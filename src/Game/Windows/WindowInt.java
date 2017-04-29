@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by Przykry on 29.04.2017.
  */
-public interface Window {
+public interface WindowInt{
 
     default void createButton(JButton button, int x, int y, String filepath, ActionListener list) {
         ImageIcon icon = new ImageIcon(filepath);

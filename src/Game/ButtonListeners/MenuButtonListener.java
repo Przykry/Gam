@@ -1,10 +1,7 @@
 package Game.ButtonListeners;
 
-import Game.Windows.MenuWindow;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import static Game.Main.changeWindow;
 
@@ -18,12 +15,6 @@ public class MenuButtonListener implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e){
-        try {
-            changeWindow(new MenuWindow(860,640));
-        }
-        catch (IOException exp){
-            exp.printStackTrace();
-        }
-
+        changeWindow(2);
     }
 }

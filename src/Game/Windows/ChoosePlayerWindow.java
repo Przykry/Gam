@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by Daniel on 26.04.2017.
  */
-public class ChoosePlayerWindow extends JPanel implements Window{
+public class ChoosePlayerWindow extends JPanel implements WindowInt {
     int width;
     int heigth;
     static int firstPlayerChoose, secondPlayerChoose;
@@ -96,10 +96,15 @@ public class ChoosePlayerWindow extends JPanel implements Window{
         this.resizedTorso[i] = resizePlayerTorso(play,img);
     }
 
-    public ChoosePlayerWindow(int width, int heigth) throws IOException{
+    public ChoosePlayerWindow(int width, int heigth){
         this.width = width;
         this.heigth = heigth;
-        this.backgroundImage = getBackgroundImage("mainBackground");
+        try {
+            this.backgroundImage = getBackgroundImage("mainBackground");
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
         this.firstPlayerChoose = 0;
         this.secondPlayerChoose = 0;
 

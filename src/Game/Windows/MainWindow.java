@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by Daniel on 24.04.2017.
  */
-public class MainWindow extends JPanel implements ActionListener, Window {
+public class MainWindow extends JPanel implements ActionListener, WindowInt {
     int width;
     int heigth;
     public Ball ball1, ball2;
@@ -41,10 +41,15 @@ public class MainWindow extends JPanel implements ActionListener, Window {
 
     Timer timer = new Timer(8, this);
 
-    public MainWindow(int width, int heigth) throws IOException {
+    public MainWindow(int width, int heigth){
         this.width = width;
         this.heigth = heigth;
-        this.mainBackground = getBackgroundImage("mainBackground");
+        try {
+            this.mainBackground = getBackgroundImage("mainBackground");
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
         this.ball1 = new Ball(0, 0, 50, 50, this);
         this.ball2 = new Ball(width - 60, 0, -40, 40, this);
         for (int i = 0; i < 4; i++) {

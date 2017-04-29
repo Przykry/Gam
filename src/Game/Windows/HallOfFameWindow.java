@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by Przykry on 29.04.2017.
  */
-public class HallOfFameWindow extends JPanel implements Window {
+public class HallOfFameWindow extends JPanel implements WindowInt {
     int width,heigth;
     Image backgroundImage;
 
@@ -29,11 +29,15 @@ public class HallOfFameWindow extends JPanel implements Window {
             new AcceptMenuButtonListener(),
     };
 
-    public HallOfFameWindow(int width, int heigth) throws IOException{
+    public HallOfFameWindow(int width, int heigth){
         this.width = width;
         this.heigth = heigth;
-        this.backgroundImage = getBackgroundImage("mainBackground");
-
+        try {
+            this.backgroundImage = getBackgroundImage("mainBackground");
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
         for(int i = 0; i < 1; i++){
             createButton(buttons[i],80+520*i,500,filepaths[i],listeners[i]);
             this.add(buttons[i]);
