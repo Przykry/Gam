@@ -19,6 +19,7 @@ public class RightSwipeButtonListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(player == 1) {
+
             int n = panel.getFirstPlayerChoose();
             if (n + 1 == panel.playerModels.length) {
                 panel.setFirstPlayerChoose(0);
