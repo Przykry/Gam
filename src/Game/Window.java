@@ -29,10 +29,10 @@ public interface Window {
 
     default void drawBorders(Graphics graphics, int width, int heigth){
         graphics.setColor(Color.black);
-        graphics.fillRect(0,0,5,heigth);
-        graphics.fillRect(0,0,width,10);
-        graphics.fillRect(0,heigth-5,width,5);
-        graphics.fillRect(width-5,0,5,heigth);
+        graphics.fillRect(0,0,15,heigth);
+        graphics.fillRect(0,0,width,15);
+        graphics.fillRect(0,heigth-15,width,15);
+        graphics.fillRect(width-15,0,15,heigth);
     }
 
     default void drawBackground(Graphics g, Image backgroundImage, ImageObserver window){
