@@ -14,8 +14,19 @@ import static java.awt.event.KeyEvent.*;
 public class Player {
     String name;
     private int x,y;
+    private int centerHeadX;
+
+    public int getCenterHeadX() {
+        return centerHeadX;
+    }
+
+    public int getCenterHeadY() {
+        return centerHeadY;
+    }
+
+    private int centerHeadY;
     private int widthTorso, heigthTorso;
-    private int widthHead;
+    private int radiusHead;
 
     public int getWidthTorso() {
         return widthTorso;
@@ -25,8 +36,8 @@ public class Player {
         return heigthTorso;
     }
 
-    public int getWidthHead() {
-        return widthHead;
+    public int getRadiusHead() {
+        return radiusHead;
     }
 
     public int getHeigthHead() {
@@ -128,7 +139,7 @@ public class Player {
     private void setWidthHeightHead(){
         try {
             final BufferedImage bi = ImageIO.read(new File("textures\\" +  name + "Head" + 0 + ".png"));
-            this.widthHead = bi.getWidth();
+            this.radiusHead = bi.getWidth();
             this.heigthHead = bi.getHeight();
         } catch (IOException e) {
             e.printStackTrace();

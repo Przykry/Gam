@@ -31,7 +31,7 @@ public class Ball {
 
     public void setBallImage() {
         try {
-            ballImage = ImageIO.read(new File("textures\\pilka.png"));
+            ballImage = ImageIO.read(new File("textures\\ball.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
