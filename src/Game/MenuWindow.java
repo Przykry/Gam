@@ -15,17 +15,17 @@ public class MenuWindow extends JPanel implements Window {
     int width,heigth;
     Image backgroundImage;
 
-    JButton [] buttons = new JButton[]{
+    private JButton [] buttons = new JButton[]{
             new JButton(),
             new JButton()
     };
 
-    String [] filepaths = new String[]{
+    private String [] filepaths = new String[]{
             "textures\\backButton.png",
             "textures\\acceptMenuButton.png"
     };
 
-    ActionListener[] listeners = new ActionListener[]{
+    private ActionListener[] listeners = new ActionListener[]{
             new BackButtonListener(),
             new AcceptMenuButtonListener(),
     };
