@@ -19,7 +19,6 @@ public class Main {
         frame.validate();
         frame.repaint();
         frame.setVisible(true);
-        System.out.println("   aa");
     }
 
     public static void main(String [] args){
