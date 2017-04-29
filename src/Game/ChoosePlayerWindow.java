@@ -48,7 +48,12 @@ public class ChoosePlayerWindow extends JPanel implements Window{
             new LeftSwipeButtonListener(this,2),
             new RightSwipeButtonListener(this,2)
     };
+
+    Image resizedHead[] = new Image[2];
+    Image resizedTorso[] = new Image[2];
+
     Image backgroundImage;
+
 
     public int getFirstPlayerChoose() {
         return firstPlayerChoose;
@@ -82,12 +87,12 @@ public class ChoosePlayerWindow extends JPanel implements Window{
         this.player2 = player2;
     }
 
-    public void setResizedHead(Image resizedHead, int i) {
-        this.resizedHead[i] = resizedHead;
+    public void setResizedHead(Player play, int i, int img) {
+        this.resizedHead[i] = resizePlayerHead(play,img);
     }
 
-    public void setResizedTorso(Image resizedTorso, int i) {
-        this.resizedTorso[i] = resizedTorso;
+    public void setResizedTorso(Player play, int i, int img) {
+        this.resizedTorso[i] = resizePlayerTorso(play,img);
     }
 
     public ChoosePlayerWindow(int width, int heigth) throws IOException{
@@ -121,9 +126,6 @@ public class ChoosePlayerWindow extends JPanel implements Window{
         this.setLayout(null);
     }
 
-    Image resizedHead[] = new Image[2];
-    Image resizedTorso[] = new Image[2];
-
     public Image resizePlayerHead(Player play, int i){
         Image scaledImg = play.getHeadImage(i).getScaledInstance(play.getWidthHead()*2, play.getHeigthHead()*2,  Image.SCALE_SMOOTH);
         return scaledImg;
@@ -140,7 +142,6 @@ public class ChoosePlayerWindow extends JPanel implements Window{
         graphics.drawImage(resizedHead[1],600,200 ,this);
         graphics.drawImage(resizedTorso[1],607, 200+player2.getHeigthHead()*2,this  );
     }
-
 
 
     private void drawAtributes(Graphics graphics){

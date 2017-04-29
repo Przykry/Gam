@@ -22,29 +22,22 @@ public class LeftSwipeButtonListener implements ActionListener{
             int n = panel.getFirstPlayerChoose();
             if (n == 0) {
                 panel.setFirstPlayerChoose(panel.playerModels.length - 1);
-                panel.setResizedHead(panel.resizePlayerHead(panel.getPlayer1(),2),0);
-                panel.setResizedTorso(panel.resizePlayerTorso(panel.getPlayer1(),2),0);
-            }
-            else {
+            } else {
                 panel.setFirstPlayerChoose(panel.getFirstPlayerChoose() - 1);
-                panel.setResizedHead(panel.resizePlayerHead(panel.getPlayer1(),2),0);
-                panel.setResizedTorso(panel.resizePlayerTorso(panel.getPlayer1(),2),0);
             }
             panel.setPlayer1(panel.playerModels[panel.getFirstPlayerChoose()]);
-        }
-        else{
+            panel.setResizedHead(panel.getPlayer1(),player-1,2);
+            panel.setResizedTorso(panel.getPlayer1(),player-1,3);
+        }else{
             int n = panel.getSecondPlayerChoose();
             if (n == 0) {
                 panel.setSecondPlayerChoose(panel.playerModels.length - 1);
-                panel.setResizedHead(panel.resizePlayerHead(panel.getPlayer2(),2),1);
-                panel.setResizedTorso(panel.resizePlayerTorso(panel.getPlayer2(),2),1);
-            }
-            else {
+            } else {
                 panel.setSecondPlayerChoose(panel.getSecondPlayerChoose() - 1);
-                panel.setResizedHead(panel.resizePlayerHead(panel.getPlayer2(),2),1);
-                panel.setResizedTorso(panel.resizePlayerTorso(panel.getPlayer2(),2),1);
             }
             panel.setPlayer2(panel.playerModels[panel.getSecondPlayerChoose()]);
+            panel.setResizedHead(panel.getPlayer2(),player-1,0);
+            panel.setResizedTorso(panel.getPlayer2(),player-1,0);
         }
         panel.repaint();
     }

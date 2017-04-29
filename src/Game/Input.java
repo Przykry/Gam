@@ -63,12 +63,19 @@ public class Input extends KeyAdapter implements KeyListener,MouseListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        char key = e.getKeyChar();
+        if(key ==  'q'){
+            window.setBackground(Color.RED);
+            window.repaint();
+        }
+        pressed.remove(e.getKeyCode());
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        if(e.getButton()== 1) window.setBackground(Color.BLUE);
+        else if(e.getButton() == 3) window.setBackground(Color.cyan);
+        window.repaint();
     }
 
     @Override
