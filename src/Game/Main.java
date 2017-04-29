@@ -8,8 +8,19 @@ import java.io.IOException;
  * Created by Daniel on 24.04.2017.
  */
 public class Main {
-    public static JFrame frame = new JFrame();
-    public static Container contentPane;
+    private static JFrame frame = new JFrame();
+    private static Container contentPane;
+
+
+    public static void changeWindow(JPanel window){
+        contentPane = Main.frame.getContentPane();
+        contentPane.removeAll();
+        contentPane.add(window);
+        frame.validate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
     public static void main(String [] args){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();

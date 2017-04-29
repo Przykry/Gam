@@ -13,16 +13,10 @@ import java.io.IOException;
 public class BackButtonListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
-        Main.contentPane = Main.frame.getContentPane();
-        Main.contentPane.removeAll();
         try {
-            Main.contentPane.add(new MainWindow(860, 640));
-            Main.frame.validate();
-            Main.frame.repaint();
-            Main.frame.setVisible(true);
-        }
-        catch(IOException exc){
-            System.out.println("Something went wrong");
+            Main.changeWindow(new MainWindow(860,640));
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
     }
 }

@@ -58,9 +58,9 @@ public class Player {
     private Image torsoImage[] = new Image[4];
     private int jumpKey,leftKey,rightKey,shotKey;
 
-    public Image getHeadImage(int i) { return headImage[i];}
+    Image getHeadImage(int i) { return headImage[i];}
 
-    public Image getTorsoImage(int i) {
+    Image getTorsoImage(int i) {
         return torsoImage[i];
     }
 
@@ -73,7 +73,7 @@ public class Player {
     }
 
 
-    public Player(String name, int shotStrength, int speed, int maxJump){
+    Player(String name, int shotStrength, int speed, int maxJump){
         this.name = name;
         this.x = this.y = 100;
         for(int i = 0; i < 4; i++) {
@@ -89,14 +89,14 @@ public class Player {
         else if(playerNumber == 2) getKeys(VK_W,VK_A,VK_D, VK_ALT);
     }
 
-    public void getKeys(int jumpKey, int leftKey, int rightKey, int shotKey){
+    private void getKeys(int jumpKey, int leftKey, int rightKey, int shotKey){
         this.jumpKey = jumpKey;
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.shotKey = shotKey;
     }
 
-    public void setHeadImage(int i){
+    private void setHeadImage(int i){
         try {
             headImage[i] = ImageIO.read(new File("textures\\" +  name + "Head" + i + ".png"));
         }
@@ -105,7 +105,7 @@ public class Player {
         }
     }
 
-    public void setTorsoImage(int i){
+    private void setTorsoImage(int i){
         try {
             torsoImage[i] = ImageIO.read(new File("textures\\" +  name + "Torso" + i + ".png"));
         }

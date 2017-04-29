@@ -1,5 +1,9 @@
 package Game.ButtonListeners;
 
+import Game.HallOfFameWindow;
+import Game.Main;
+import Game.MenuWindow;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,6 +18,6 @@ public class HallOfFameButtonListener implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Hall of fame button pressed");
+        Main.changeWindow(new HallOfFameWindow(860,640));
     }
 }

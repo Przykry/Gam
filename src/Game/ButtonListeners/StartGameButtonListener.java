@@ -17,18 +17,10 @@ public class StartGameButtonListener implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Start game button pressed");
-        Main.contentPane = Main.frame.getContentPane();
-        Main.contentPane.removeAll();
         try {
-            Main.contentPane.add(new ChoosePlayerWindow(860, 640));
-            Main.frame.validate();
-            Main.frame.repaint();
-            Main.frame.setVisible(true);
-
-        }
-        catch(IOException exc){
-            System.out.println("Something went wrong");
+            Main.changeWindow(new ChoosePlayerWindow(860,640));
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
     }
 }
