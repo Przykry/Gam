@@ -23,14 +23,8 @@ public interface Window {
         button.setFocusable(false);
     }
 
-    default Image getBackgroundImage(String nameBackground){
-        try {
+    default Image getBackgroundImage(String nameBackground) throws IOException{
             return ImageIO.read(new File("textures\\" + nameBackground + ".png"));
-        }
-        catch (IOException e) {
-            System.out.println("Could not read the picture");
-            return null;
-        }
     }
 
     default void drawBorders(Graphics graphics, int width, int heigth){

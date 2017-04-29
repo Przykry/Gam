@@ -6,6 +6,7 @@ import Game.ButtonListeners.BackButtonListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * Created by Przykry on 29.04.2017.
@@ -29,7 +30,7 @@ public class MenuWindow extends JPanel implements Window {
             new AcceptMenuButtonListener(),
     };
 
-    public MenuWindow(int width, int heigth){
+    public MenuWindow(int width, int heigth) throws IOException{
         this.width = width;
         this.heigth = heigth;
         this.backgroundImage = getBackgroundImage("mainBackground");

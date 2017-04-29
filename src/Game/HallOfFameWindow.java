@@ -6,6 +6,7 @@ import Game.ButtonListeners.BackButtonListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * Created by Przykry on 29.04.2017.
@@ -28,7 +29,7 @@ public class HallOfFameWindow extends JPanel implements Window {
             new AcceptMenuButtonListener(),
     };
 
-    public HallOfFameWindow(int width, int heigth){
+    public HallOfFameWindow(int width, int heigth) throws IOException{
         this.width = width;
         this.heigth = heigth;
         this.backgroundImage = getBackgroundImage("mainBackground");
