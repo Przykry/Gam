@@ -1,4 +1,4 @@
-package Game;
+package Game.Entities;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -58,9 +58,9 @@ public class Player {
     private Image torsoImage[] = new Image[4];
     private int jumpKey,leftKey,rightKey,shotKey;
 
-    Image getHeadImage(int i) { return headImage[i];}
+    public Image getHeadImage(int i) { return headImage[i];}
 
-    Image getTorsoImage(int i) {
+    public Image getTorsoImage(int i) {
         return torsoImage[i];
     }
 
@@ -73,7 +73,7 @@ public class Player {
     }
 
 
-    Player(String name, int shotStrength, int speed, int maxJump){
+    public Player(String name, int shotStrength, int speed, int maxJump){
         this.name = name;
         this.x = this.y = 100;
         for(int i = 0; i < 4; i++) {

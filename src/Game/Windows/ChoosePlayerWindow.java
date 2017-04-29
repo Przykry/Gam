@@ -1,9 +1,10 @@
-package Game;
+package Game.Windows;
 
 import Game.ButtonListeners.AcceptButtonListener;
 import Game.ButtonListeners.BackButtonListener;
 import Game.ButtonListeners.LeftSwipeButtonListener;
 import Game.ButtonListeners.RightSwipeButtonListener;
+import Game.Entities.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class ChoosePlayerWindow extends JPanel implements Window{
     int heigth;
     static int firstPlayerChoose, secondPlayerChoose;
 
-    public Player [] playerModels = new Player[]{
+    public Player[] playerModels = new Player[]{
             new Player("Messi",10,7,55),
             new Player("Arbuz",2,0,0)
     };

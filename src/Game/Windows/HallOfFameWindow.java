@@ -1,4 +1,4 @@
-package Game;
+package Game.Windows;
 
 import Game.ButtonListeners.AcceptMenuButtonListener;
 import Game.ButtonListeners.BackButtonListener;

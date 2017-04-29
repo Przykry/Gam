@@ -1,5 +1,6 @@
-package Game;
+package Game.Windows;
 
+import Game.Entities.Ball;
 import Game.ButtonListeners.ExitGameButtonListener;
 import Game.ButtonListeners.HallOfFameButtonListener;
 import Game.ButtonListeners.MenuButtonListener;

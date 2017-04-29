@@ -1,6 +1,5 @@
 package Game;
 
-import java.awt.*;
 import java.awt.event.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,9 +8,9 @@ import java.util.Set;
  * Created by Daniel on 24.04.2017.
  */
 public class Input extends KeyAdapter implements KeyListener,MouseListener {
-    Window window;
+    Game.Windows.Window window;
 
-    public Input(Window window){
+    public Input(Game.Windows.Window window){
         this.window = window;
     }
 

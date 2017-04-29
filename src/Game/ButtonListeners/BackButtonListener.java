@@ -1,7 +1,7 @@
 package Game.ButtonListeners;
 
 import Game.Main;
-import Game.MainWindow;
+import Game.Windows.MainWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

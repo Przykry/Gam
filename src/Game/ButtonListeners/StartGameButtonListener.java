@@ -1,7 +1,6 @@
 package Game.ButtonListeners;
 
-import Game.ChoosePlayerWindow;
-import Game.Main;
+import Game.Windows.ChoosePlayerWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,8 +1,6 @@
 package Game.ButtonListeners;
 
-import Game.HallOfFameWindow;
-import Game.Main;
-import Game.MenuWindow;
+import Game.Windows.HallOfFameWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
