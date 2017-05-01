@@ -106,6 +106,7 @@ public class Player {
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.shotKey = shotKey;
+
     }
 
     private void setHeadImage(int i){
