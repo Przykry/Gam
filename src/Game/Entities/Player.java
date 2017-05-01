@@ -26,6 +26,26 @@ public class Player {
     private Image torsoImage[] = new Image[4];
     private int jumpKey,leftKey,rightKey,shotKey;
 
+    public Player(int x, int y, String name, int shotStrength, int speed, int maxJump){
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        for(int i = 0; i < 4; i++) {
+            setHeadImage(i);
+            setTorsoImage(i);
+        }
+        abilities(shotStrength,speed,maxJump);
+        setPlayerWidthHeight();
+    }
+
+    public void setCenterHeadX(int centerHeadX) {
+        this.centerHeadX = centerHeadX;
+    }
+
+    public void setCenterHeadY(int centerHeadY) {
+        this.centerHeadY = centerHeadY;
+    }
+
     public int getCenterHeadX() {
         return centerHeadX;
     }
@@ -82,18 +102,6 @@ public class Player {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    public Player(int x, int y, String name, int shotStrength, int speed, int maxJump){
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        for(int i = 0; i < 4; i++) {
-            setHeadImage(i);
-            setTorsoImage(i);
-        }
-        abilities(shotStrength,speed,maxJump);
-        setPlayerWidthHeight();
     }
 
     public void setKeys(int playerNumber){

@@ -1,6 +1,7 @@
 package Game.ButtonListeners;
 
 import Game.Main;
+import Game.Windows.GameWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +11,9 @@ import java.awt.event.ActionListener;
  */
 public class BackButtonListener implements ActionListener{
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e){
+        GameWindow.getTimer().stop();
+        Main.setGameWindow(null);
         Main.changeWindow(0);
     }
 }

@@ -15,8 +15,18 @@ public class Main {
 
     private static ArrayList<JPanel> windows;
 
+    private static GameWindow gameWindow;
+
     public static JPanel getPanel(int i){
         return windows.get(i);
+    }
+
+    public static GameWindow getGameWindow() {
+        return gameWindow;
+    }
+
+    public static void setGameWindow(GameWindow gameWindow) {
+        Main.gameWindow = gameWindow;
     }
 
     public static void changeWindow(int n){
@@ -28,10 +38,10 @@ public class Main {
         frame.setVisible(true);
     }
 
-    public static void changeWindowToGame(GameWindow window){
+    public static void changeWindowToGame(){
         contentPane = frame.getContentPane();
         contentPane.removeAll();
-        contentPane.add(window);
+        contentPane.add(gameWindow);
         frame.validate();
         frame.repaint();
         frame.setVisible(true);

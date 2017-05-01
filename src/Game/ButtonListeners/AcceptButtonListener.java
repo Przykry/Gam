@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static Game.Main.changeWindowToGame;
+import static Game.Main.setGameWindow;
 
 
 /**
@@ -19,7 +20,7 @@ public class AcceptButtonListener implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        GameWindow gameWindow = new GameWindow(860,640, window);
-        changeWindowToGame(gameWindow);
+        setGameWindow(new GameWindow(860,640,window));
+        changeWindowToGame();
     }
 }

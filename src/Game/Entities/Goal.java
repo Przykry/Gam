@@ -15,7 +15,7 @@ public class Goal {
 
     public Goal(int leftOrRight){
         this.width = 60;
-        this.heigth = 180;
+        this.heigth = 210;
         this.scored = false;
         loadGoalImage(leftOrRight);
     }
