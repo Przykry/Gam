@@ -97,8 +97,8 @@ public class Player {
     }
 
     public void setKeys(int playerNumber){
-        if(playerNumber == 2) getKeys(VK_UP,VK_LEFT,VK_RIGHT,VK_0);
-        else if(playerNumber == 1) getKeys(VK_W,VK_A,VK_D, VK_ALT);
+        if(playerNumber == 1) getKeys(VK_W,VK_A,VK_D, VK_ALT);
+        else if(playerNumber == 2) getKeys(VK_UP,VK_LEFT,VK_RIGHT,VK_0);
     }
 
     private void getKeys(int jumpKey, int leftKey, int rightKey, int shotKey){
