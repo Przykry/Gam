@@ -13,8 +13,18 @@ import static java.awt.event.KeyEvent.*;
  */
 public class Player {
     String name;
-    private int x,y;
+    private int x;
+    private int y;
     private int centerHeadX;
+    private int centerHeadY;
+    private int widthTorso, heigthTorso;
+    private int radiusHead;
+    private int speed;
+    private int maxJump;
+    private int shotStrength;
+    private Image headImage[] = new Image[4];
+    private Image torsoImage[] = new Image[4];
+    private int jumpKey,leftKey,rightKey,shotKey;
 
     public int getCenterHeadX() {
         return centerHeadX;
@@ -23,10 +33,6 @@ public class Player {
     public int getCenterHeadY() {
         return centerHeadY;
     }
-
-    private int centerHeadY;
-    private int widthTorso, heigthTorso;
-    private int radiusHead;
 
     public int getWidthTorso() {
         return widthTorso;
@@ -39,13 +45,6 @@ public class Player {
     public int getRadiusHead() {
         return radiusHead;
     }
-
-    public int getHeigthHead() {
-        return heigthHead;
-    }
-
-    private int heigthHead;
-    private int speed;
 
     public String getName() {
         return name;
@@ -63,12 +62,6 @@ public class Player {
         return shotStrength;
     }
 
-    private int maxJump;
-    private int shotStrength;
-    private Image headImage[] = new Image[4];
-    private Image torsoImage[] = new Image[4];
-    private int jumpKey,leftKey,rightKey,shotKey;
-
     public Image getHeadImage(int i) { return headImage[i];}
 
     public Image getTorsoImage(int i) {
@@ -83,10 +76,18 @@ public class Player {
         return y;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
 
-    public Player(String name, int shotStrength, int speed, int maxJump){
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public Player(int x, int y, String name, int shotStrength, int speed, int maxJump){
         this.name = name;
-        this.x = this.y = 100;
+        this.x = x;
+        this.y = y;
         for(int i = 0; i < 4; i++) {
             setHeadImage(i);
             setTorsoImage(i);
@@ -96,8 +97,8 @@ public class Player {
     }
 
     public void setKeys(int playerNumber){
-        if(playerNumber == 1) getKeys(VK_UP,VK_LEFT,VK_RIGHT,VK_0);
-        else if(playerNumber == 2) getKeys(VK_W,VK_A,VK_D, VK_ALT);
+        if(playerNumber == 2) getKeys(VK_UP,VK_LEFT,VK_RIGHT,VK_0);
+        else if(playerNumber == 1) getKeys(VK_W,VK_A,VK_D, VK_ALT);
     }
 
     private void getKeys(int jumpKey, int leftKey, int rightKey, int shotKey){
@@ -140,7 +141,6 @@ public class Player {
         try {
             final BufferedImage bi = ImageIO.read(new File("textures\\" +  name + "Head" + 0 + ".png"));
             this.radiusHead = bi.getWidth();
-            this.heigthHead = bi.getHeight();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -158,7 +158,7 @@ public class Player {
             this.shotStrength = shotStrength;
     }
 
-    public void setPlayerPositionX(int directory){
+    public void movePlayerX(int directory){
         if(directory == 1) {
             x = x + speed;
         }
@@ -166,7 +166,7 @@ public class Player {
     }
 
 
-    public void setPlayerPositionY(int directory){
+    public void movePlayerY(int directory){
         if(directory == 0) this.y += maxJump;
         else this.y -= maxJump;
     }

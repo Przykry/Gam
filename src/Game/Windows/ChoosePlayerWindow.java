@@ -19,9 +19,14 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
     int heigth;
     static int firstPlayerChoose, secondPlayerChoose;
 
-    public Player[] playerModels = new Player[]{
-            new Player("Messi",10,7,55),
-            new Player("Arbuz",2,0,0)
+    public Player[] player1Models = new Player[]{
+            new Player(50,50,"Messi",10,7,55),
+            new Player(50,50,"Arbuz",2,0,0)
+    };
+
+    public Player[] player2Models = new Player[]{
+            new Player(50,50,"Messi",10,7,55),
+            new Player(50,50,"Arbuz",2,0,0)
     };
 
     private Player player1;
@@ -43,7 +48,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
     };
     ActionListener [] listeners = new ActionListener[]{
             new BackButtonListener(),
-            new AcceptButtonListener(),
+            new AcceptButtonListener(this),
             new LeftSwipeButtonListener(this,1),
             new RightSwipeButtonListener(this,1),
             new LeftSwipeButtonListener(this,2),
@@ -109,8 +114,10 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         this.secondPlayerChoose = 0;
 
 
-        this.player1 = playerModels[firstPlayerChoose];
-        this.player2 = playerModels[secondPlayerChoose];
+        this.player1 = player1Models[firstPlayerChoose];
+        this.player2 = player2Models[secondPlayerChoose];
+        player1.setX(60);
+        player2.setX(80);
         this.resizedHead[0] = resizePlayerHead(this.player1,2);
         this.resizedTorso[0] = resizePlayerTorso(this.player1,3);
         this.resizedHead[1] = resizePlayerHead(this.player2,0);
@@ -150,7 +157,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
     }
 
 
-    private void drawAtributes(Graphics graphics){
+    private void drawAttributes(Graphics graphics){
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("MyFont",Font.BOLD,25));
         graphics.drawString("Name: "+player1.getName(),120,80);
@@ -168,6 +175,6 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         graphics.drawImage(backgroundImage,0,0,this);
         drawBorders(graphics,width,heigth);
         drawPlayers(graphics);
-        drawAtributes(graphics);
+        drawAttributes(graphics);
     }
 }
