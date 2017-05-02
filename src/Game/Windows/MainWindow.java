@@ -43,7 +43,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
     };
     Image mainBackground = null;
     Timer timer = new Timer(8, this);
-    Thread thread[] = new Thread[10];
+    Thread thread[];
     List<Ball> ballList = new ArrayList<>();
     public MainWindow(int width, int heigth){
         this.width = width;
@@ -54,7 +54,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
         catch(IOException e){
             e.printStackTrace();
         }
-        addBouncigBalls(12);
+        addBouncigBalls(15);
         for (int i = 0; i < 4; i++) {
             createButton(buttons[i], width - 300, i * 60 + i * 40 + 60, filePaths[i], listeners[i]);
             this.add(buttons[i]);
@@ -64,8 +64,10 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
         timer.start();
     }
 
+
     private void addBouncigBalls(int numberOfBalls){
-        for(int i=0;i<10;i++){
+        thread = new Thread[numberOfBalls];
+        for(int i=0;i<numberOfBalls;i++){
             ballList.add(new Ball(
                         new Random().nextInt(850),
                         new Random().nextInt(630),
@@ -76,7 +78,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
         }
 
         List<Runnable> bouncingBall = new ArrayList<>();
-        for(int i=0;i<10;i++) {
+        for(int i=0;i<numberOfBalls;i++) {
             bouncingBall.add(new BouncingBall(ballList,i,this));
             thread[i] = new Thread(bouncingBall.get(i));
             thread[i].start();
