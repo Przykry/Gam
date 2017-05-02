@@ -128,11 +128,11 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         }
         createButton(buttons[2],50,260,filepaths[2],listeners[2]);
         this.add(buttons[2]);
-        createButton(buttons[3], 50+player1.getRadiusHead()*2+90,260,filepaths[3],listeners[3]);
+        createButton(buttons[3], 50+player1.getRadiusHead()*4+90,260,filepaths[3],listeners[3]);
         this.add(buttons[3]);
         createButton(buttons[4],530,260,filepaths[2],listeners[4]);
         this.add(buttons[4]);
-        createButton(buttons[5], 530+player1.getRadiusHead()*2+90,260,filepaths[3],listeners[5]);
+        createButton(buttons[5], 530+player1.getRadiusHead()*4+90,260,filepaths[3],listeners[5]);
         this.add(buttons[5]);
 
         this.setFocusable(true);
@@ -140,7 +140,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
     }
 
     public Image resizePlayerHead(Player play, int i){
-        Image scaledImg = play.getHeadImage(i).getScaledInstance(play.getRadiusHead()*2, play.getRadiusHead()*2,  Image.SCALE_SMOOTH);
+        Image scaledImg = play.getHeadImage(i).getScaledInstance(play.getRadiusHead()*4, play.getRadiusHead()*4,  Image.SCALE_SMOOTH);
         return scaledImg;
     }
 
@@ -151,9 +151,9 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
 
     private void drawPlayers(Graphics graphics){
         graphics.drawImage(resizedHead[0],120,200 ,this);
-        graphics.drawImage(resizedTorso[0],127, 200+player1.getRadiusHead()*2,this  );
+        graphics.drawImage(resizedTorso[0],127, 200+player1.getRadiusHead()*4,this  );
         graphics.drawImage(resizedHead[1],600,200 ,this);
-        graphics.drawImage(resizedTorso[1],607, 200+player2.getRadiusHead()*2,this  );
+        graphics.drawImage(resizedTorso[1],607, 200+player2.getRadiusHead()*4,this  );
     }
 
 

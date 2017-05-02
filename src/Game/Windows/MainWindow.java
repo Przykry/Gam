@@ -54,7 +54,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
         catch(IOException e){
             e.printStackTrace();
         }
-        addBouncigBalls(15);
+        addBouncingBalls(2);
         for (int i = 0; i < 4; i++) {
             createButton(buttons[i], width - 300, i * 60 + i * 40 + 60, filePaths[i], listeners[i]);
             this.add(buttons[i]);
@@ -65,7 +65,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
     }
 
 
-    private void addBouncigBalls(int numberOfBalls){
+    private void addBouncingBalls(int numberOfBalls){
         thread = new Thread[numberOfBalls];
         for(int i=0;i<numberOfBalls;i++){
             ballList.add(new Ball(
@@ -95,5 +95,6 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        this.repaint();
     }
 }

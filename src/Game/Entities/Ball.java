@@ -1,13 +1,10 @@
 package Game.Entities;
 
-import Game.Windows.WindowInt;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.Callable;
 
 /**
  * Created by Daniel on 28.04.2017.
@@ -113,10 +110,10 @@ public class Ball {
     }
 
     public void move(){
-        this.x += speedX/10;
-        this.y += speedY/10;
-        this.centerX += speedX/10;
-        this.centerY += speedY/10;
+        this.x += speedX/100;
+        this.y += speedY/100;
+        this.centerX += speedX/100;
+        this.centerY += speedY/100;
     }
 
     public void reverseSpeedX(){

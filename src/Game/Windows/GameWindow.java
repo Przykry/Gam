@@ -1,6 +1,7 @@
 package Game.Windows;
 
 import Game.ButtonListeners.BackButtonListener;
+import Game.ButtonListeners.PlayerMoveListener;
 import Game.Entities.Ball;
 import Game.Entities.Goal;
 import Game.Entities.Player;
@@ -22,7 +23,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     private JButton backButton;
     private Player player1, player2;
     private static Timer timer;
-    int g;
+    final int g;
 
     public static Timer getTimer() {
         return timer;
@@ -53,18 +54,20 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         this.add(backButton);
         leftGoal = new Goal(1);
         rightGoal = new Goal(2);
-        ball = new Ball((width-30)/2,50,40,0,this);
+        ball = new Ball((width-30)/2,50,0,16,this);
         player1.setX(leftGoal.getWidth()+20+15);
-        player1.setY(heigth-15-player1.getHeigthTorso()-player1.getRadiusHead());
-        player2.setX(width - rightGoal.getWidth()-player2.getRadiusHead()-20);
-        player2.setY(heigth-15-player2.getHeigthTorso()-player2.getRadiusHead());
-        player1.setCenterHeadX(player1.getX() + 60);
-        player1.setCenterHeadY(player1.getY() + 60);
-        player2.setCenterHeadX(player2.getX() + 60);
-        player2.setCenterHeadY(player2.getY() + 60);
+        player1.setY(heigth-15-player1.getHeigthTorso()-2*player1.getRadiusHead());
+        player2.setX(width - rightGoal.getWidth()-2*player2.getRadiusHead()-20);
+        player2.setY(heigth-15-player2.getHeigthTorso()-2*player2.getRadiusHead());
+        player1.setCenterHeadX(player1.getX() + player1.getRadiusHead());
+        player1.setCenterHeadY(player1.getY() + player1.getRadiusHead());
+        player2.setCenterHeadX(player2.getX() + player2.getRadiusHead());
+        player2.setCenterHeadY(player2.getY() + player2.getRadiusHead());
         player1.setKeys(1);
         player2.setKeys(2);
-        g = 2;
+        g = 20;
+        this.setFocusable(true);
+        this.addKeyListener(new PlayerMoveListener(player1, player2));
         timer = new Timer(5,this);
         timer.start();
     }
@@ -77,10 +80,10 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
 
     private void drawPlayers(Graphics graphics){
         graphics.drawImage(player1.getHeadImage(2),player1.getX(),player1.getY(),this);
-        graphics.drawImage(player1.getTorsoImage(3),player1.getX()+3,player1.getY()+player1.getRadiusHead(),this);
+        graphics.drawImage(player1.getTorsoImage(3),player1.getX()+3,player1.getY()+2*player1.getRadiusHead(),this);
 
         graphics.drawImage(player2.getHeadImage(0),player2.getX(),player2.getY(),this);
-        graphics.drawImage(player2.getTorsoImage(0),player2.getX()+3,player2.getY()+player2.getRadiusHead(),this);
+        graphics.drawImage(player2.getTorsoImage(0),player2.getX()+3,player2.getY()+2*player2.getRadiusHead(),this);
     }
 
     public void paintComponent(Graphics graphics){
@@ -90,11 +93,11 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         drawPlayers(graphics);
     }
 
-    private int calculateMaxHigh(int vy){
+    /*private int calculateMaxHigh(int vy){
         int vykw = (int)Math.round(Math.pow(vy,2));
 
         return vykw/(2*g);
-    }
+    }*/
 
     public void ballHittingBorder(Ball ball) {
         if (new Rectangle(0, 0, 15, heigth).intersects(new Rectangle(ball.getX(), ball.getY(), ball.getRadius() * 2, ball.getRadius() * 2))) {
@@ -126,21 +129,27 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         double xDir1 = (ball.getCenterX() - player.getCenterHeadX()) / calculatePythagoras(ball,player);
         double yDir1 = (player.getCenterHeadY() - ball.getCenterY()) / calculatePythagoras(ball, player);
 
-        double xDir2 = (player.getCenterHeadX() - ball.getCenterX()) / calculatePythagoras(ball, player);
-        double yDir2 = (ball.getCenterY() - player.getCenterHeadY()) / calculatePythagoras(ball, player);
+        int dirX1 = (int) Math.round(xDir1 * 700);
+        int dirY1 = (int) Math.round(yDir1 * 700);
 
-        int dirX1 = (int) Math.round(xDir1 * 70);
-        int dirY1 = (int) Math.round(yDir1 * 70);
-
-        int dirX2 = (int) Math.round(xDir2 * 70);
-        int dirY2 = (int) Math.round(yDir2 * 70);
         ball.setSpeedX(dirX1);
         ball.setSpeedY(-dirY1);
     }
 
-    public void checkIfIntersects(Ball ball, Player player) {
+    private void checkIfIntersects(Ball ball, Player player) {
         if (calculatePythagoras(ball, player) <= ball.getRadius() + player.getRadiusHead()) {
             calculateDirection(ball,player);
+        }
+    }
+
+    private void checkIfBodyIntersects(Ball ball, Player player2, Player player1){
+        if(ball.getCenterX() + ball.getRadius() >= player2.getX()+28 && ball.getY() <= player2.getY() + player2.getRadiusHead()+player2.getHeigthTorso() && ball.getY() > player2.getY() + player2.getRadiusHead()){
+            ball.reverseSpeedX();
+            ball.setSpeedX((int)(ball.getSpeedX()*0.8 + player2.getSpeed()*0.8));
+        }
+        if(ball.getCenterX() - ball.getRadius() <= player1.getX()-10 +player1.getWidthTorso() && ball.getY() <= player1.getY() + player1.getRadiusHead()+player1.getHeigthTorso() && ball.getY() > player1.getY() + player1.getRadiusHead()){
+            ball.reverseSpeedX();
+            ball.setSpeedX((int)(ball.getCenterX()*0.8 + player1.getSpeed()*0.8));
         }
     }
 
@@ -149,14 +158,25 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         if(ball.getSpeedY() < 0){
             ball.move();
             ball.setSpeedY(ball.getSpeedY()+g);
-        }else{
+        }else if(ball.getSpeedY() > 0){
             ball.move();
             ball.setSpeedY(ball.getSpeedY()+g);
         }
-        System.out.println(ball.getSpeedY());
+        if(ball.getSpeedY() < 10 && ball.getSpeedY() > -10 && ball.getCenterY() + ball.getRadius() >= heigth - 17){
+            ball.move();
+            ball.setSpeedY(0);
+        }
+        if(ball.getCenterY() + ball.getRadius()>=heigth-17){
+            ball.decreaseSpeedX(10);
+        }
+        if(player1.isMovingLeft()) player1.movePlayerLeft();
+        if(player1.isMovingRight()) player1.movePlayerRight();
+        if(player2.isMovingLeft()) player2.movePlayerLeft();
+        if(player2.isMovingRight()) player2.movePlayerRight();
         ballHittingBorder(ball);
         checkIfIntersects(ball,player1);
         checkIfIntersects(ball,player2);
+        checkIfBodyIntersects(ball,player2, player1);
         this.repaint();
     }
 }

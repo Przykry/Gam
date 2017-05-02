@@ -15,7 +15,7 @@ public class Main {
 
     private static ArrayList<JPanel> windows;
 
-    private static GameWindow gameWindow;
+    private static GameWindow gameWindow = null;
 
     public static JPanel getPanel(int i){
         return windows.get(i);

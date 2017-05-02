@@ -24,7 +24,52 @@ public class Player {
     private int shotStrength;
     private Image headImage[] = new Image[4];
     private Image torsoImage[] = new Image[4];
-    private int jumpKey,leftKey,rightKey,shotKey;
+    private int jumpKey;
+    private int leftKey;
+
+    public int getJumpKey() {
+        return jumpKey;
+    }
+
+    public int getLeftKey() {
+        return leftKey;
+    }
+
+    public int getRightKey() {
+        return rightKey;
+    }
+
+    public int getShotKey() {
+        return shotKey;
+    }
+
+    private int rightKey;
+    private int shotKey;
+    private boolean movingLeft, movingRight, jumping;
+
+    public boolean isMovingLeft() {
+        return movingLeft;
+    }
+
+    public void setMovingLeft(boolean movingLeft) {
+        this.movingLeft = movingLeft;
+    }
+
+    public boolean isMovingRight() {
+        return movingRight;
+    }
+
+    public void setMovingRight(boolean movingRight) {
+        this.movingRight = movingRight;
+    }
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
 
     public Player(int x, int y, String name, int shotStrength, int speed, int maxJump){
         this.name = name;
@@ -36,6 +81,9 @@ public class Player {
         }
         abilities(shotStrength,speed,maxJump);
         setPlayerWidthHeight();
+        this.movingLeft = false;
+        this.movingRight = false;
+        this.jumping = false;
     }
 
     public void setCenterHeadX(int centerHeadX) {
@@ -117,6 +165,13 @@ public class Player {
 
     }
 
+    public void movePlayerLeft(){
+        this.x -= speed;
+    }
+    public void movePlayerRight(){
+        this.x += speed;
+    }
+
     private void setHeadImage(int i){
         try {
             headImage[i] = ImageIO.read(new File("textures\\" +  name + "Head" + i + ".png"));
@@ -149,7 +204,7 @@ public class Player {
     private void setWidthHeightHead(){
         try {
             final BufferedImage bi = ImageIO.read(new File("textures\\" +  name + "Head" + 0 + ".png"));
-            this.radiusHead = bi.getWidth();
+            this.radiusHead = bi.getWidth()/2;
         } catch (IOException e) {
             e.printStackTrace();
         }
