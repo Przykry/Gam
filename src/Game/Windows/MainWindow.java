@@ -22,7 +22,6 @@ import java.util.List;
 public class MainWindow extends JPanel implements ActionListener, WindowInt {
     int width;
     int heigth;
-    public Ball ball1, ball2;
     JButton[] buttons = new JButton[]{
             new JButton(),
             new JButton(),
@@ -45,6 +44,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
     Timer timer = new Timer(8, this);
     Thread thread[];
     List<Ball> ballList = new ArrayList<>();
+
     public MainWindow(int width, int heigth){
         this.width = width;
         this.heigth = heigth;
