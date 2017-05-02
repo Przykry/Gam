@@ -14,7 +14,13 @@ public class BouncingBall implements Runnable {
     Ball ball;
     List<Ball> ballsList;
     JPanel observer;
+    boolean paused = false;
+    private volatile boolean threadSuspended = false;
 
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
 
     public BouncingBall(List<Ball> ballsList, int iterator, JPanel observer){
         ball = ballsList.get(iterator);
@@ -33,6 +39,13 @@ public class BouncingBall implements Runnable {
             observer.repaint();
             try {
                 Thread.sleep(6);
+                if(threadSuspended){
+                    synchronized(this){
+                        while (threadSuspended){
+                            wait();
+                        }
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

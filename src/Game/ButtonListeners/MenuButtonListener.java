@@ -1,5 +1,7 @@
 package Game.ButtonListeners;
 
+import Game.Windows.MainWindow;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,5 +18,6 @@ public class MenuButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e){
         changeWindow(2);
+        MainWindow.stopBouncingBalls();
     }
 }

@@ -2,6 +2,7 @@ package Game.ButtonListeners;
 
 import Game.Main;
 import Game.Windows.GameWindow;
+import Game.Windows.MainWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,5 +18,6 @@ public class BackButtonListener implements ActionListener{
             Main.setGameWindow(null);
         }
         Main.changeWindow(0);
+        MainWindow.startBouncingBalls();
     }
 }

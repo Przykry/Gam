@@ -1,5 +1,7 @@
 package Game.ButtonListeners;
 
+import Game.Windows.MainWindow;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,5 +19,6 @@ public class HallOfFameButtonListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         changeWindow(1);
+        MainWindow.stopBouncingBalls();
     }
 }
