@@ -38,7 +38,7 @@ public class HallOfFameWindow extends JPanel implements WindowInt {
         catch(IOException e){
             e.printStackTrace();
         }
-        for(int i = 0; i < 1; i++){
+        for(int i = 0; i < buttons.length; i++){
             createButton(buttons[i],80+520*i,500,filepaths[i],listeners[i]);
             this.add(buttons[i]);
         }

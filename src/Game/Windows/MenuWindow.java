@@ -7,6 +7,7 @@ import Game.Input;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
@@ -38,9 +39,9 @@ public class MenuWindow extends JPanel implements WindowInt {
             this.backgroundImage = getBackgroundImage("mainBackground");
         }
         catch (IOException e){
-            e.printStackTrace();
+           this.backgroundImage = Toolkit.getDefaultToolkit().createImage("background.jpg");
         }
-        for(int i = 0; i < 2; i++){
+        for(int i = 0; i < buttons.length; i++){
             createButton(buttons[i],80+520*i,500,filepaths[i],listeners[i]);
             this.add(buttons[i]);
         }

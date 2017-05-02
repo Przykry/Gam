@@ -14,42 +14,25 @@ import java.util.ArrayList;
 public class Main {
     private static JFrame frame = new JFrame();
     private static Container contentPane;
-
     private static ArrayList<JPanel> windows;
-
     private static GameWindow gameWindow = null;
-
-    public static JPanel getPanel(int i){
-        return windows.get(i);
-    }
-
-    public static GameWindow getGameWindow() {
-        return gameWindow;
-    }
 
     public static void setGameWindow(GameWindow gameWindow) {
         Main.gameWindow = gameWindow;
     }
+    public static GameWindow getGameWindow() {
+        return gameWindow;
+    }
 
     public static void changeWindow(int n){
-        for(KeyListener keyListener : frame.getKeyListeners()) frame.removeKeyListener(keyListener);
+        for(KeyListener kL : frame.getKeyListeners()) frame.removeKeyListener(kL);
         contentPane = frame.getContentPane();
         contentPane.removeAll();
         contentPane.add(windows.get(n));
+        if(n == 4)  frame.addKeyListener(new PlayerMoveListener(gameWindow.getPlayer(1), gameWindow.getPlayer(2)));
         frame.validate();
         frame.repaint();
         frame.setFocusable(true);
-        frame.setVisible(true);
-    }
-
-    public static void changeWindowToGame(){
-        for(KeyListener keyListener : frame.getKeyListeners()) frame.removeKeyListener(keyListener);
-        contentPane = frame.getContentPane();
-        contentPane.removeAll();
-        contentPane.add(gameWindow);
-        frame.addKeyListener(new PlayerMoveListener(gameWindow.getPlayer(1),gameWindow.getPlayer(2)));
-        frame.validate();
-        frame.repaint();
         frame.setVisible(true);
     }
 
@@ -62,7 +45,7 @@ public class Main {
         windows.add(new HallOfFameWindow(860,640));
         windows.add(new MenuWindow(860,640));
         windows.add(new ChoosePlayerWindow(860,640));
-        //windows.add(new GameWindow(860,640));
+        windows.add(new GameWindow(860,640));
         frame.setBounds((int)width/5,(int)(height/11),860,640);
         frame.setTitle("Game");
         frame.setResizable(false);

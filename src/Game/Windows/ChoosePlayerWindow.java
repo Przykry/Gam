@@ -29,8 +29,8 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
             new Player(50,50,"Arbuz",2,0,0)
     };
 
-    private Player player1;
-    private Player player2;
+    private static Player player1;
+    private static Player player2;
 
     JButton [] buttons = new JButton[]{
             new JButton(),
@@ -48,7 +48,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
     };
     ActionListener [] listeners = new ActionListener[]{
             new BackButtonListener(),
-            new AcceptButtonListener(this),
+            new AcceptButtonListener(),
             new LeftSwipeButtonListener(this,1),
             new RightSwipeButtonListener(this,1),
             new LeftSwipeButtonListener(this,2),
@@ -77,7 +77,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         this.secondPlayerChoose = secondPlayerChoose;
     }
 
-    public Player getPlayer1() {
+    public static Player getPlayer1() {
         return player1;
     }
 
@@ -85,7 +85,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         this.player1 = player1;
     }
 
-    public Player getPlayer2() {
+    public static Player getPlayer2() {
         return player2;
     }
 
@@ -100,6 +100,8 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
     public void setResizedTorso(Player play, int i, int img) {
         this.resizedTorso[i] = resizePlayerTorso(play,img);
     }
+
+
 
     public ChoosePlayerWindow(int width, int heigth){
         this.width = width;

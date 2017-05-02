@@ -19,5 +19,6 @@ public class MenuButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e){
         changeWindow(2);
         MainWindow.stopBouncingBalls();
+
     }
 }

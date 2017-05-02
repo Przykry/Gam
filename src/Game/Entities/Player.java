@@ -1,5 +1,7 @@
 package Game.Entities;
 
+import Game.Main;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -26,6 +28,9 @@ public class Player {
     private Image torsoImage[] = new Image[4];
     private int jumpKey;
     private int leftKey;
+    private final static int TERMINAL_VELOCITY = 15;
+    private final static int GRAVITY = 1;
+    private int fallingVelocity = GRAVITY;
 
     public int getJumpKey() {
         return jumpKey;
@@ -71,15 +76,15 @@ public class Player {
         this.jumping = jumping;
     }
 
-    public Player(int x, int y, String name, int shotStrength, int speed, int maxJump){
+    public Player(int x, int y, String name, int shotStrength, int speed, int maxJump) {
         this.name = name;
         this.x = x;
         this.y = y;
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             setHeadImage(i);
             setTorsoImage(i);
         }
-        abilities(shotStrength,speed,maxJump);
+        abilities(shotStrength, speed, maxJump);
         setPlayerWidthHeight();
         this.movingLeft = false;
         this.movingRight = false;
@@ -130,7 +135,9 @@ public class Player {
         return shotStrength;
     }
 
-    public Image getHeadImage(int i) { return headImage[i];}
+    public Image getHeadImage(int i) {
+        return headImage[i];
+    }
 
     public Image getTorsoImage(int i) {
         return torsoImage[i];
@@ -152,12 +159,12 @@ public class Player {
         this.y = y;
     }
 
-    public void setKeys(int playerNumber){
-        if(playerNumber == 1) getKeys(VK_W,VK_A,VK_D, VK_ALT);
-        else if(playerNumber == 2) getKeys(VK_UP,VK_LEFT,VK_RIGHT,VK_0);
+    public void setKeys(int playerNumber) {
+        if (playerNumber == 1) getKeys(VK_W, VK_A, VK_D, VK_ALT);
+        else if (playerNumber == 2) getKeys(VK_UP, VK_LEFT, VK_RIGHT, VK_0);
     }
 
-    private void getKeys(int jumpKey, int leftKey, int rightKey, int shotKey){
+    private void getKeys(int jumpKey, int leftKey, int rightKey, int shotKey) {
         this.jumpKey = jumpKey;
         this.leftKey = leftKey;
         this.rightKey = rightKey;
@@ -165,34 +172,34 @@ public class Player {
 
     }
 
-    public void movePlayerLeft(){
+    public void movePlayerLeft() {
         this.x -= speed;
     }
-    public void movePlayerRight(){
+
+    public void movePlayerRight() {
         this.x += speed;
     }
 
-    private void setHeadImage(int i){
+    private void setHeadImage(int i) {
         try {
-            headImage[i] = ImageIO.read(new File("textures\\" +  name + "Head" + i + ".png"));
-        }
-        catch (IOException e) {
+            headImage[i] = ImageIO.read(new File("textures\\" + name + "Head" + i + ".png"));
+        } catch (IOException e) {
             System.out.println("Could not read the picture");
         }
     }
 
-    private void setTorsoImage(int i){
+    private void setTorsoImage(int i) {
         try {
-            torsoImage[i] = ImageIO.read(new File("textures\\" +  name + "Torso" + i + ".png"));
-        }
-        catch (IOException e) {
+            torsoImage[i] = ImageIO.read(new File("textures\\" + name + "Torso" + i + ".png"));
+        } catch (IOException e) {
             System.out.println("Could not read the picture");
         }
     }
-    private void setWidthHeightTorso(){
+
+    private void setWidthHeightTorso() {
         final BufferedImage bi;
         try {
-            bi = ImageIO.read(new File("textures\\" +  name + "Torso" + 0 + ".png"));
+            bi = ImageIO.read(new File("textures\\" + name + "Torso" + 0 + ".png"));
             this.widthTorso = bi.getWidth();
             this.heigthTorso = bi.getHeight();
         } catch (IOException e) {
@@ -201,38 +208,48 @@ public class Player {
     }
 
 
-    private void setWidthHeightHead(){
+    private void setWidthHeightHead() {
         try {
-            final BufferedImage bi = ImageIO.read(new File("textures\\" +  name + "Head" + 0 + ".png"));
-            this.radiusHead = bi.getWidth()/2;
+            final BufferedImage bi = ImageIO.read(new File("textures\\" + name + "Head" + 0 + ".png"));
+            this.radiusHead = bi.getWidth() / 2;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void setPlayerWidthHeight(){
+    private void setPlayerWidthHeight() {
         setWidthHeightHead();
         setWidthHeightTorso();
     }
 
 
-    private void abilities(int shotStrength, int speed, int maxJump){
-            this.speed = speed;
-            this.maxJump = maxJump;
-            this.shotStrength = shotStrength;
+    private void abilities(int shotStrength, int speed, int maxJump) {
+        this.speed = speed;
+        this.maxJump = maxJump;
+        this.shotStrength = shotStrength;
     }
 
-    public void movePlayerX(int directory){
-        if(directory == 1) {
-            x = x + speed;
+    public void jumping() {
+        if(jumping) {
+            if (Main.getGameWindow().getHeight() - 15 - getHeigthTorso() - (2 * getRadiusHead()) - maxJump < y) y-=TERMINAL_VELOCITY + fallingVelocity;
+            else setJumping(false);
         }
-        else this.x -= speed;
     }
 
-
-    public void movePlayerY(int directory){
-        if(directory == 0) this.y += maxJump;
-        else this.y -= maxJump;
+    public int getGround(){
+        return Main.getGameWindow().getHeight() - 15 - getHeigthTorso() - (2 * getRadiusHead());
     }
+
+    public void falling() {
+        if (getGround() > y) {
+            fallingVelocity = fallingVelocity + GRAVITY;
+            if (fallingVelocity > TERMINAL_VELOCITY) {
+                fallingVelocity = TERMINAL_VELOCITY;
+            }
+            this.y = this.y + 2;
+        }
+        else fallingVelocity = GRAVITY;
+    }
+
 
 }

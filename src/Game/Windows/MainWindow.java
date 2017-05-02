@@ -56,8 +56,8 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
         catch(IOException e){
             e.printStackTrace();
         }
-        addBouncingBalls(10);
-        for (int i = 0; i < 4; i++) {
+        addBouncingBalls(new Random().nextInt(20));
+        for (int i = 0; i < buttons.length; i++) {
             createButton(buttons[i], width - 300, i * 60 + i * 40 + 60, filePaths[i], listeners[i]);
             this.add(buttons[i]);
         }
