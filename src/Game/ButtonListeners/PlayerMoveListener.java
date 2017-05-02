@@ -2,14 +2,12 @@ package Game.ButtonListeners;
 
 import Game.Entities.Player;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 /**
  * Created by Daniel on 02.05.2017.
  */
-public class PlayerMoveListener extends KeyAdapter implements KeyListener{
+public class PlayerMoveListener implements KeyListener, MouseListener{
     Player player1, player2;
 
     public PlayerMoveListener(Player player1, Player player2){
@@ -25,8 +23,8 @@ public class PlayerMoveListener extends KeyAdapter implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == player2.getLeftKey()){
-            System.out.println("pressed");
             player2.setMovingLeft(true);
+            System.out.println();
         }
         else if(e.getKeyCode() == player2.getRightKey()){
             player2.setMovingRight(true);
@@ -43,6 +41,7 @@ public class PlayerMoveListener extends KeyAdapter implements KeyListener{
         else if(e.getKeyCode() == player1.getJumpKey()){
             player1.setJumping(true);
         }
+        System.out.println(e.getKeyCode());
     }
 
     @Override
@@ -65,5 +64,29 @@ public class PlayerMoveListener extends KeyAdapter implements KeyListener{
         else if(e.getKeyCode() == KeyEvent.VK_W){
             player1.setJumping(false);
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

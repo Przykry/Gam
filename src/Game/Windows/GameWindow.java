@@ -5,6 +5,7 @@ import Game.ButtonListeners.PlayerMoveListener;
 import Game.Entities.Ball;
 import Game.Entities.Goal;
 import Game.Entities.Player;
+import Game.Input;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,13 +30,11 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         return timer;
     }
 
-    public void setPlayer1(Player player1) {
-        this.player1 = player1;
+    public Player getPlayer(int player) {
+       if(player == 1) return player1;
+       else return player2;
     }
 
-    public void setPlayer2(Player player2) {
-        this.player2 = player2;
-}
 
     public GameWindow(int width, int heigth, ChoosePlayerWindow window){
         this.width = width;
@@ -50,7 +49,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
         backButton = new JButton();
         createButton(backButton,50,25,"textures\\backButton.png",new BackButtonListener());
-        this.setLayout(null);
+
         this.add(backButton);
         leftGoal = new Goal(1);
         rightGoal = new Goal(2);
@@ -65,9 +64,13 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         player2.setCenterHeadY(player2.getY() + player2.getRadiusHead());
         player1.setKeys(1);
         player2.setKeys(2);
-        g = 20;
+        g = 10;
+
+
+        this.addKeyListener(new PlayerMoveListener(player1,player2));
         this.setFocusable(true);
-        this.addKeyListener(new PlayerMoveListener(player1, player2));
+        this.setLayout(null);
+
         timer = new Timer(5,this);
         timer.start();
     }
@@ -169,9 +172,9 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         if(ball.getCenterY() + ball.getRadius()>=heigth-17){
             ball.decreaseSpeedX(10);
         }
-        if(player1.isMovingLeft()) player1.movePlayerLeft();
+        if(player1.isMovingLeft())  player1.movePlayerLeft();
         if(player1.isMovingRight()) player1.movePlayerRight();
-        if(player2.isMovingLeft()) player2.movePlayerLeft();
+        if(player2.isMovingLeft())  player2.movePlayerLeft();
         if(player2.isMovingRight()) player2.movePlayerRight();
         ballHittingBorder(ball);
         checkIfIntersects(ball,player1);

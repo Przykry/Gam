@@ -1,7 +1,11 @@
 package Game;
 
+import Game.Entities.Player;
+import Game.Windows.GameWindow;
 import Game.Windows.MainWindow;
+import Game.Windows.WindowInt;
 
+import javax.swing.*;
 import java.awt.event.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,10 +14,15 @@ import java.util.Set;
  * Created by Daniel on 24.04.2017.
  */
 public class Input extends KeyAdapter implements KeyListener,MouseListener {
-    MainWindow window;
+    JFrame window;
+    Player p1, p2;
 
-    public Input(MainWindow window){
+
+
+    public Input(JFrame window, Player p1, Player p2){
         this.window = window;
+        this.p1 = p1;
+        this.p2 = p2;
     }
 
     @Override
@@ -25,45 +34,38 @@ public class Input extends KeyAdapter implements KeyListener,MouseListener {
 
     @Override
     public synchronized void keyPressed(KeyEvent e) {
-       /* pressed.add(e.getKeyCode());
-        if (pressed.size() > 1) {
+       pressed.add(e.getKeyCode());
+      /*  if (pressed.size() > 1) {
             if(pressed.contains(KeyEvent.VK_LEFT) && pressed.contains(KeyEvent.VK_UP)){
-                window.getP1().setPlayerPositionX(0);
-                window.getP1().setPlayerPositionY(1);
+                window.getPlayer(1).setMovingLeft(true);
+                p1.setJumping(true);
             }
-            else if(pressed.contains(KeyEvent.VK_LEFT) && pressed.contains(KeyEvent.VK_DOWN)){
-                window.getP1().setPlayerPositionX(0);
-                window.getP1().setPlayerPositionY(0);
-            }
+
             else if(pressed.contains(KeyEvent.VK_RIGHT) && pressed.contains(KeyEvent.VK_UP)){
-                window.getP1().setPlayerPositionX(1);
-                window.getP1().setPlayerPositionY(1);
-            }
-            else if(pressed.contains(KeyEvent.VK_RIGHT) && pressed.contains(KeyEvent.VK_DOWN)){
-                window.getP1().setPlayerPositionX(1);
-                window.getP1().setPlayerPositionY(0);
+                p1.setMovingRight(true);
+                p1.setJumping(true);
             }
         }
         else{
             if (pressed.contains(KeyEvent.VK_RIGHT)) {
-                window.getP1().setPlayerPositionX(1);
+                window.getPlayer(1).setMovingLeft(true);
             }
             if (pressed.contains(KeyEvent.VK_LEFT)) {
-                window.getP1().setPlayerPositionX(0);
+                window.getPlayer(1).setMovingLeft(true);
             }
             if (pressed.contains(KeyEvent.VK_UP)) {
-                window.getP1().setPlayerPositionY(1);
+                window.getPlayer(1).setMovingLeft(true);
             }
 
-            if (pressed.contains(KeyEvent.VK_DOWN)){
-                window.getP1().setPlayerPositionY(0);
-            }
-        }
-        window.repaint();*/
+        }*/
+        System.out.println(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT) p1.setMovingRight(false);
+        if(e.getKeyCode() == KeyEvent.VK_LEFT) p1.setMovingLeft(false);
+        if(e.getKeyCode() == KeyEvent.VK_UP) p1.setJumping(false);
     }
 
     @Override

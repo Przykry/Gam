@@ -43,7 +43,6 @@ public class HallOfFameWindow extends JPanel implements WindowInt {
             this.add(buttons[i]);
         }
 
-        this.setFocusable(true);
         this.setLayout(null);
     }
 

@@ -1,9 +1,11 @@
 package Game;
 
+import Game.ButtonListeners.PlayerMoveListener;
 import Game.Windows.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 /**
@@ -30,18 +32,22 @@ public class Main {
     }
 
     public static void changeWindow(int n){
+        for(KeyListener keyListener : frame.getKeyListeners()) frame.removeKeyListener(keyListener);
         contentPane = frame.getContentPane();
         contentPane.removeAll();
         contentPane.add(windows.get(n));
         frame.validate();
         frame.repaint();
+        frame.setFocusable(true);
         frame.setVisible(true);
     }
 
     public static void changeWindowToGame(){
+        for(KeyListener keyListener : frame.getKeyListeners()) frame.removeKeyListener(keyListener);
         contentPane = frame.getContentPane();
         contentPane.removeAll();
         contentPane.add(gameWindow);
+        frame.addKeyListener(new PlayerMoveListener(gameWindow.getPlayer(1),gameWindow.getPlayer(2)));
         frame.validate();
         frame.repaint();
         frame.setVisible(true);
@@ -61,6 +67,7 @@ public class Main {
         frame.setTitle("Game");
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setFocusable(true);
         //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setUndecorated(true);
         frame.add(windows.get(0));

@@ -13,32 +13,22 @@ import java.util.Random;
 public class BouncingBall implements Runnable {
     Ball ball;
     List<Ball> ballsList;
-    JPanel observer;
-    boolean paused = false;
     private volatile boolean threadSuspended = false;
 
-
-    public void setPaused(boolean paused) {
-        this.paused = paused;
-    }
-
-    public BouncingBall(List<Ball> ballsList, int iterator, JPanel observer){
+    public BouncingBall(List<Ball> ballsList, int iterator){
         ball = ballsList.get(iterator);
         this.ballsList = new ArrayList<>(ballsList);
-        this.observer = observer;
     }
 
     @Override
     public void run() {
         while (true) {
             ball.directoryOfBall();
-            for(Ball cheack : ballsList){
-                if(!ball.equals(cheack)) ball.checkIfIntersects(cheack);
+            for(Ball cheack : ballsList) {
+                if (!ball.equals(cheack)) ball.checkIfIntersects(cheack);
             }
-            System.out.println(ball.getX());
-            observer.repaint();
             try {
-                Thread.sleep(6);
+                Thread.sleep(8);
                 if(threadSuspended){
                     synchronized(this){
                         while (threadSuspended){

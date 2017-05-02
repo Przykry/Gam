@@ -6,12 +6,15 @@ import Game.ButtonListeners.ExitGameButtonListener;
 import Game.ButtonListeners.HallOfFameButtonListener;
 import Game.ButtonListeners.MenuButtonListener;
 import Game.ButtonListeners.StartGameButtonListener;
+import Game.Input;
 
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
@@ -41,10 +44,9 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
             new ExitGameButtonListener()
     };
     Image mainBackground = null;
-    Timer timer = new Timer(8, this);
     static Thread thread[];
     List<Ball> ballList = new ArrayList<>();
-
+    Timer timer;
     public MainWindow(int width, int heigth){
         this.width = width;
         this.heigth = heigth;
@@ -59,6 +61,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
             createButton(buttons[i], width - 300, i * 60 + i * 40 + 60, filePaths[i], listeners[i]);
             this.add(buttons[i]);
         }
+        timer = new Timer(8,this);
         this.setFocusable(true);
         this.setLayout(null);
         timer.start();
@@ -79,7 +82,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
 
         List<Runnable> bouncingBall = new ArrayList<>();
         for(int i=0;i<numberOfBalls;i++) {
-            bouncingBall.add(new BouncingBall(ballList,i,this));
+            bouncingBall.add(new BouncingBall(ballList,i));
             thread[i] = new Thread(bouncingBall.get(i));
             thread[i].start();
         }
@@ -91,7 +94,6 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
         }
     }
 
-
     public static void startBouncingBalls(){
         for(Thread t : thread){
             t.resume();
@@ -99,7 +101,6 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
     }
 
     public void paintComponent(Graphics graphics) {
-        //background
         drawBackground(graphics, mainBackground, this);
         drawBorders(graphics,width,heigth);
         for(Ball ball : ballList) ball.drawBall(graphics);
@@ -108,5 +109,6 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        repaint();
     }
 }
