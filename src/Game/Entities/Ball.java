@@ -110,10 +110,10 @@ public class Ball {
     }
 
     public void move(){
-        this.x += speedX/100;
-        this.y += speedY/100;
-        this.centerX += speedX/100;
-        this.centerY += speedY/100;
+        this.x += speedX/10;
+        this.y += speedY/10;
+        this.centerX += speedX/10;
+        this.centerY += speedY/10;
     }
 
     public void reverseSpeedX(){

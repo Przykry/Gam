@@ -29,6 +29,7 @@ public class BouncingBall implements Runnable {
             for(Ball cheack : ballsList){
                 if(!ball.equals(cheack)) ball.checkIfIntersects(cheack);
             }
+            System.out.println(ball.getX());
             observer.repaint();
             try {
                 Thread.sleep(6);

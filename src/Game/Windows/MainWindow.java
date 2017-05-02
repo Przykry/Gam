@@ -95,6 +95,5 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.repaint();
     }
 }
