@@ -8,12 +8,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static Game.Windows.GameWindow.getGround;
 import static java.awt.event.KeyEvent.*;
+import static java.lang.Thread.sleep;
 
 /**
  * Created by Przykry on 26.04.2017.
  */
-public class Player {
+public class Player implements Runnable {
     String name;
     private int x;
     private int y;
@@ -28,8 +30,8 @@ public class Player {
     private Image torsoImage[] = new Image[4];
     private int jumpKey;
     private int leftKey;
-    private final static int TERMINAL_VELOCITY = 15;
-    private final static int GRAVITY = 1;
+    private final static int TERMINAL_VELOCITY = 20;
+    private final static int GRAVITY = 15;
     private int fallingVelocity = GRAVITY;
 
     public int getJumpKey() {
@@ -231,13 +233,9 @@ public class Player {
 
     public void jumping() {
         if(jumping) {
-            if (Main.getGameWindow().getHeight() - 15 - getHeigthTorso() - (2 * getRadiusHead()) - maxJump < y) y-=TERMINAL_VELOCITY + fallingVelocity;
+            if (getGround() - maxJump < y) y-=TERMINAL_VELOCITY;
             else setJumping(false);
         }
-    }
-
-    public int getGround(){
-        return Main.getGameWindow().getHeight() - 15 - getHeigthTorso() - (2 * getRadiusHead());
     }
 
     public void falling() {
@@ -246,10 +244,24 @@ public class Player {
             if (fallingVelocity > TERMINAL_VELOCITY) {
                 fallingVelocity = TERMINAL_VELOCITY;
             }
-            this.y = this.y + 2;
+            this.y = this.y + fallingVelocity - 10;
         }
         else fallingVelocity = GRAVITY;
     }
 
 
+    @Override
+    public void run() {
+        while (true){
+            falling();
+            jumping();
+            if(isMovingLeft())  movePlayerLeft();
+            if(isMovingRight()) movePlayerRight();
+            try{
+                sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

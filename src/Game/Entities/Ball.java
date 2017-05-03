@@ -1,15 +1,20 @@
 package Game.Entities;
 
+import Game.Windows.GameWindow;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+import static Game.Windows.GameWindow.getGround;
+import static java.lang.Thread.sleep;
+
 /**
  * Created by Daniel on 28.04.2017.
  */
-public class Ball {
+public class Ball implements Runnable {
     private int x, y;
     private int width, heigth;
     private int speedX, speedY;
@@ -163,6 +168,19 @@ public class Ball {
             setSpeedY(this.speedY + y);
         }
     }
+    final static int GRAVITY = 15;
+    final static int TERMINAL_VELOCITY = 105;
+    int fallingVelocity = 15;
+    public void falling() {
+        if (getGround() > y) {
+            fallingVelocity = fallingVelocity + GRAVITY;
+            if (fallingVelocity > TERMINAL_VELOCITY) {
+                fallingVelocity = TERMINAL_VELOCITY;
+            }
+            decreaseSpeedY(fallingVelocity);
+        }
+        else fallingVelocity = GRAVITY;
+    }
 
 
     public void directoryOfBall() {
@@ -199,30 +217,73 @@ public class Ball {
         double toReturn = Math.sqrt(aplusb);
         return toReturn;
     }
-
-    public void calculateDirection(Ball ball1) {
-        double xDir1 = (ball1.getCenterX() - this.getCenterX()) / calculatePythagoras(ball1);
-        double yDir1 = (this.getCenterY() - ball1.getCenterY()) / calculatePythagoras(ball1);
-
-        double xDir2 = (this.getCenterX() - ball1.getCenterX()) / calculatePythagoras(ball1);
-        double yDir2 = (ball1.getCenterY() - this.getCenterY()) / calculatePythagoras(ball1);
-
-        int dirX1 = (int) Math.round(xDir1 * 40);
-        int dirY1 = (int) Math.round(yDir1 * 40);
-
-        int dirX2 = (int) Math.round(xDir2 * 40);
-        int dirY2 = (int) Math.round(yDir2 * 40);
-        ball1.setSpeedX(dirX1);
-        ball1.setSpeedY(-dirY1);
-        this.setSpeedX(dirX2);
-        this.setSpeedY(-dirY2);
+    public double calculatePythagoras(Ball ball, Player player) {
+        double aplusb = Math.pow(ball.getCenterX() - player.getCenterHeadX(), 2) + Math.pow(player.getCenterHeadY() - ball.getCenterY(), 2);
+        double toReturn = Math.sqrt(aplusb);
+        return toReturn;
     }
 
-    public void checkIfIntersects(Ball ball1) {
-        if (calculatePythagoras(ball1) <= ball1.getRadius() + this.getRadius()) {
-            calculateDirection(ball1);
+
+    public void calculateDirection(Object obj) {
+       if(obj instanceof Ball) {
+           Ball ball = (Ball)obj;
+           double xDir1 = (ball.getCenterX() - this.getCenterX()) / calculatePythagoras(ball);
+           double yDir1 = (this.getCenterY() - ball.getCenterY()) / calculatePythagoras(ball);
+
+           double xDir2 = (this.getCenterX() - ball.getCenterX()) / calculatePythagoras(ball);
+           double yDir2 = (ball.getCenterY() - this.getCenterY()) / calculatePythagoras(ball);
+
+           int dirX1 = (int) Math.round(xDir1 * 40);
+           int dirY1 = (int) Math.round(yDir1 * 40);
+
+           int dirX2 = (int) Math.round(xDir2 * 40);
+           int dirY2 = (int) Math.round(yDir2 * 40);
+           ball.setSpeedX(dirX1);
+           ball.setSpeedY(-dirY1);
+           this.setSpeedX(dirX2);
+           this.setSpeedY(-dirY2);
+       }
+       else if(obj instanceof Player){
+           Player player = (Player) obj;
+           double xDir1 = (this.getCenterX() - player.getCenterHeadX()) / calculatePythagoras(this,player);
+           double yDir1 = (player.getCenterHeadY() - this.getCenterY()) / calculatePythagoras(this, player);
+
+           int dirX1 = (int) Math.round(xDir1 * 40);
+           int dirY1 = (int) Math.round(yDir1 * 40);
+
+           this.setSpeedX(dirX1);
+           this.setSpeedY(-dirY1);
+       }
+    }
+
+    public void checkIfIntersects(Object obj) {
+        if(obj instanceof Ball) {
+            Ball ball1 = (Ball)obj;
+            if (calculatePythagoras(ball1) <= ball1.getRadius() + this.getRadius()) {
+                calculateDirection(ball1);
+            }
+        }
+        else if(obj instanceof Player){
+            Player player = (Player)obj;
+            if (calculatePythagoras(this, player) <= this.getRadius() + player.getRadiusHead()) {
+                calculateDirection(player);
+            }
         }
     }
 
+    @Override
+    public void run() {
+        while(true){
+            falling();
+            directoryOfBall();
+            checkIfIntersects(GameWindow.getPlayer(1));
+            checkIfIntersects(GameWindow.getPlayer(2));
+            try{
+                sleep(35);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
 

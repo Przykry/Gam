@@ -1,20 +1,17 @@
 package Game.Windows;
 
-import Game.BouncingBall;
+import Game.Entities.BouncingBall;
 import Game.Entities.Ball;
 import Game.ButtonListeners.ExitGameButtonListener;
 import Game.ButtonListeners.HallOfFameButtonListener;
 import Game.ButtonListeners.MenuButtonListener;
 import Game.ButtonListeners.StartGameButtonListener;
-import Game.Input;
 
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;

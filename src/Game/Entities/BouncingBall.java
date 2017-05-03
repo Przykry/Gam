@@ -1,4 +1,4 @@
-package Game;
+package Game.Entities;
 
 import Game.Entities.Ball;
 

@@ -3,6 +3,9 @@ package Game.ButtonListeners;
 import Game.Entities.Player;
 
 import java.awt.event.*;
+import java.security.Key;
+
+import static Game.Windows.GameWindow.getGround;
 
 /**
  * Created by Daniel on 02.05.2017.
@@ -26,6 +29,12 @@ public class PlayerMoveListener implements KeyListener{
         playerMove(e,player1);
     }
 
+    @Override
+    public void keyReleased(KeyEvent e) {
+        playerStop(e,player1);
+        playerStop(e,player2);
+    }
+
     private void playerMove(KeyEvent e,Player player){
         if(e.getKeyCode() == player.getLeftKey()){
             player.setMovingLeft(true);
@@ -34,23 +43,17 @@ public class PlayerMoveListener implements KeyListener{
             player.setMovingRight(true);
         }
         else if(e.getKeyCode() == player.getJumpKey()){
-            if(player.getY() == player.getGround()) player.setJumping(true);
+            if(player.getY() == getGround()) player.setJumping(true);
         }
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_LEFT){
-            player2.setMovingLeft(false);
+    private void playerStop(KeyEvent e,Player player){
+        System.out.println(player.getLeftKey());
+        if(e.getKeyCode() == player.getLeftKey()){
+            player.setMovingLeft(false);
         }
-        else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            player2.setMovingRight(false);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_A){
-            player1.setMovingLeft(false);
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_D){
-            player1.setMovingRight(false);
+        else if(e.getKeyCode() == player.getRightKey()){
+            player.setMovingRight(false);
         }
     }
 }
