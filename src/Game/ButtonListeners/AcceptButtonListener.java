@@ -20,5 +20,6 @@ public class AcceptButtonListener implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         changeWindow(4);
         GameWindow.getTimer().start();
+        GameWindow.runEntities();
     }
 }

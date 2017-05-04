@@ -33,6 +33,7 @@ public class Player implements Runnable {
     private final static int TERMINAL_VELOCITY = 20;
     private final static int GRAVITY = 15;
     private int fallingVelocity = GRAVITY;
+    private volatile boolean threadSuspended;
 
     public int getJumpKey() {
         return jumpKey;
@@ -259,6 +260,13 @@ public class Player implements Runnable {
             if(isMovingRight()) movePlayerRight();
             try{
                 sleep(15);
+                if(threadSuspended){
+                    synchronized(this){
+                        while (threadSuspended){
+                            wait();
+                        }
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

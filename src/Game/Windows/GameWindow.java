@@ -29,12 +29,12 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     private int width, heigth;
     private Image backgroundImage;
     private Goal leftGoal, rightGoal;
-    private Ball ball;
+    private static Ball ball;
     private JButton backButton;
     private static Player player1, player2;
     private static Timer timer;
     final int g;
-    Thread entities[];
+    static Thread[] entities;
     public static Timer getTimer() {
         return timer;
     }
@@ -65,9 +65,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         player1.setKeys(1);
         player2.setKeys(2);
         g = 17;
-
-        runEntities();
-
         this.addKeyListener(new PlayerMoveListener(player1,player2));
         this.setFocusable(true);
         this.setLayout(null);
@@ -86,7 +83,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         player2.setCenterHeadY(player2.getY() + player2.getRadiusHead());
     }
 
-    private void runEntities(){
+    public static void runEntities(){
         List<Runnable> entity = new ArrayList<>();
         entity.add(player1);
         entity.add(player2);
@@ -97,6 +94,13 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
             entities[i].start();
         }
     }
+
+    public static void stopEntities(){
+        for(Thread t : entities){
+            t.suspend();
+        }
+    }
+
 
     private void drawGoalsAndBall(Graphics graphics){
         ball.drawBall(graphics);

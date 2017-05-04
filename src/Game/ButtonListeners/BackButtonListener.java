@@ -20,5 +20,6 @@ public class BackButtonListener implements ActionListener{
         }
         Main.changeWindow(0);
         MainWindow.startBouncingBalls();
+        GameWindow.stopEntities();
     }
 }
