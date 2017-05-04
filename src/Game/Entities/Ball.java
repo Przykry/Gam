@@ -22,7 +22,7 @@ public class Ball implements Runnable {
     private int radius;
     private Image ballImage;
     JPanel observer;
-
+    private volatile boolean threadSuspended;
     public Ball(int x, int y, int speedX, int speedY, JPanel observer){
         this.x = x;
         this.y = y;
@@ -177,7 +177,7 @@ public class Ball implements Runnable {
             if (fallingVelocity > TERMINAL_VELOCITY) {
                 fallingVelocity = TERMINAL_VELOCITY;
             }
-            decreaseSpeedY(fallingVelocity);
+            if(speedY < 0) decreaseSpeedY(fallingVelocity);
         }
         else fallingVelocity = GRAVITY;
     }
@@ -278,8 +278,17 @@ public class Ball implements Runnable {
             directoryOfBall();
             checkIfIntersects(GameWindow.getPlayer(1));
             checkIfIntersects(GameWindow.getPlayer(2));
+            System.out.println(x);
+            System.out.println(y);
             try{
-                sleep(35);
+                sleep(5);
+                if(threadSuspended){
+                    synchronized(this){
+                        while (threadSuspended){
+                            wait();
+                        }
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
