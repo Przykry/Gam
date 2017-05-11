@@ -1,15 +1,17 @@
 package Game.Entities;
 
-import Game.Main;
+import Game.Windows.GameWindow;
+import Game.Windows.MenuWindow;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
 import static Game.Windows.GameWindow.getGround;
-import static java.awt.event.KeyEvent.*;
 import static java.lang.Thread.sleep;
 
 /**
@@ -26,7 +28,7 @@ public class Player implements Runnable {
     private int speed;
     private int maxJump;
     private int shotStrength;
-    private Image headImage[] = new Image[4];
+    private Image headImage[] = new Image[2];
     private Image torsoImage[] = new Image[4];
     private int jumpKey;
     private int leftKey;
@@ -34,6 +36,26 @@ public class Player implements Runnable {
     private final static int GRAVITY = 15;
     private int fallingVelocity = GRAVITY;
     private volatile boolean threadSuspended;
+    private int playerTorsoImage;
+    private int playerHeadImage;
+
+    public int getPlayerTorsoImage() {
+        return playerTorsoImage;
+    }
+
+    public int getPlayerHeadImage() {
+        return playerHeadImage;
+    }
+
+
+
+    public void setPlayerTorsoImage(int p1) {
+        this.playerTorsoImage = p1;
+    }
+    public void setPlayerHeadImage(int p2) {
+        this.playerHeadImage = p2;
+    }
+
 
     public int getJumpKey() {
         return jumpKey;
@@ -84,7 +106,7 @@ public class Player implements Runnable {
         this.x = x;
         this.y = y;
         for (int i = 0; i < 4; i++) {
-            setHeadImage(i);
+            if(i<2) setHeadImage(i);
             setTorsoImage(i);
         }
         abilities(shotStrength, speed, maxJump);
@@ -163,24 +185,27 @@ public class Player implements Runnable {
     }
 
     public void setKeys(int playerNumber) {
-        if (playerNumber == 1) getKeys(VK_W, VK_A, VK_D, VK_ALT);
-        else if (playerNumber == 2) getKeys(VK_UP, VK_LEFT, VK_RIGHT, VK_0);
+        int keys[] = MenuWindow.getKeys();
+        if(playerNumber == 1) setKeys(keys[0],keys[1],keys[2],keys[3]);
+        else if(playerNumber == 2) setKeys(keys[4],keys[5],keys[6],keys[7]);
     }
 
-    private void getKeys(int jumpKey, int leftKey, int rightKey, int shotKey) {
+
+    private void setKeys(int jumpKey, int leftKey, int rightKey, int shotKey) {
         this.jumpKey = jumpKey;
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.shotKey = shotKey;
-
     }
 
     public void movePlayerLeft() {
         this.x -= speed;
+        this.centerHeadX -= speed;
     }
 
     public void movePlayerRight() {
         this.x += speed;
+        this.centerHeadX += speed;
     }
 
     private void setHeadImage(int i) {
@@ -240,7 +265,7 @@ public class Player implements Runnable {
     }
 
     public void falling() {
-        if (getGround() > y) {
+        if (isNoGround()) {
             fallingVelocity = fallingVelocity + GRAVITY;
             if (fallingVelocity > TERMINAL_VELOCITY) {
                 fallingVelocity = TERMINAL_VELOCITY;
@@ -250,6 +275,9 @@ public class Player implements Runnable {
         else fallingVelocity = GRAVITY;
     }
 
+    private boolean isNoGround(){
+        return getGround() > y;
+    }
 
     @Override
     public void run() {

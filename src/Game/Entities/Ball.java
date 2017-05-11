@@ -121,6 +121,7 @@ public class Ball implements Runnable {
         this.centerY += speedY/10;
     }
 
+
     public void reverseSpeedX(){
         this.speedX = -this.speedX;
     }
@@ -168,20 +169,23 @@ public class Ball implements Runnable {
             setSpeedY(this.speedY + y);
         }
     }
-    final static int GRAVITY = 15;
-    final static int TERMINAL_VELOCITY = 105;
-    int fallingVelocity = 15;
+
+    boolean directory = true;
+
+
+
+
     public void falling() {
-        if (getGround() > y) {
-            fallingVelocity = fallingVelocity + GRAVITY;
-            if (fallingVelocity > TERMINAL_VELOCITY) {
-                fallingVelocity = TERMINAL_VELOCITY;
-            }
-            if(speedY < 0) decreaseSpeedY(fallingVelocity);
+        if (!isNoGround()) {
+            speedY/=1.1;
         }
-        else fallingVelocity = GRAVITY;
+        if(speedX > 0) speedX -= 0.5;
     }
 
+
+    private boolean isNoGround(){
+        return getGround() > y;
+    }
 
     public void directoryOfBall() {
         ballHittingBorder(observer.getHeight(),observer.getWidth());
@@ -249,7 +253,7 @@ public class Ball implements Runnable {
            double yDir1 = (player.getCenterHeadY() - this.getCenterY()) / calculatePythagoras(this, player);
 
            int dirX1 = (int) Math.round(xDir1 * 40);
-           int dirY1 = (int) Math.round(yDir1 * 40);
+           int dirY1 = (int) Math.round(yDir1 * 20);
 
            this.setSpeedX(dirX1);
            this.setSpeedY(-dirY1);
@@ -278,8 +282,6 @@ public class Ball implements Runnable {
             directoryOfBall();
             checkIfIntersects(GameWindow.getPlayer(1));
             checkIfIntersects(GameWindow.getPlayer(2));
-            System.out.println(x);
-            System.out.println(y);
             try{
                 sleep(5);
                 if(threadSuspended){

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static Game.Main.getGameWindow;
+import static Game.Main.getWindow;
 
 /**
  * Created by Daniel on 26.04.2017.
@@ -18,8 +19,8 @@ public class BackButtonListener implements ActionListener{
         if(getGameWindow() != null) {
             GameWindow.getTimer().stop();
         }
+        if(getWindow() == 4) GameWindow.stopEntities();
         Main.changeWindow(0);
         MainWindow.startBouncingBalls();
-        GameWindow.stopEntities();
     }
 }

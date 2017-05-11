@@ -16,15 +16,17 @@ public class Main {
     private static Container contentPane;
     private static ArrayList<JPanel> windows;
     private static GameWindow gameWindow = null;
-
+    static int n = 0;
     public static void setGameWindow(GameWindow gameWindow) {
         Main.gameWindow = gameWindow;
     }
     public static GameWindow getGameWindow() {
         return gameWindow;
     }
+    public static int getWindow(){return n;}
 
     public static void changeWindow(int n){
+        Main.n = n;
         for(KeyListener kL : frame.getKeyListeners()) frame.removeKeyListener(kL);
         contentPane = frame.getContentPane();
         contentPane.removeAll();

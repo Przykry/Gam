@@ -120,7 +120,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         this.player2 = player2Models[secondPlayerChoose];
         player1.setX(60);
         player2.setX(80);
-        this.resizedHead[0] = resizePlayerHead(this.player1,2);
+        this.resizedHead[0] = resizePlayerHead(this.player1,1);
         this.resizedTorso[0] = resizePlayerTorso(this.player1,3);
         this.resizedHead[1] = resizePlayerHead(this.player2,0);
         this.resizedTorso[1] = resizePlayerTorso(this.player2,0);

@@ -33,7 +33,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     private JButton backButton;
     private static Player player1, player2;
     private static Timer timer;
-    final int g;
     static Thread[] entities;
     public static Timer getTimer() {
         return timer;
@@ -48,7 +47,11 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         this.width = width;
         this.heigth = heigth;
         this.player1 = getPlayer1();
+        player1.setPlayerHeadImage(1);
+        player1.setPlayerTorsoImage(2);
         this.player2 = getPlayer2();
+        player2.setPlayerTorsoImage(0);
+        player2.setPlayerHeadImage(0);
         try {
             backgroundImage = getBackgroundImage("mainBackground");
         }
@@ -60,11 +63,10 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         this.add(backButton);
         leftGoal = new Goal(1);
         rightGoal = new Goal(2);
-        ball = new Ball((width-30)/2, getGround() + 50,0,16,this);
+        ball = new Ball((width-30)/2, getGround() + 50,0,1000,this);
         setPlayerStanding();
         player1.setKeys(1);
         player2.setKeys(2);
-        g = 17;
         this.addKeyListener(new PlayerMoveListener(player1,player2));
         this.setFocusable(true);
         this.setLayout(null);
@@ -108,12 +110,16 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         graphics.drawImage(rightGoal.getGoalImage(),width-15- rightGoal.getWidth(),heigth-15- rightGoal.getHeigth(),this);
     }
 
-    private void drawPlayers(Graphics graphics){
-        graphics.drawImage(player1.getHeadImage(2),player1.getX(),player1.getY(),this);
-        graphics.drawImage(player1.getTorsoImage(3),player1.getX()+3,player1.getY()+2*player1.getRadiusHead(),this);
 
-        graphics.drawImage(player2.getHeadImage(0),player2.getX(),player2.getY(),this);
-        graphics.drawImage(player2.getTorsoImage(0),player2.getX()+3,player2.getY()+2*player2.getRadiusHead(),this);
+
+
+
+    private void drawPlayers(Graphics graphics){
+        graphics.drawImage(player1.getHeadImage(player1.getPlayerHeadImage()),player1.getX(),player1.getY(),this);
+        graphics.drawImage(player1.getTorsoImage(player1.getPlayerTorsoImage()),player1.getX()+3,player1.getY()+2*player1.getRadiusHead(),this);
+
+        graphics.drawImage(player2.getHeadImage(player2.getPlayerHeadImage()),player2.getX(),player2.getY(),this);
+        graphics.drawImage(player2.getTorsoImage(player2.getPlayerTorsoImage()),player2.getX()+3,player2.getY()+2*player2.getRadiusHead(),this);
     }
 
     public void paintComponent(Graphics graphics){
@@ -123,11 +129,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         drawPlayers(graphics);
     }
 
-    /*private int calculateMaxHigh(int vy){
-        int vykw = (int)Math.round(Math.pow(vy,2));
-
-        return vykw/(2*g);
-    }*/
 
     private void checkIfBodyIntersects(Ball ball, Player player2, Player player1){
         if(ball.getCenterX() + ball.getRadius() >= player2.getX()+28 && ball.getY() <= player2.getY() + player2.getRadiusHead()+player2.getHeigthTorso() && ball.getY() > player2.getY() + player2.getRadiusHead()){
@@ -146,21 +147,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        /*if(ball.getSpeedY() < 0){
-            ball.move();
-            ball.setSpeedY(ball.getSpeedY()-g);
-        }else if(ball.getSpeedY() > 0){
-            ball.move();
-            ball.setSpeedY(ball.getSpeedY()-g);
-        }
-        if(ball.getSpeedY() < 10 && ball.getSpeedY() > -10 && ball.getCenterY() + ball.getRadius() >= heigth - 17){
-            ball.move();
-            ball.setSpeedY(0);
-        }
-        if(ball.getCenterY() + ball.getRadius()>=heigth-17){
-            ball.decreaseSpeedX(10);
-        }*/
-        checkIfBodyIntersects(ball,player2, player1);
         this.repaint();
     }
 }

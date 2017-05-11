@@ -15,10 +15,23 @@ import java.awt.event.KeyListener;
 public class Engine extends Thread{
     Player player;
     Ball ball;
+    static int velocity;
+    static int mass;
+    static int timeStep;
+    static int time;
+    static int acceleration;
+
+
+
+
+
+
     public Engine(Player player, Ball ball) {
         this.player = player;
         this.ball = ball;
     }
+
+
 
 
     public double calculatePythagoras(Ball ball, Player player) {
