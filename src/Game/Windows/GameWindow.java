@@ -65,13 +65,17 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         rightGoal = new Goal(2);
         ball = new Ball((width-30)/2, getGround() + 50,0,1000,this);
         setPlayerStanding();
-        player1.setKeys(1);
-        player2.setKeys(2);
+
         this.addKeyListener(new PlayerMoveListener(player1,player2));
         this.setFocusable(true);
         this.setLayout(null);
         Main.setGameWindow(this);
         timer = new Timer(5,this);
+    }
+
+    public static void setPlayerKeys(){
+        player1.setKeys(1);
+        player2.setKeys(2);
     }
 
     private void setPlayerStanding(){

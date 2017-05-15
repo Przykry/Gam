@@ -1,15 +1,14 @@
 package Game.Windows;
 
-import Game.ButtonListeners.AcceptMenuButtonListener;
+import Game.ButtonListeners.ButtonListeners.Menu.AcceptMenuButtonListener;
 import Game.ButtonListeners.BackButtonListener;
-import Game.ButtonListeners.ButtonListeners.Menu.JumpKeyOne;
-import Game.Input;
+import Game.ButtonListeners.ButtonListeners.Menu.MenuActionListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,7 +17,7 @@ import java.util.Scanner;
 /**
  * Created by Przykry on 29.04.2017.
  */
-public class MenuWindow extends JPanel implements WindowInt {
+public class MenuWindow extends JPanel implements WindowInt, ActionListener {
     int width,heigth;
     Image backgroundImage;
     static int[] keys = new int[8];
@@ -57,21 +56,20 @@ public class MenuWindow extends JPanel implements WindowInt {
     public MenuWindow(int width, int heigth){
         this.width = width;
         this.heigth = heigth;
-        try {
-            this.backgroundImage = getBackgroundImage("mainBackground");
-        }
-        catch (IOException e){
-           this.backgroundImage = Toolkit.getDefaultToolkit().createImage("background.jpg");
-        }
         for(int i = 0; i < buttons.length; i++){
             createButton(buttons[i],80+520*i,500,filepaths[i],listeners[i]);
             this.add(buttons[i]);
         }
+
         try {
+            this.backgroundImage = getBackgroundImage("mainBackground");
             setKeys();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e){
+           this.backgroundImage = Toolkit.getDefaultToolkit().createImage("background.jpg");
         }
+
         keySwitchers();
         createPlayerLabel(keySwitchers[8],105,"Player 1");
         createPlayerLabel(keySwitchers[9],535,"Player 2");
@@ -81,8 +79,8 @@ public class MenuWindow extends JPanel implements WindowInt {
 
     private void keySwitchers(){
         for(int i=0;i<4;i++){
-            createButton(keySwitchers[i],135,200+50*i,filepaths[2],new JumpKeyOne());
-            createButton(keySwitchers[i+4],565,200+50*i,filepaths[2],null);
+            createButton(keySwitchers[i],135,200+50*i,filepaths[2], new MenuActionListener(this,i));
+            createButton(keySwitchers[i+4],565,200+50*i,filepaths[2],new MenuActionListener(this,i+4));
             setTextKeySwitcherForeground(keySwitchers[i]);
             setTextMovmentKey(keySwitchers[i],keys[i]);
             setTextKeySwitcherForeground(keySwitchers[i+4]);
@@ -90,6 +88,15 @@ public class MenuWindow extends JPanel implements WindowInt {
             this.add(keySwitchers[i]);
             this.add(keySwitchers[i+4]);
         }
+    }
+
+    public boolean switcherClicked(int i){
+        if(keySwitchers[i].getModel().isEnabled()) return true;
+        else return false;
+    }
+
+    public JButton getKeySwitcher(int i){
+        return keySwitchers[i];
     }
 
     private void createPlayerLabel(JButton player, int x, String text){
@@ -131,5 +138,10 @@ public class MenuWindow extends JPanel implements WindowInt {
     public void paintComponent(Graphics g){
      drawBackground(g,backgroundImage,this);
      drawBorders(g,width,heigth);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

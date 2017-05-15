@@ -1,6 +1,6 @@
 package Game.Windows;
 
-import Game.ButtonListeners.AcceptMenuButtonListener;
+import Game.ButtonListeners.ButtonListeners.Menu.AcceptMenuButtonListener;
 import Game.ButtonListeners.BackButtonListener;
 
 import javax.swing.*;
