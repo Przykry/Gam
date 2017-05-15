@@ -17,7 +17,7 @@ import java.io.IOException;
 public class ChoosePlayerWindow extends JPanel implements WindowInt {
     int width;
     int heigth;
-    static int firstPlayerChoose, secondPlayerChoose;
+    private static int firstPlayerChoose, secondPlayerChoose;
 
     public Player[] player1Models = new Player[]{
             new Player(50,50,"Messi",10,7,55),
@@ -32,7 +32,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
     private static Player player1;
     private static Player player2;
 
-    JButton [] buttons = new JButton[]{
+    private JButton [] buttons = new JButton[]{
             new JButton(),
             new JButton(),
             new JButton(),
@@ -40,25 +40,25 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
             new JButton(),
             new JButton()
     };
-    String [] filepaths = new String[]{
+    private String [] filepaths = new String[]{
             "textures\\backButton.png",
             "textures\\acceptButton.png",
             "textures\\swipeLeftButton.png",
             "textures\\swipeRightButton.png"
     };
-    ActionListener [] listeners = new ActionListener[]{
+    private ActionListener [] listeners = new ActionListener[]{
             new BackButtonListener(),
-            new AcceptButtonListener(),
+            new AcceptButtonListener(this),
             new LeftSwipeButtonListener(this,1),
             new RightSwipeButtonListener(this,1),
             new LeftSwipeButtonListener(this,2),
             new RightSwipeButtonListener(this,2)
     };
 
-    Image resizedHead[] = new Image[2];
-    Image resizedTorso[] = new Image[2];
+    private Image resizedHead[] = new Image[2];
+    private Image resizedTorso[] = new Image[2];
 
-    Image backgroundImage;
+    private Image backgroundImage;
 
 
     public int getFirstPlayerChoose() {
@@ -147,7 +147,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
     }
 
     public Image resizePlayerTorso(Player play, int i){
-        Image scaledImg = play.getTorsoImage(i).getScaledInstance(play.getWidthTorso()*2, play.getHeigthTorso()*2,  Image.SCALE_SMOOTH);
+        Image scaledImg = play.getTorsoImage(i).getScaledInstance(play.getWidthTorso()*2, play.getHeightTorso()*2,  Image.SCALE_SMOOTH);
         return scaledImg;
     }
 

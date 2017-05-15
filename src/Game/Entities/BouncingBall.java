@@ -1,11 +1,7 @@
 package Game.Entities;
 
-import Game.Entities.Ball;
-
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Przykry on 02.05.2017.
@@ -24,11 +20,11 @@ public class BouncingBall implements Runnable {
     public void run() {
         while (true) {
             ball.directoryOfBall();
-            for(Ball cheack : ballsList) {
-                if (!ball.equals(cheack)) ball.checkIfIntersects(cheack);
+            for(Ball check : ballsList) {
+                if (!ball.equals(check)) ball.checkIfIntersects(check);
             }
             try {
-                Thread.sleep(8);
+                Thread.sleep(15);
                 if(threadSuspended){
                     synchronized(this){
                         while (threadSuspended){

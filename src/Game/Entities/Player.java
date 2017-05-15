@@ -1,15 +1,12 @@
 package Game.Entities;
 
-import Game.Windows.GameWindow;
 import Game.Windows.MenuWindow;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 import static Game.Windows.GameWindow.getGround;
 import static java.lang.Thread.sleep;
@@ -23,15 +20,25 @@ public class Player implements Runnable {
     private int y;
     private int centerHeadX;
     private int centerHeadY;
-    private int widthTorso, heigthTorso;
+    private int widthTorso, heightTorso;
     private int radiusHead;
     private int speed;
     private int maxJump;
     private int shotStrength;
     private Image headImage[] = new Image[2];
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     private Image torsoImage[] = new Image[4];
     private int jumpKey;
     private int leftKey;
+
+    public static int getTerminalVelocity() {
+        return TERMINAL_VELOCITY;
+    }
+
     private final static int TERMINAL_VELOCITY = 20;
     private final static int GRAVITY = 15;
     private int fallingVelocity = GRAVITY;
@@ -136,8 +143,8 @@ public class Player implements Runnable {
         return widthTorso;
     }
 
-    public int getHeigthTorso() {
-        return heigthTorso;
+    public int getHeightTorso() {
+        return heightTorso;
     }
 
     public int getRadiusHead() {
@@ -229,7 +236,7 @@ public class Player implements Runnable {
         try {
             bi = ImageIO.read(new File("textures\\" + name + "Torso" + 0 + ".png"));
             this.widthTorso = bi.getWidth();
-            this.heigthTorso = bi.getHeight();
+            this.heightTorso = bi.getHeight();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -259,7 +266,7 @@ public class Player implements Runnable {
 
     public void jumping() {
         if(jumping) {
-            if (getGround() - maxJump < y) y-=TERMINAL_VELOCITY;
+            if (getGround() - 2*radiusHead - heightTorso - maxJump < y) y-=TERMINAL_VELOCITY;
             else setJumping(false);
         }
     }
@@ -276,7 +283,7 @@ public class Player implements Runnable {
     }
 
     private boolean isNoGround(){
-        return getGround() > y;
+        return getGround() > y + 2*this.radiusHead+this.heightTorso;
     }
 
     @Override

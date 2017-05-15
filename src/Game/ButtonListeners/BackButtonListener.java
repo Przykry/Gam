@@ -19,7 +19,10 @@ public class BackButtonListener implements ActionListener{
         if(getGameWindow() != null) {
             GameWindow.getTimer().stop();
         }
-        if(getWindow() == 4) GameWindow.stopEntities();
+        if(getWindow() == 4){
+            GameWindow.stopEntities();
+            Main.removeWindow();
+        }
         Main.changeWindow(0);
         MainWindow.startBouncingBalls();
     }

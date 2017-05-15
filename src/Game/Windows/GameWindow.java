@@ -2,31 +2,24 @@ package Game.Windows;
 
 import Game.ButtonListeners.BackButtonListener;
 import Game.ButtonListeners.PlayerMoveListener;
-import Game.Engine;
 import Game.Entities.Ball;
-import Game.Entities.BouncingBall;
 import Game.Entities.Goal;
 import Game.Entities.Player;
-import Game.Input;
 import Game.Main;
 
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
-
-import static Game.Windows.ChoosePlayerWindow.getPlayer1;
-import static Game.Windows.ChoosePlayerWindow.getPlayer2;
 
 /**
  * Created by Daniel on 29.04.2017.
  */
 public class GameWindow extends JPanel implements WindowInt, ActionListener{
-    private int width, heigth;
+    private int width, height;
     private Image backgroundImage;
     private Goal leftGoal, rightGoal;
     private static Ball ball;
@@ -43,15 +36,16 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
        else return player2;
     }
 
-    public GameWindow(int width, int heigth){
+    public GameWindow(int width, int height, ChoosePlayerWindow window){
         this.width = width;
-        this.heigth = heigth;
-        this.player1 = getPlayer1();
+        this.height = height;
+        this.player1 = window.getPlayer1();
         player1.setPlayerHeadImage(1);
         player1.setPlayerTorsoImage(2);
-        this.player2 = getPlayer2();
+        this.player2 = window.getPlayer2();
         player2.setPlayerTorsoImage(0);
         player2.setPlayerHeadImage(0);
+        setPlayerKeys();
         try {
             backgroundImage = getBackgroundImage("mainBackground");
         }
@@ -63,7 +57,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         this.add(backButton);
         leftGoal = new Goal(1);
         rightGoal = new Goal(2);
-        ball = new Ball((width-30)/2, getGround() + 50,0,1000,this);
+        ball = new Ball((width-30)/2, getGround()-600,0,0,this);
         setPlayerStanding();
 
         this.addKeyListener(new PlayerMoveListener(player1,player2));
@@ -80,9 +74,9 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
 
     private void setPlayerStanding(){
         player1.setX(leftGoal.getWidth()+20+15);
-        player1.setY(heigth-15-player1.getHeigthTorso()-2*player1.getRadiusHead());
+        player1.setY(height -15-player1.getHeightTorso()-2*player1.getRadiusHead());
         player2.setX(width - rightGoal.getWidth()-2*player2.getRadiusHead()-20);
-        player2.setY(heigth-15-player2.getHeigthTorso()-2*player2.getRadiusHead());
+        player2.setY(height -15-player2.getHeightTorso()-2*player2.getRadiusHead());
         player1.setCenterHeadX(player1.getX() + player1.getRadiusHead());
         player1.setCenterHeadY(player1.getY() + player1.getRadiusHead());
         player2.setCenterHeadX(player2.getX() + player2.getRadiusHead());
@@ -110,8 +104,8 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
 
     private void drawGoalsAndBall(Graphics graphics){
         ball.drawBall(graphics);
-        graphics.drawImage(leftGoal.getGoalImage(),16,heigth-15-leftGoal.getHeigth(),this);
-        graphics.drawImage(rightGoal.getGoalImage(),width-15- rightGoal.getWidth(),heigth-15- rightGoal.getHeigth(),this);
+        graphics.drawImage(leftGoal.getGoalImage(),16, height -15-leftGoal.getHeigth(),this);
+        graphics.drawImage(rightGoal.getGoalImage(),width-15- rightGoal.getWidth(), height -15- rightGoal.getHeigth(),this);
     }
 
 
@@ -135,18 +129,18 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
 
 
     private void checkIfBodyIntersects(Ball ball, Player player2, Player player1){
-        if(ball.getCenterX() + ball.getRadius() >= player2.getX()+28 && ball.getY() <= player2.getY() + player2.getRadiusHead()+player2.getHeigthTorso() && ball.getY() > player2.getY() + player2.getRadiusHead()){
+        if(ball.getCenterX() + ball.getRadius() >= player2.getX()+28 && ball.getY() <= player2.getY() + player2.getRadiusHead()+player2.getHeightTorso() && ball.getY() > player2.getY() + player2.getRadiusHead()){
             ball.reverseSpeedX();
             ball.setSpeedX((int)(ball.getSpeedX()*0.8 + player2.getSpeed()*0.8));
         }
-        if(ball.getCenterX() - ball.getRadius() <= player1.getX()-10 +player1.getWidthTorso() && ball.getY() <= player1.getY() + player1.getRadiusHead()+player1.getHeigthTorso() && ball.getY() > player1.getY() + player1.getRadiusHead()){
+        if(ball.getCenterX() - ball.getRadius() <= player1.getX()-10 +player1.getWidthTorso() && ball.getY() <= player1.getY() + player1.getRadiusHead()+player1.getHeightTorso() && ball.getY() > player1.getY() + player1.getRadiusHead()){
             ball.reverseSpeedX();
             ball.setSpeedX((int)(ball.getCenterX()*0.8 + player1.getSpeed()*0.8));
         }
     }
 
     public static int getGround(){
-        return 485;
+        return 625;
     }
 
     @Override

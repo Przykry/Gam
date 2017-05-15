@@ -1,10 +1,11 @@
 package Game.ButtonListeners.ButtonListeners.Menu;
 
-import Game.Windows.GameWindow;
 import Game.Windows.MenuWindow;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by Przykry on 29.04.2017.
@@ -24,7 +25,7 @@ public class AcceptMenuButtonListener implements ActionListener {
             PrintWriter writer = new PrintWriter("textures\\KeyBindings.txt", "UTF-8");
             writer.println(savedKeys);
             writer.close();
-            GameWindow.setPlayerKeys();
+            //GameWindow.setPlayerKeys();
         } catch (IOException exp) {
             exp.printStackTrace();
         }

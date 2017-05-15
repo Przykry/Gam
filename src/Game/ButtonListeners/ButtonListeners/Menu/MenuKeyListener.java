@@ -1,10 +1,10 @@
 package Game.ButtonListeners.ButtonListeners.Menu;
 
-import Game.Windows.GameWindow;
 import Game.Windows.MenuWindow;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Created by Przykry on 09.05.2017.
@@ -29,7 +29,7 @@ public class MenuKeyListener implements KeyListener {
         for(int i = 0; i<8 ;i++) {
             if (canChange[i]) {
                 keys[i] = e.getKeyCode();
-                GameWindow.setPlayerKeys();
+                //GameWindow.setPlayerKeys();
                 canChange[i] = false;
                 SwingWorker<Void, Void> worker = new MenuSwingWorker(window,i);
                 worker.execute();

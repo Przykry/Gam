@@ -37,8 +37,16 @@ public class Main {
         else if(n == 2) frame.addKeyListener( new MenuKeyListener(windows.get(2)));
         frame.validate();
         frame.repaint();
-        frame.setFocusable(true);
+        //frame.setFocusable(true);
         frame.setVisible(true);
+    }
+
+    public static void addWindow(WindowInt window){
+        windows.add((JPanel)window);
+    }
+
+    public static void removeWindow(){
+        windows.remove(4);
     }
 
     public static void main(String [] args){
@@ -50,7 +58,6 @@ public class Main {
         windows.add(new HallOfFameWindow(860,640));
         windows.add(new MenuWindow(860,640));
         windows.add(new ChoosePlayerWindow(860,640));
-        windows.add(new GameWindow(860,640));
         frame.setBounds((int)width/5,(int)(height/11),860,640);
         frame.setTitle("Game");
         frame.setResizable(false);

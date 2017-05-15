@@ -26,7 +26,7 @@ public class RightSwipeButtonListener implements ActionListener{
                 panel.setFirstPlayerChoose(panel.getFirstPlayerChoose() + 1);
             }
             panel.setPlayer1(panel.player1Models[panel.getFirstPlayerChoose()]);
-            panel.setResizedHead(panel.getPlayer1(),player-1,2);
+            panel.setResizedHead(panel.getPlayer1(),player-1,1);
             panel.setResizedTorso(panel.getPlayer1(),player-1,3);
         }else{
             int n = panel.getSecondPlayerChoose();

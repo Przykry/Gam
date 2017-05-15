@@ -216,19 +216,17 @@ public class Ball implements Runnable {
         }
     }
 
-    public double calculatePythagoras(Ball ball1) {
+    private double calculatePythagoras(Ball ball1) {
         double aplusb = Math.pow(ball1.getCenterX() - this.getCenterX(), 2) + Math.pow(this.getCenterY() - ball1.getCenterY(), 2);
-        double toReturn = Math.sqrt(aplusb);
-        return toReturn;
+        return Math.sqrt(aplusb);
     }
-    public double calculatePythagoras(Ball ball, Player player) {
+    private double calculatePythagoras(Ball ball, Player player) {
         double aplusb = Math.pow(ball.getCenterX() - player.getCenterHeadX(), 2) + Math.pow(player.getCenterHeadY() - ball.getCenterY(), 2);
-        double toReturn = Math.sqrt(aplusb);
-        return toReturn;
+        return Math.sqrt(aplusb);
     }
 
 
-    public void calculateDirection(Object obj) {
+    private void calculateDirection(Object obj) {
        if(obj instanceof Ball) {
            Ball ball = (Ball)obj;
            double xDir1 = (ball.getCenterX() - this.getCenterX()) / calculatePythagoras(ball);
@@ -237,11 +235,11 @@ public class Ball implements Runnable {
            double xDir2 = (this.getCenterX() - ball.getCenterX()) / calculatePythagoras(ball);
            double yDir2 = (ball.getCenterY() - this.getCenterY()) / calculatePythagoras(ball);
 
-           int dirX1 = (int) Math.round(xDir1 * 40);
-           int dirY1 = (int) Math.round(yDir1 * 40);
+           int dirX1 = (int) Math.round(xDir1 * 200);
+           int dirY1 = (int) Math.round(yDir1 * 200);
 
-           int dirX2 = (int) Math.round(xDir2 * 40);
-           int dirY2 = (int) Math.round(yDir2 * 40);
+           int dirX2 = (int) Math.round(xDir2 * 200);
+           int dirY2 = (int) Math.round(yDir2 * 200);
            ball.setSpeedX(dirX1);
            ball.setSpeedY(-dirY1);
            this.setSpeedX(dirX2);
@@ -249,12 +247,39 @@ public class Ball implements Runnable {
        }
        else if(obj instanceof Player){
            Player player = (Player) obj;
+           int dirX1=0, dirY1=0;
            double xDir1 = (this.getCenterX() - player.getCenterHeadX()) / calculatePythagoras(this,player);
            double yDir1 = (player.getCenterHeadY() - this.getCenterY()) / calculatePythagoras(this, player);
-
-           int dirX1 = (int) Math.round(xDir1 * 40);
-           int dirY1 = (int) Math.round(yDir1 * 20);
-
+           System.out.println("dirx" + xDir1+"  diry" + yDir1);
+           if(player.isMovingLeft() && speedX < 0 && player.getCenterHeadX() > this.getCenterX()){
+               dirX1 = (int) Math.round(xDir1 * 10 - Math.abs(speedX) - player.getSpeed() * 10);
+           }
+           else if(player.isMovingLeft() && speedX < 0 && player.getCenterHeadX() <= this.getCenterX()) {
+               dirX1 = (int) Math.round(xDir1 * 10 + (Math.abs(speedX)*0.7)+player.getSpeed()*10);
+           }
+           else if(player.isMovingLeft() && speedX > 0){
+               dirX1 = (int) Math.round(xDir1 * 10 - Math.abs(speedX) * 0.7 - player.getSpeed()*10);
+           }
+           else if(player.isMovingRight() && speedX < 0){
+               dirX1 = (int) Math.round(xDir1 * 10 + Math.abs(speedX) * 0.7 + player.getSpeed()*10);
+           }
+           else if(player.isMovingRight() && speedX > 0 && player.getCenterHeadX() > this.getCenterX()){
+               dirX1 = (int) Math.round(xDir1 * 10 - Math.abs(speedX) * 0.7);
+           }
+           else if(player.isMovingRight() && speedX > 0 && player.getCenterHeadX() <= this.getCenterX()){
+               dirX1 = (int) Math.round(xDir1 * 10 + Math.abs(speedX) + player.getSpeed() * 10);
+           }
+           else{
+               dirX1 = (int) Math.round(xDir1 * 10 + (Math.abs(speedX) * 0.7));
+           }
+           if(player.isJumping()) {
+               dirY1 = (int) Math.round(yDir1 * (Math.abs(speedY))+player.getTerminalVelocity()*4);
+           }
+           else{
+               dirY1 = (int) Math.round(yDir1 * (Math.abs(speedY)));
+               if(dirY1 < -150) dirY1 = -150;
+           }
+           System.out.println("xdir" + dirX1 + "  ydir" + dirY1);
            this.setSpeedX(dirX1);
            this.setSpeedY(-dirY1);
        }
@@ -275,15 +300,31 @@ public class Ball implements Runnable {
         }
     }
 
+    private void speedLimitY(){
+        if(speedY > 300) speedY = 300;
+        else if(speedY < -300) speedY = -300;
+    }
+
+    private void gravity(){
+        if(y + 2*radius < getGround() && speedY < 300) speedY += 10;
+        else if(y+2*radius >= getGround()) {
+            y = getGround() - 2*radius;
+            speedY = (int)Math.round((-speedY) * 0.7);
+            speedX = (int)Math.round(speedX*0.8);
+        }
+    }
+
     @Override
     public void run() {
         while(true){
-            falling();
+            gravity();
             directoryOfBall();
             checkIfIntersects(GameWindow.getPlayer(1));
             checkIfIntersects(GameWindow.getPlayer(2));
+            speedLimitY();
+            System.out.println("speedX"+speedX+"  speedY"+speedY);
             try{
-                sleep(5);
+                sleep(20);
                 if(threadSuspended){
                     synchronized(this){
                         while (threadSuspended){
