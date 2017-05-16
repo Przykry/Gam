@@ -279,7 +279,6 @@ public class Ball implements Runnable {
                dirY1 = (int) Math.round(yDir1 * (Math.abs(speedY)));
                if(dirY1 < -150) dirY1 = -150;
            }
-           System.out.println("xdir" + dirX1 + "  ydir" + dirY1);
            this.setSpeedX(dirX1);
            this.setSpeedY(-dirY1);
        }
@@ -294,10 +293,35 @@ public class Ball implements Runnable {
         }
         else if(obj instanceof Player){
             Player player = (Player)obj;
-            if (calculatePythagoras(this, player) <= this.getRadius() + player.getRadiusHead()) {
+            double pitagoras = calculatePythagoras(this, player);
+            if (pitagoras <= this.getRadius() + player.getRadiusHead()) {
                 calculateDirection(player);
             }
+            if(ballTouchTorso(player)) {
+                if(ballTouchLeft(player)) {
+                    System.out.println("left");
+                    if(speedX>0) speedX = -2*speedX;
+                    else speedX++;
+                }
+                else if(ballTouchRight(player)) {
+                    System.out.println("right");
+                    if(speedX<0) speedX = -speedX;
+                    else speedX++;
+                }
+            }
         }
+    }
+
+    private boolean ballTouchTorso(Player player){
+        return player.getCenterHeadY() - player.getRadiusHead() <= this.getCenterY();
+    }
+
+    private boolean ballTouchRight(Player player){
+        return (player.getCenterHeadX() + 30 == this.getCenterX() + getRadius()) && (this.getCenterX() + getRadius() < player.getCenterHeadX() + player.getWidthTorso());
+    }
+
+    private boolean ballTouchLeft(Player player){
+        return (player.getCenterHeadX() - 30 == this.getCenterX() - getRadius()) && (this.getCenterX() - getRadius() > player.getCenterHeadX() - player.getWidthTorso());
     }
 
     private void speedLimitY(){
@@ -322,7 +346,6 @@ public class Ball implements Runnable {
             checkIfIntersects(GameWindow.getPlayer(1));
             checkIfIntersects(GameWindow.getPlayer(2));
             speedLimitY();
-            System.out.println("speedX"+speedX+"  speedY"+speedY);
             try{
                 sleep(20);
                 if(threadSuspended){
