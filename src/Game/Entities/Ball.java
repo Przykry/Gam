@@ -196,7 +196,7 @@ public class Ball implements Runnable {
         g.drawImage(getBallImage(), getX(), getY(), observer);
     }
 
-    public void ballHittingBorder(int heigth, int width) {
+    private void ballHittingBorder(int heigth, int width) {
         if (new Rectangle(0, 0, 15, heigth).intersects(new Rectangle(this.getX(), this.getY(), this.getRadius() * 2, this.getRadius() * 2))) {
             this.reverseSpeedX();
             if (this.getX() < 15) this.setX(16);
@@ -250,7 +250,6 @@ public class Ball implements Runnable {
            int dirX1=0, dirY1=0;
            double xDir1 = (this.getCenterX() - player.getCenterHeadX()) / calculatePythagoras(this,player);
            double yDir1 = (player.getCenterHeadY() - this.getCenterY()) / calculatePythagoras(this, player);
-           System.out.println("dirx" + xDir1+"  diry" + yDir1);
            if(player.isMovingLeft() && speedX < 0 && player.getCenterHeadX() > this.getCenterX()){
                dirX1 = (int) Math.round(xDir1 * 10 - Math.abs(speedX) - player.getSpeed() * 10);
            }
@@ -279,7 +278,6 @@ public class Ball implements Runnable {
                dirY1 = (int) Math.round(yDir1 * (Math.abs(speedY)));
                if(dirY1 < -150) dirY1 = -150;
            }
-           System.out.println("xdir" + dirX1 + "  ydir" + dirY1);
            this.setSpeedX(dirX1);
            this.setSpeedY(-dirY1);
        }
@@ -317,12 +315,11 @@ public class Ball implements Runnable {
     @Override
     public void run() {
         while(true){
-            gravity();
             directoryOfBall();
+            gravity();
             checkIfIntersects(GameWindow.getPlayer(1));
             checkIfIntersects(GameWindow.getPlayer(2));
             speedLimitY();
-            System.out.println("speedX"+speedX+"  speedY"+speedY);
             try{
                 sleep(20);
                 if(threadSuspended){

@@ -44,16 +44,16 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
     static Thread thread[];
     List<Ball> ballList = new ArrayList<>();
     Timer timer;
-    public MainWindow(int width, int heigth){
+    public MainWindow(int width, int height){
         this.width = width;
-        this.heigth = heigth;
+        this.heigth = height;
         try {
             this.mainBackground = getBackgroundImage("mainBackground");
         }
         catch(IOException e){
             e.printStackTrace();
         }
-        addBouncingBalls(new Random().nextInt(10));
+        addBouncingBalls(new Random().nextInt(15));
         for (int i = 0; i < buttons.length; i++) {
             createButton(buttons[i], width - 300, i * 60 + i * 40 + 60, filePaths[i], listeners[i]);
             this.add(buttons[i]);
@@ -71,8 +71,8 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
             ballList.add(new Ball(
                         new Random().nextInt(560),
                         new Random().nextInt(465),
-                        300,
-                        300,
+                        150,
+                        150,
                         this)
                         );
         }
