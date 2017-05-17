@@ -13,7 +13,8 @@ import static Game.Windows.GameWindow.getGround;
 public class PlayerMoveListener implements KeyListener,ActionListener{
     private Player player1, player2;
     private boolean check = true;
-    static Timer moveTimer;
+    private static Timer moveTimer;
+
 
 
     public PlayerMoveListener(Player player1, Player player2){
@@ -23,7 +24,7 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
         moveTimer.start();
     }
 
-    public static void stopTimer(){
+    static void stopTimer(){
         moveTimer.stop();
     }
 
