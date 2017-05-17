@@ -38,14 +38,25 @@ public class Goal {
 
 
     static void ballHittingGoal(Ball ball){
-        if(ball.getCenterY() + ball.getRadius() <= 430 && ball.getCenterY() + ball.getRadius() > 400){
+        if(ball.getCenterY() + ball.getRadius() <= 445 && ball.getCenterY() + ball.getRadius() > 415){
             if(ball.getCenterX() - ball.getRadius() < 75){
-                ball.reverseSpeedX();
+                ball.setY(416-60);
                 ball.setSpeedX(ball.getSpeedX()+10);
                 ball.reverseSpeedY();
             }
             else if (ball.getCenterX() + ball.getRadius() > 785){
-                ball.reverseSpeedX();
+                ball.setY(416-60);
+                ball.setSpeedX(ball.getSpeedX()-10);
+                ball.reverseSpeedY();
+            }
+        }else if(ball.getY() < 420 && ball.getY() >= 390){
+            if(ball.getCenterX() - ball.getRadius() < 75){
+                ball.setY(421);
+                ball.setSpeedX(ball.getSpeedX()+10);
+                ball.reverseSpeedY();
+            }
+            else if (ball.getCenterX() + ball.getRadius() > 785){
+                ball.setY(421);
                 ball.setSpeedX(ball.getSpeedX()-10);
                 ball.reverseSpeedY();
             }

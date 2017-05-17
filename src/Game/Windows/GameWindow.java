@@ -59,7 +59,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         this.add(backButton);
         leftGoal = new Goal(1);
         rightGoal = new Goal(2);
-        ball = new Ball(790, getGround()-600,0,0,this);
+        ball = new Ball(width/2, getGround()-600,0,0,this);
         setPlayerStanding();
 
         this.addKeyListener(new PlayerMoveListener(player1,player2));
@@ -143,7 +143,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
 
     private void blockPlayers(){
         if(ball.checkIfIntersectsBoth(player1,player2)){
-            System.out.println("dupa");
             if(player1.getCenterHeadX() < player2.getCenterHeadX() ){
                 player1.setBlockedRight(true);
                 player2.setBlockedLeft(true);
@@ -154,7 +153,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
                 ball.setBlocked(true);
             }
         }else{
-            System.out.println("nie dupa");
             player1.setBlockedLeft(false);
             player1.setBlockedRight(false);
             player2.setBlockedLeft(false);
