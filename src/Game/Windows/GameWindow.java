@@ -46,6 +46,8 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         player2.setPlayerTorsoImage(0);
         player2.setPlayerHeadImage(0);
         setPlayerKeys();
+        //player1.setTurnedLeft(false);
+        //player2.setTurnedLeft(true);
         try {
             backgroundImage = getBackgroundImage("mainBackground");
         }
@@ -139,12 +141,35 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    private void blockPlayers(){
+        if(ball.checkIfIntersectsBoth(player1,player2)){
+            System.out.println("dupa");
+            if(player1.getCenterHeadX() < player2.getCenterHeadX() ){
+                player1.setBlockedRight(true);
+                player2.setBlockedLeft(true);
+                ball.setBlocked(true);
+            }else{
+                player1.setBlockedLeft(true);
+                player2.setBlockedRight(true);
+                ball.setBlocked(true);
+            }
+        }else{
+            System.out.println("nie dupa");
+            player1.setBlockedLeft(false);
+            player1.setBlockedRight(false);
+            player2.setBlockedLeft(false);
+            player2.setBlockedRight(false);
+            ball.setBlocked(false);
+        }
+    }
+
     public static int getGround(){
         return 625;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        blockPlayers();
         this.repaint();
     }
 }

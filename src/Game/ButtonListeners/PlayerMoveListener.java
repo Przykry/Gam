@@ -60,22 +60,30 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
     private void playerMove(KeyEvent e,Player player){
         if(e.getKeyCode() == player.getLeftKey()){
             player.setMovingLeft(true);
+            //player.setTurnedLeft(true);
         }
         else if(e.getKeyCode() == player.getRightKey()){
             player.setMovingRight(true);
+            //player.setTurnedLeft(false);
         }
         else if(e.getKeyCode() == player.getJumpKey()){
             if(player.getY()+player.getHeightTorso()+2*player.getRadiusHead() == getGround()) player.setJumping(true);
         }
+        else if(e.getKeyCode() == player.getShotKey()){
+            //System.out.println("shooting");
+            //player.setShooting(true);
+        }
     }
 
     private void playerStop(KeyEvent e,Player player){
-        System.out.println(player.getLeftKey());
         if(e.getKeyCode() == player.getLeftKey()){
             player.setMovingLeft(false);
         }
         else if(e.getKeyCode() == player.getRightKey()){
             player.setMovingRight(false);
+        }
+        else if(e.getKeyCode() == player.getShotKey()){
+            //player.setShooting(false);
         }
     }
 

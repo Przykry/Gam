@@ -83,6 +83,24 @@ public class Player implements Runnable {
     private int rightKey;
     private int shotKey;
     private boolean movingLeft, movingRight, jumping;
+    private boolean blockedLeft, blockedRight;
+
+    public boolean isBlockedRight() {
+        return blockedRight;
+    }
+
+    public void setBlockedRight(boolean blockedRight) {
+        this.blockedRight = blockedRight;
+    }
+
+    public boolean isBlockedLeft() {
+        return blockedLeft;
+    }
+
+    public void setBlockedLeft(boolean blockedLeft) {
+        this.blockedLeft = blockedLeft;
+    }
+
 
     public boolean isMovingLeft() {
         return movingLeft;
@@ -208,13 +226,17 @@ public class Player implements Runnable {
     }
 
     public void movePlayerLeft() {
-        this.x -= speed;
-        this.centerHeadX -= speed;
+        if(!isBlockedLeft()) {
+            this.x -= speed;
+            this.centerHeadX -= speed;
+        }
     }
 
     public void movePlayerRight() {
-        this.x += speed;
-        this.centerHeadX += speed;
+        if(!isBlockedRight()) {
+            this.x += speed;
+            this.centerHeadX += speed;
+        }
     }
 
     private void setHeadImage(int i) {

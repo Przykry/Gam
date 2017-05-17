@@ -23,6 +23,15 @@ public class Ball implements Runnable {
     private Image ballImage;
     JPanel observer;
     private volatile boolean threadSuspended;
+    private boolean blocked;
+
+    public boolean isBlocked(){
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked){
+        this.blocked = blocked;
+    }
 
     public Ball(int x, int y, int speedX, int speedY, JPanel observer){
         this.x = x;
@@ -112,10 +121,12 @@ public class Ball implements Runnable {
     }
 
     private void move(){
-        this.x += speedX/10;
-        this.y += speedY/10;
-        this.centerX = this.x + 30;
-        this.centerY = this.y + 30;
+        if(!blocked) {
+            this.x += speedX / 10;
+            this.y += speedY / 10;
+            this.centerX = this.x + 30;
+            this.centerY = this.y + 30;
+        }
     }
 
     public void reverseSpeedX(){
@@ -138,20 +149,32 @@ public class Ball implements Runnable {
     private void ballHittingBorder(int heigth, int width) {
         if (new Rectangle(0, 0, 15, heigth).intersects(new Rectangle(this.getX(), this.getY(), this.getRadius() * 2, this.getRadius() * 2))) {
             this.reverseSpeedX();
-            if (this.getX() < 15) this.setX(16);
+            if (this.getX() <= 15){
+                this.setX(16);
+                centerX = 46;
+            }
         }
         if (new Rectangle(0, 0, width, 15).intersects(new Rectangle(this.getX(), this.getY(), this.getRadius() * 2, this.getRadius() * 2))) {
             this.reverseSpeedY();
 
-            if (this.getY() < 15) this.setY(16);
+            if (this.getY() <= 15){
+                this.setY(16);
+                centerY = 46;
+            }
         }
         if (new Rectangle(0, heigth - 15, width, 15).intersects(new Rectangle(this.getX(), this.getY(), this.getRadius() * 2, this.getRadius() * 2))) {
             this.reverseSpeedY();
-            if (this.getY() + this.getHeigth() > heigth - 15) this.setY(heigth - 1 - 15 - this.getHeigth());
+            if (this.getY() + this.getHeigth() >= heigth - 15){
+                this.setY(heigth - 1 - 15 - this.getHeigth());
+                this.centerY = 640 - 1 - 15 - radius;
+            }
         }
         if (new Rectangle(width - 15, 0, 15, heigth).intersects(new Rectangle(this.getX(), this.getY(), this.getRadius() * 2, this.getRadius() * 2))) {
             this.reverseSpeedX();
-            if (this.getX() + this.getWidth() > width - 15) this.setX(width - 1 - 15 - this.getWidth());
+            if (this.getX() + this.getWidth() >= width - 15){
+                this.setX(width - 1 - 15 - this.getWidth());
+                this.centerY = 860 - 1 - 15 - radius;
+            }
         }
     }
 
@@ -238,17 +261,37 @@ public class Ball implements Runnable {
                 calculateDirection(ball1);
             }
         }
-        else if(obj instanceof Player){
-            Player player = (Player)obj;
+        else if(obj instanceof Player) {
+            Player player = (Player) obj;
             if (calculatePythagoras(this, player) <= this.getRadius() + player.getRadiusHead()) {
                 calculateDirection(player);
             }
         }
     }
+    public boolean checkIfIntersectsBoth(Player player1, Player player2){
+        if (player1.getCenterHeadX() > centerX && player2.getCenterHeadX() < centerX || player1.getCenterHeadX() < centerX && player2.getCenterHeadX() > centerX){
+            System.out.println("1");
+            if(centerY > player1.getY() && centerY > player2.getY()){
+                System.out.println("2");
+                if(Math.abs(player1.getCenterHeadX()-centerX)<=player1.getRadiusHead() + radius && Math.abs(player2.getCenterHeadX()-centerX)<=player2.getRadiusHead() + radius){
+                    System.out.println("3");
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
+        else return false;
+    }
 
     private void speedLimitY(){
         if(speedY > 300) speedY = 300;
         else if(speedY < -300) speedY = -300;
+    }
+
+    private void speedLimitX(){
+        if(speedX > 300) speedX = 300;
+        else if(speedX < -300) speedX = -300;
     }
 
     private void gravity(){
@@ -268,7 +311,7 @@ public class Ball implements Runnable {
             checkIfIntersects(GameWindow.getPlayer(1));
             checkIfIntersects(GameWindow.getPlayer(2));
             speedLimitY();
-
+            speedLimitX();
 
             try{
                 sleep(20);
