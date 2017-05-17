@@ -36,6 +36,22 @@ public class Goal {
         }
     }
 
+
+    static void ballHittingGoal(Ball ball){
+        if(ball.getCenterY() + ball.getRadius() <= 430 && ball.getCenterY() + ball.getRadius() > 400){
+            if(ball.getCenterX() - ball.getRadius() < 75){
+                ball.reverseSpeedX();
+                ball.setSpeedX(ball.getSpeedX()+10);
+                ball.reverseSpeedY();
+            }
+            else if (ball.getCenterX() + ball.getRadius() > 785){
+                ball.reverseSpeedX();
+                ball.setSpeedX(ball.getSpeedX()-10);
+                ball.reverseSpeedY();
+            }
+        }
+    }
+
     public int getWidth() {
         return width;
     }

@@ -59,7 +59,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         this.add(backButton);
         leftGoal = new Goal(1);
         rightGoal = new Goal(2);
-        ball = new Ball((width-30)/2, getGround()-600,0,0,this);
+        ball = new Ball(790, getGround()-600,0,0,this);
         setPlayerStanding();
 
         this.addKeyListener(new PlayerMoveListener(player1,player2));

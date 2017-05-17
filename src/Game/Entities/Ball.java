@@ -312,7 +312,7 @@ public class Ball implements Runnable {
             checkIfIntersects(GameWindow.getPlayer(2));
             speedLimitY();
             speedLimitX();
-
+            Goal.ballHittingGoal(this);
             try{
                 sleep(20);
                 if(threadSuspended){
