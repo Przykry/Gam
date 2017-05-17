@@ -2,6 +2,7 @@ package Game.ButtonListeners;
 
 import Game.Entities.Player;
 
+import javax.swing.*;
 import java.awt.event.*;
 
 import static Game.Windows.GameWindow.getGround;
@@ -9,13 +10,22 @@ import static Game.Windows.GameWindow.getGround;
 /**
  * Created by Daniel on 02.05.2017.
  */
-public class PlayerMoveListener implements KeyListener{
+public class PlayerMoveListener implements KeyListener,ActionListener{
     private Player player1, player2;
     private boolean check = true;
+    private static Timer moveTimer;
+
+
 
     public PlayerMoveListener(Player player1, Player player2){
         this.player1 = player1;
         this.player2 = player2;
+        moveTimer = new Timer(130,this);
+        moveTimer.start();
+    }
+
+    static void stopTimer(){
+        moveTimer.stop();
     }
 
     @Override
@@ -41,25 +51,9 @@ public class PlayerMoveListener implements KeyListener{
     private void setPlayerImage(KeyEvent e, Player player){
         if(e.getKeyCode() == player.getLeftKey()){
             player.setPlayerHeadImage(0);
-            if(check) {
-                player.setPlayerTorsoImage(0);
-                check = !check;
-            }
-            else{
-                player.setPlayerTorsoImage(1);
-                check = !check;
-            }
         }
         else if(e.getKeyCode() == player.getRightKey()){
             player.setPlayerHeadImage(1);
-            if(check) {
-                player.setPlayerTorsoImage(2);
-                check = !check;
-            }
-            else{
-                player.setPlayerTorsoImage(3);
-                check = !check;
-            }
         }
     }
 
@@ -83,5 +77,32 @@ public class PlayerMoveListener implements KeyListener{
         else if(e.getKeyCode() == player.getRightKey()){
             player.setMovingRight(false);
         }
+    }
+
+    private void torsoMove(Player player) {
+        if(player.getMovingLeft()){
+            if (check) {
+                player.setPlayerTorsoImage(0);
+                check = !check;
+            } else {
+                player.setPlayerTorsoImage(1);
+                check = !check;
+            }
+        }
+        else if(player.getMovingRight()) {
+            if (check) {
+                player.setPlayerTorsoImage(2);
+                check = !check;
+            } else {
+                player.setPlayerTorsoImage(3);
+                check = !check;
+            }
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        torsoMove(player1);
+        torsoMove(player2);
     }
 }

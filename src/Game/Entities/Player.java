@@ -143,9 +143,11 @@ public class Player implements Runnable {
         return widthTorso;
     }
 
-    public int getHeightTorso() {
-        return heightTorso;
-    }
+    public int getHeightTorso() {return heightTorso;}
+
+    public boolean getMovingRight() { return movingRight;}
+
+    public boolean getMovingLeft() { return movingLeft; }
 
     public int getRadiusHead() {
         return radiusHead;

@@ -23,6 +23,7 @@ public class Ball implements Runnable {
     private Image ballImage;
     JPanel observer;
     private volatile boolean threadSuspended;
+
     public Ball(int x, int y, int speedX, int speedY, JPanel observer){
         this.x = x;
         this.y = y;
@@ -102,10 +103,6 @@ public class Ball implements Runnable {
         this.speedX = speedX;
     }
 
-    public int getSpeedY() {
-        return speedY;
-    }
-
     public void setSpeedY(int speedY) {
         this.speedY = speedY;
     }
@@ -114,13 +111,12 @@ public class Ball implements Runnable {
         return ballImage;
     }
 
-    public void move(){
+    private void move(){
         this.x += speedX/10;
         this.y += speedY/10;
-        this.centerX += speedX/10;
-        this.centerY += speedY/10;
+        this.centerX = this.x + 30;
+        this.centerY = this.y + 30;
     }
-
 
     public void reverseSpeedX(){
         this.speedX = -this.speedX;
@@ -130,64 +126,7 @@ public class Ball implements Runnable {
         this.speedY = -this.speedY;
     }
 
-
-
-
-
-    public void increaseSpeedX(int x){
-        if(this.speedX >= 0){
-            this.speedX += x;
-        }
-        else{
-            this.speedX -= x;
-        }
-    }
-
-    public void increaseSpeedY(int y){
-        if(this.speedY >= 0){
-            this.speedY += y;
-        }
-        else{
-            this.speedY -= y;
-        }
-    }
-
-    public void decreaseSpeedX(int x){
-        if(this.speedX > 0){
-            this.speedX -= x;
-        }
-        else if(this.speedX < 0){
-            this.speedX += x;
-        }
-    }
-
-    public void decreaseSpeedY(int y){
-        if(this.speedY > 0){
-            setSpeedY(this.speedY - y);
-        }
-        else if(this.speedY < 0){
-            setSpeedY(this.speedY + y);
-        }
-    }
-
-    boolean directory = true;
-
-
-
-
-    public void falling() {
-        if (!isNoGround()) {
-            speedY/=1.1;
-        }
-        if(speedX > 0) speedX -= 0.5;
-    }
-
-
-    private boolean isNoGround(){
-        return getGround() > y;
-    }
-
-    public void directoryOfBall() {
+    void directoryOfBall() {
         ballHittingBorder(observer.getHeight(),observer.getWidth());
         move();
     }
@@ -235,11 +174,11 @@ public class Ball implements Runnable {
            double xDir2 = (this.getCenterX() - ball.getCenterX()) / calculatePythagoras(ball);
            double yDir2 = (ball.getCenterY() - this.getCenterY()) / calculatePythagoras(ball);
 
-           int dirX1 = (int) Math.round(xDir1 * 200);
-           int dirY1 = (int) Math.round(yDir1 * 200);
+           int dirX1 = (int) Math.round(xDir1 * 50);
+           int dirY1 = (int) Math.round(yDir1 * 50);
 
-           int dirX2 = (int) Math.round(xDir2 * 200);
-           int dirY2 = (int) Math.round(yDir2 * 200);
+           int dirX2 = (int) Math.round(xDir2 * 50);
+           int dirY2 = (int) Math.round(yDir2 * 50);
            ball.setSpeedX(dirX1);
            ball.setSpeedY(-dirY1);
            this.setSpeedX(dirX2);
@@ -283,7 +222,7 @@ public class Ball implements Runnable {
        }
     }
 
-    public void checkIfIntersects(Object obj) {
+    void checkIfIntersects(Object obj) {
         if(obj instanceof Ball) {
             Ball ball1 = (Ball)obj;
             if (calculatePythagoras(ball1) <= ball1.getRadius() + this.getRadius()) {
@@ -320,6 +259,8 @@ public class Ball implements Runnable {
             checkIfIntersects(GameWindow.getPlayer(1));
             checkIfIntersects(GameWindow.getPlayer(2));
             speedLimitY();
+
+
             try{
                 sleep(20);
                 if(threadSuspended){

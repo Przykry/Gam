@@ -53,7 +53,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
         catch(IOException e){
             e.printStackTrace();
         }
-        addBouncingBalls(new Random().nextInt(15));
+        addBouncingBalls(0);
         for (int i = 0; i < buttons.length; i++) {
             createButton(buttons[i], width - 300, i * 60 + i * 40 + 60, filePaths[i], listeners[i]);
             this.add(buttons[i]);
@@ -71,8 +71,8 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
             ballList.add(new Ball(
                         new Random().nextInt(560),
                         new Random().nextInt(465),
-                        150,
-                        150,
+                        50,
+                        50,
                         this)
                         );
         }
