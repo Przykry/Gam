@@ -266,7 +266,10 @@ public class Player implements Runnable {
 
     public void jumping() {
         if(jumping) {
-            if (getGround() - 2*radiusHead - heightTorso - maxJump < y) y-=TERMINAL_VELOCITY;
+            if (getGround() - 2*radiusHead - heightTorso - maxJump < y){
+                y-=TERMINAL_VELOCITY;
+                centerHeadY -= TERMINAL_VELOCITY;
+            }
             else setJumping(false);
         }
     }
@@ -278,6 +281,7 @@ public class Player implements Runnable {
                 fallingVelocity = TERMINAL_VELOCITY;
             }
             this.y = this.y + fallingVelocity - 10;
+            this.centerHeadY = this.centerHeadY + fallingVelocity - 10;
         }
         else fallingVelocity = GRAVITY;
     }

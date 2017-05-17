@@ -19,7 +19,6 @@ public class Main {
     private static GameWindow gameWindow = null;
     static int n = 0;
 
-
     public static void setGameWindow(GameWindow gameWindow) {
         Main.gameWindow = gameWindow;
     }
