@@ -247,29 +247,38 @@ public class Ball implements Runnable {
        }
        else if(obj instanceof Player){
            Player player = (Player) obj;
-           int dirX1, dirY1;
+           int dirX1=0, dirY1;
            double xDir1 = (this.getCenterX() - player.getCenterHeadX()) / calculatePythagoras(this,player);
            double yDir1 = (player.getCenterHeadY() - this.getCenterY()) / calculatePythagoras(this, player);
-           if(player.isMovingLeft() && speedX < 0 && player.getCenterHeadX() > this.getCenterX()){
+           if(player.isMovingLeft() && speedX <= 0 && player.getCenterHeadX() > this.getCenterX()){
                dirX1 = (int) Math.round(xDir1 * 20 - Math.abs(speedX) - player.getSpeed() * 10);
            }
-           else if(player.isMovingLeft() && speedX < 0 && player.getCenterHeadX() <= this.getCenterX()) {
+           else if(player.isMovingLeft() && speedX <= 0 && player.getCenterHeadX() <= this.getCenterX()) {
                dirX1 = (int) Math.round(xDir1 * 20 + (Math.abs(speedX)*0.7)+player.getSpeed()*10);
            }
-           else if(player.isMovingLeft() && speedX > 0){
+           else if(player.isMovingLeft() && speedX >= 0){
                dirX1 = (int) Math.round(xDir1 * 20 - Math.abs(speedX) * 0.7 - player.getSpeed()*10);
            }
-           else if(player.isMovingRight() && speedX < 0){
+           else if(player.isMovingRight() && speedX <= 0){
                dirX1 = (int) Math.round(xDir1 * 20 + Math.abs(speedX) * 0.7 + player.getSpeed()*10);
            }
-           else if(player.isMovingRight() && speedX > 0 && player.getCenterHeadX() > this.getCenterX()){
+           else if(player.isMovingRight() && speedX >= 0 && player.getCenterHeadX() > this.getCenterX()){
                dirX1 = (int) Math.round(xDir1 * 20 - Math.abs(speedX) * 0.7);
            }
-           else if(player.isMovingRight() && speedX > 0 && player.getCenterHeadX() <= this.getCenterX()){
+           else if(player.isMovingRight() && speedX >= 0 && player.getCenterHeadX() <= this.getCenterX()){
                dirX1 = (int) Math.round(xDir1 * 20 + Math.abs(speedX) + player.getSpeed() * 10);
            }
-           else{
-               dirX1 = (int) Math.round(xDir1 * 20 - speedX * 0.7);
+           else if(speedX <= 0 && player.getCenterHeadX() > this.getCenterX()){
+               dirX1 = (int) Math.round(xDir1 * 20 - Math.abs(speedX));
+           }
+           else if(speedX <= 0 && player.getCenterHeadX() <= this.getCenterX()) {
+               dirX1 = (int) Math.round(xDir1 * 20 + (Math.abs(speedX)*0.7));
+           }
+           else if(speedX >= 0 && player.getCenterHeadX() > this.getCenterX()){
+               dirX1 = (int) Math.round(xDir1 * 20 - Math.abs(speedX)*0.7);
+           }
+           else if(speedX >= 0 && player.getCenterHeadX() <= this.getCenterX()) {
+               dirX1 = (int) Math.round(xDir1 * 20 + (Math.abs(speedX)));
            }
            if(player.isJumping()) {
                dirY1 = (int) Math.round(yDir1 * (Math.abs(speedY))+player.getTerminalVelocity()*4);
