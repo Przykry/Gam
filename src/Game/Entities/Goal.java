@@ -37,7 +37,7 @@ public class Goal {
     }
 
 
-    static void ballHittingGoal(Ball ball){
+    public static void ballHittingGoal(Ball ball){
         if(ball.getCenterY() + ball.getRadius() <= 445 && ball.getCenterY() + ball.getRadius() > 415){
             if(ball.getCenterX() - ball.getRadius() < 75){
                 ball.setY(416-60);

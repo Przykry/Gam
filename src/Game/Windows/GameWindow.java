@@ -125,49 +125,119 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     public void paintComponent(Graphics graphics){
         drawBackground(graphics,backgroundImage,this);
         drawBorders(graphics,860,640);
-        drawGoalsAndBall(graphics);
         drawPlayers(graphics);
+        drawGoalsAndBall(graphics);
     }
 
-
-    private void checkIfBodyIntersects(Ball ball, Player player2, Player player1){
-        if(ball.getCenterX() + ball.getRadius() >= player2.getX()+28 && ball.getY() <= player2.getY() + player2.getRadiusHead()+player2.getHeightTorso() && ball.getY() > player2.getY() + player2.getRadiusHead()){
-            ball.reverseSpeedX();
-            ball.setSpeedX((int)(ball.getSpeedX()*0.8 + player2.getSpeed()*0.8));
-        }
-        if(ball.getCenterX() - ball.getRadius() <= player1.getX()-10 +player1.getWidthTorso() && ball.getY() <= player1.getY() + player1.getRadiusHead()+player1.getHeightTorso() && ball.getY() > player1.getY() + player1.getRadiusHead()){
-            ball.reverseSpeedX();
-            ball.setSpeedX((int)(ball.getCenterX()*0.8 + player1.getSpeed()*0.8));
-        }
-    }
-
-    private void blockPlayers(){
-        if(ball.checkIfIntersectsBoth(player1,player2)){
-            if(player1.getCenterHeadX() < player2.getCenterHeadX() ){
-                player1.setBlockedRight(true);
-                player2.setBlockedLeft(true);
-                ball.setBlocked(true);
-            }else{
-                player1.setBlockedLeft(true);
-                player2.setBlockedRight(true);
-                ball.setBlocked(true);
+    private void playerUnblocking(Player player){
+        if(player.isPlayerBlocked()){
+            if(player.isBlockedLeft()){
+                player.setBlockedLeft(false);
+                player.setPlayerBlocked(false);
             }
+            else if(player.isBlockedRight()) {
+                player.setBlockedRight(false);
+                player.setPlayerBlocked(false);
+            }
+        }
+    }
+
+    private boolean checkIfPlayerHits(){
+        if(Math.abs(player1.getX() - player2.getX()) < player1.getRadiusHead() + player2.getRadiusHead()){
+            blockPlayers(false);
+            player1.setPlayerBlocked(true);
+            player2.setPlayerBlocked(true);
+            return true;
         }else{
-            player1.setBlockedLeft(false);
-            player1.setBlockedRight(false);
-            player2.setBlockedLeft(false);
-            player2.setBlockedRight(false);
+            playerUnblocking(player1);
+            playerUnblocking(player2);
+            return false;
+        }
+    }
+
+    private void playerBallUnblocking(Player player){
+        if(player.isPlayerBallBlocked()){
+            if(player.isBlockedLeft()) {
+                player.setBlockedLeft(false);
+                player.setPlayerBallBlocked(false);
+            }
+            else if(player.isBlockedRight()) {
+                player.setBlockedRight(false);
+                player.setPlayerBallBlocked(false);
+            }
+        }
+    }
+
+    private boolean checkIfPlayersBlockedTheBall(){
+        if(ball.checkIfIntersectsBoth(player1,player2)){
+            blockPlayers(true);
+            player1.setPlayerBallBlocked(true);
+            player2.setPlayerBallBlocked(true);
+            return true;
+        }
+        else{
+            playerBallUnblocking(player1);
+            playerBallUnblocking(player2);
             ball.setBlocked(false);
+            return false;
+        }
+    }
+
+    private void blockPlayers(boolean ifBall){
+        if(player1.getCenterHeadX() < player2.getCenterHeadX() ){
+            player1.setBlockedRight(true);
+            player2.setBlockedLeft(true);
+            if(ifBall) ball.setBlocked(true);
+        }else{
+            player1.setBlockedLeft(true);
+            player2.setBlockedRight(true);
+            if(ifBall) ball.setBlocked(true);
+        }
+    }
+
+    private boolean playerExitFrame(Player player){
+        if(player.getCenterHeadX()+player.getRadiusHead() >= 860-15){
+            player.setX(860-15-2*player.getRadiusHead());
+            player.setBlockedRight(true);
+            player.setExitBlocked(true);
+            return true;
+        }else if(player.getCenterHeadX()-player.getRadiusHead() <= 15){
+            player.setX(15);
+            player.setBlockedLeft(true);
+            player.setExitBlocked(true);
+            return true;
+        }else{
+            if(player.isBlockedRight() && player.isExitBlocked()){
+                player.setBlockedRight(false);
+                player.setExitBlocked(false);
+            }
+            else if(player.isBlockedLeft() && player.isExitBlocked()){
+                player.setBlockedLeft(false);
+                player.setExitBlocked(false);
+            }
+            return false;
         }
     }
 
     public static int getGround(){
         return 625;
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        blockPlayers();
+        ball.checkIfIntersects(player1);
+        ball.checkIfIntersects(player2);
+        ball.checkIfBodyIntersects(player1);
+        ball.checkIfBodyIntersects(player2);
+        checkIfPlayersBlockedTheBall();
+        checkIfPlayerHits();
+        Goal.ballHittingGoal(ball);
+        playerExitFrame(player1);
+        playerExitFrame(player2);
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
         this.repaint();
     }
 }

@@ -1,7 +1,5 @@
 package Game.Entities;
 
-import Game.Windows.GameWindow;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -137,7 +135,7 @@ public class Ball implements Runnable {
         this.speedY = -this.speedY;
     }
 
-    void directoryOfBall() {
+    public void directoryOfBall() {
         ballHittingBorder(observer.getHeight(),observer.getWidth());
         move();
     }
@@ -254,7 +252,7 @@ public class Ball implements Runnable {
        }
     }
 
-    void checkIfIntersects(Object obj) {
+    public void checkIfIntersects(Object obj) {
         if(obj instanceof Ball) {
             Ball ball1 = (Ball)obj;
             if (calculatePythagoras(ball1) <= ball1.getRadius() + this.getRadius()) {
@@ -268,13 +266,24 @@ public class Ball implements Runnable {
             }
         }
     }
+
+    public void checkIfBodyIntersects(Player player) {
+        if (new Rectangle(x, y, 60, 60).intersects(new Rectangle(player.getX() + 15, player.getY() + 80, player.getWidthTorso()-10, player.getHeightTorso())) && centerX > player.getCenterHeadX()) {
+            System.out.println("xD Left");
+        } else if (new Rectangle(x, y, 60, 60).intersects(new Rectangle(player.getX() + 15, player.getY() + 80, player.getWidthTorso()-10, player.getHeightTorso())) && centerX < player.getCenterHeadX()) {
+            System.out.println("xD Right");
+        }
+    }
     public boolean checkIfIntersectsBoth(Player player1, Player player2){
         if (player1.getCenterHeadX() > centerX && player2.getCenterHeadX() < centerX || player1.getCenterHeadX() < centerX && player2.getCenterHeadX() > centerX){
-            System.out.println("1");
-            if(centerY > player1.getY() && centerY > player2.getY()){
-                System.out.println("2");
+            if(centerY > player1.getY() && centerY > player2.getY() && centerY < player1.getY()+2*player1.getRadiusHead() && centerY < player2.getY()+2*player2.getRadiusHead()){
                 if(Math.abs(player1.getCenterHeadX()-centerX)<=player1.getRadiusHead() + radius && Math.abs(player2.getCenterHeadX()-centerX)<=player2.getRadiusHead() + radius){
-                    System.out.println("3");
+                    return true;
+                }
+                else return false;
+            }
+            else if(centerY > player1.getCenterHeadY()+player1.getRadiusHead() && centerY > player2.getCenterHeadY() + player2.getRadiusHead()) {
+                if (Math.abs(player1.getCenterHeadX() - 20 - centerX) <= player1.getRadiusHead() + radius && Math.abs(player2.getCenterHeadX() + 25 - centerX) <= player2.getRadiusHead() + radius) {
                     return true;
                 }
                 else return false;
@@ -284,17 +293,17 @@ public class Ball implements Runnable {
         else return false;
     }
 
-    private void speedLimitY(){
+    public void speedLimitY(){
         if(speedY > 300) speedY = 300;
         else if(speedY < -300) speedY = -300;
     }
 
-    private void speedLimitX(){
+    public void speedLimitX(){
         if(speedX > 300) speedX = 300;
         else if(speedX < -300) speedX = -300;
     }
 
-    private void gravity(){
+    public void gravity(){
         if(y + 2*radius < getGround() && speedY < 300) speedY += 10;
         else if(y+2*radius >= getGround()) {
             y = getGround() - 2*radius;
@@ -308,11 +317,8 @@ public class Ball implements Runnable {
         while(true){
             directoryOfBall();
             gravity();
-            checkIfIntersects(GameWindow.getPlayer(1));
-            checkIfIntersects(GameWindow.getPlayer(2));
             speedLimitY();
             speedLimitX();
-            Goal.ballHittingGoal(this);
             try{
                 sleep(20);
                 if(threadSuspended){

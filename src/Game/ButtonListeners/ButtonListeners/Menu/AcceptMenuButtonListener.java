@@ -20,7 +20,6 @@ public class AcceptMenuButtonListener implements ActionListener {
         for (int k : keys) {
             savedKeys += (k + "\n");
         }
-        System.out.println(savedKeys);
         try {
             PrintWriter writer = new PrintWriter("textures\\KeyBindings.txt", "UTF-8");
             writer.println(savedKeys);

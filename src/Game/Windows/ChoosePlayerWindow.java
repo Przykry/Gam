@@ -21,12 +21,12 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
 
     public Player[] player1Models = new Player[]{
             new Player(50,50,"Messi",10,7,55),
-            new Player(50,50,"Arbuz",2,0,0)
+            new Player(50,50,"Arbuz",2,9,60)
     };
 
     public Player[] player2Models = new Player[]{
             new Player(50,50,"Messi",10,7,55),
-            new Player(50,50,"Arbuz",2,0,0)
+            new Player(50,50,"Arbuz",2,9,60)
     };
 
     private static Player player1;

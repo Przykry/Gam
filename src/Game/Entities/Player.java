@@ -85,6 +85,36 @@ public class Player implements Runnable {
     private boolean movingLeft, movingRight, jumping;
     private boolean blockedLeft, blockedRight;
 
+    public boolean isExitBlocked() {
+        return exitBlocked;
+    }
+
+    public void setExitBlocked(boolean exitBlocked) {
+        this.exitBlocked = exitBlocked;
+    }
+
+    private boolean exitBlocked;
+    private boolean playerBlocked;
+
+    public boolean isPlayerBlocked() {
+        return playerBlocked;
+    }
+
+    public void setPlayerBlocked(boolean playerBlocked) {
+        this.playerBlocked = playerBlocked;
+    }
+
+    public boolean isPlayerBallBlocked() {
+        return playerBallBlocked;
+    }
+
+    public void setPlayerBallBlocked(boolean playerBallBlocked) {
+        this.playerBallBlocked = playerBallBlocked;
+    }
+
+    private boolean playerBallBlocked;
+
+
     public boolean isBlockedRight() {
         return blockedRight;
     }
@@ -139,6 +169,11 @@ public class Player implements Runnable {
         this.movingLeft = false;
         this.movingRight = false;
         this.jumping = false;
+        this.exitBlocked = false;
+        this.blockedRight = false;
+        this.blockedLeft = false;
+        this.playerBlocked = false;
+        this.playerBallBlocked = false;
     }
 
     public void setCenterHeadX(int centerHeadX) {
@@ -205,10 +240,12 @@ public class Player implements Runnable {
 
     public void setX(int x) {
         this.x = x;
+        setCenterHeadX(x+radiusHead);
     }
 
     public void setY(int y) {
         this.y = y;
+        setCenterHeadY(y+radiusHead);
     }
 
     public void setKeys(int playerNumber) {
