@@ -190,19 +190,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         drawGoalsAndBall(graphics);
     }
 
-    private void playerUnblocking(Player player){
-        if(player.isPlayerBlocked()){
-            if(player.isBlockedLeft()){
-                player.setBlockedLeft(false);
-                player.setPlayerBlocked(false);
-            }
-            else if(player.isBlockedRight()) {
-                player.setBlockedRight(false);
-                player.setPlayerBlocked(false);
-            }
-        }
-    }
-
     private boolean checkIfPlayerHits(){
         if(Math.abs(player1.getX() - player2.getX()) < player1.getRadiusHead() + player2.getRadiusHead()){
             blockPlayers(false);
@@ -210,22 +197,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
             player2.setPlayerBlocked(true);
             return true;
         }else{
-            playerUnblocking(player1);
-            playerUnblocking(player2);
             return false;
-        }
-    }
-
-    private void playerBallUnblocking(Player player){
-        if(player.isPlayerBallBlocked()){
-            if(player.isBlockedLeft()) {
-                player.setBlockedLeft(false);
-                player.setPlayerBallBlocked(false);
-            }
-            else if(player.isBlockedRight()) {
-                player.setBlockedRight(false);
-                player.setPlayerBallBlocked(false);
-            }
         }
     }
 
@@ -237,8 +209,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
             return true;
         }
         else{
-            playerBallUnblocking(player1);
-            playerBallUnblocking(player2);
             ball.setBlocked(false);
             return false;
         }
@@ -280,6 +250,25 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    private void unblockPlayers(){
+        if(player1.isMovingRight() && !checkIfPlayerHits()){
+            player1.setBlockedLeft(false);
+            player2.setBlockedRight(false);
+        }
+        if(player1.isMovingLeft() && !checkIfPlayerHits()){
+            player1.setBlockedRight(false);
+            player2.setBlockedLeft(false);
+        }
+        if(player2.isMovingRight() && !checkIfPlayerHits()){
+            player1.setBlockedRight(false);
+            player2.setBlockedLeft(false);
+        }
+        if(player2.isMovingLeft() && !checkIfPlayerHits()){
+            player1.setBlockedLeft(false);
+            player2.setBlockedRight(false);
+        }
+    }
+
     public static int getGround(){
         return 625;
     }
@@ -295,6 +284,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         Goal.ballHittingGoal(ball);
         playerExitFrame(player1);
         playerExitFrame(player2);
+        unblockPlayers();
         try {
             Thread.sleep(10);
         } catch (InterruptedException e1) {

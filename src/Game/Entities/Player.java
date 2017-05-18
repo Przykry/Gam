@@ -360,8 +360,14 @@ public class Player implements Runnable {
         while (true){
             falling();
             jumping();
-            if(isMovingLeft())  movePlayerLeft();
-            if(isMovingRight()) movePlayerRight();
+            if(isMovingLeft()){
+                setBlockedRight(false);
+                movePlayerLeft();
+            }
+            if(isMovingRight()) {
+                setBlockedLeft(false);
+                movePlayerRight();
+            }
             try{
                 sleep(15);
                 if(threadSuspended){
