@@ -124,6 +124,9 @@ public class Ball implements Runnable {
             this.y += speedY / 10;
             this.centerX = this.x + 30;
             this.centerY = this.y + 30;
+        }else {
+            speedY = 0;
+            speedX = 0;
         }
     }
 
