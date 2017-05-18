@@ -171,16 +171,21 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
             this.add(points[i]);
         }
     }
+
+    public static void resetPoints(){
+        player1.setPoints(0);
+        player2.setPoints(0);
+    }
+
     private boolean isScored(){
         if(leftGoal.isLeftScored(ball)) {
-            player1.setPoints(player1.getPoints() + 1);
-            setLabelPoints(points[0],player1);
-            System.out.println("jest brama");
+            player2.setPoints(player2.getPoints() + 1);
+            setLabelPoints(points[1],player2);
             return true;
         }
         else if(rightGoal.isRightScored(ball)) {
-            player2.setPoints(player2.getPoints() + 1);
-            setLabelPoints(points[1],player2);
+            player1.setPoints(player1.getPoints() + 1);
+            setLabelPoints(points[0],player1);
             return true;
         }
         return false;

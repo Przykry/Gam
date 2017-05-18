@@ -57,9 +57,8 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
 
     private Image resizedHead[] = new Image[2];
     private Image resizedTorso[] = new Image[2];
-
     private Image backgroundImage;
-
+    private Image chooseWindowBar;
 
     public int getFirstPlayerChoose() {
         return firstPlayerChoose;
@@ -108,6 +107,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         this.heigth = heigth;
         try {
             this.backgroundImage = getBackgroundImage("mainBackground");
+            this.chooseWindowBar = getBackgroundImage("gameBar");
         }
         catch(IOException e){
             e.printStackTrace();
