@@ -293,6 +293,10 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+
+
+
+
     public static int getGround(){
         return 625;
     }
@@ -302,6 +306,8 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         ball.checkIfIntersects(player2);
         ball.checkIfBodyIntersects(player1);
         ball.checkIfBodyIntersects(player2);
+        ball.playerShot(player1);
+        ball.playerShot(player2);
         checkIfPlayersBlockedTheBall();
         checkIfPlayerHits();
         startGameAgain();

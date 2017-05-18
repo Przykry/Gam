@@ -296,6 +296,25 @@ public class Ball implements Runnable {
         else return false;
     }
 
+    public void playerShot(Player player){
+        if(player.isShooting()){
+            if(this.getCenterY() + this.getRadius() >= player.getCenterHeadY() - player.getRadiusHead()){
+                if(this.getCenterX() >= player.getCenterHeadX()){
+                    if(this.getCenterX() - 3 * this.getRadius()  <= player.getCenterHeadX()){
+                        speedY -= player.getShotStrength() * 20;
+                        speedX -= player.getShotStrength();
+                    }
+                }
+                else if(this.getCenterX() <= player.getCenterHeadX()){
+                    if(this.getCenterX()  + 3 * this.getRadius() >= player.getCenterHeadX()) {
+                        speedY -= player.getShotStrength() * 20;
+                        speedX += player.getShotStrength();
+                    }
+                }
+            }
+        }
+    }
+
     public void speedLimitY(){
         if(speedY > 300) speedY = 300;
         else if(speedY < -300) speedY = -300;

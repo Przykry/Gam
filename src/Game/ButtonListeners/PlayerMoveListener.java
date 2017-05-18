@@ -35,8 +35,8 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        playerMove(e,player2, player1);
-        playerMove(e,player1, player2);
+        playerMove(e,player2);
+        playerMove(e,player1);
         setPlayerImage(e,player1);
         setPlayerImage(e,player2);
     }
@@ -57,19 +57,19 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
         }
     }
 
-    private void playerMove(KeyEvent e,Player player1, Player player2){
-        if(e.getKeyCode() == player1.getLeftKey()){
-            player1.setMovingLeft(true);
+    private void playerMove(KeyEvent e,Player player){
+        if(e.getKeyCode() == player.getLeftKey()){
+            player.setMovingLeft(true);
         }
-        else if(e.getKeyCode() == player1.getRightKey()){
-            player1.setMovingRight(true);
+        else if(e.getKeyCode() == player.getRightKey()){
+            player.setMovingRight(true);
         }
-        else if(e.getKeyCode() == player1.getJumpKey()){
-            if(player1.getY()+player1.getHeightTorso()+2*player1.getRadiusHead() == getGround()) player1.setJumping(true);
+        else if(e.getKeyCode() == player.getJumpKey()){
+            if(player.getY()+player.getHeightTorso()+2*player.getRadiusHead() == getGround()) player.setJumping(true);
         }
-        else if(e.getKeyCode() == player1.getShotKey()){
+        else if(e.getKeyCode() == player.getShotKey()){
             //System.out.println("shooting");
-            //player.setShooting(true);
+            player.setShooting(true);
         }
     }
 
@@ -81,7 +81,7 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
             player.setMovingRight(false);
         }
         else if(e.getKeyCode() == player.getShotKey()){
-            //player.setShooting(false);
+            player.setShooting(false);
         }
     }
 
