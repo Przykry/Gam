@@ -20,7 +20,7 @@ public class HallOfFameWindow extends JPanel implements WindowInt {
     };
 
     String [] filepaths = new String[]{
-            "textures\\backButton.png",
+            "textures\\chooseButtons.png",
             "textures\\acceptMenuButton.png"
     };
 
@@ -40,6 +40,7 @@ public class HallOfFameWindow extends JPanel implements WindowInt {
         }
         for(int i = 0; i < buttons.length; i++){
             createButton(buttons[i],80+520*i,500,filepaths[i],listeners[i]);
+            buttons[i].setText("Back");
             this.add(buttons[i]);
         }
 

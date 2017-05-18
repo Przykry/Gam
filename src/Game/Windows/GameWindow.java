@@ -11,7 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     private Image backgroundImage;
     private Goal leftGoal, rightGoal;
     private static Ball ball;
-    private JButton backButton;
+    private JButton backButton = new JButton();
     private static Player player1, player2;
     private static Timer timer;
     static Thread[] entities;
@@ -66,13 +65,13 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         catch(IOException e){
             e.printStackTrace();
         }
-        createBackButton();
         leftGoal = new Goal(1);
         rightGoal = new Goal(2);
         ball = new Ball(width/2, getGround()-600,0,0,this);
         setPlayerStanding();
         createPointsLabel();
         createColonLabel();
+        addBackButton();
         this.addKeyListener(new PlayerMoveListener(player1,player2));
         this.setFocusable(true);
         this.setLayout(null);
@@ -83,6 +82,12 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     public static void setPlayerKeys(){
         player1.setKeys(1);
         player2.setKeys(2);
+    }
+
+    private void addBackButton(){
+        createButton(backButton,15,15,"textures\\backGameButton.png",new BackButtonListener());
+        backButton.setText("Back");
+        this.add(backButton);
     }
 
     private void setPlayerStanding(){
@@ -112,17 +117,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         for(Thread t : entities){
             t.suspend();
         }
-    }
-
-    private void createBackButton(){
-        backButton = new JButton();
-        createButton(backButton,15,15,"textures\\backGameButton.png",new BackButtonListener());
-        backButton.setFont(new Font("Comic Sans", Font.BOLD, 32));
-        backButton.setVerticalTextPosition(SwingConstants.CENTER);
-        backButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        backButton.setForeground(Color.WHITE);
-        backButton.setText("Back");
-        this.add(backButton);
     }
 
     private void drawWindowBar(Graphics g){

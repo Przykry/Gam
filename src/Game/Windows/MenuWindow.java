@@ -41,7 +41,7 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
     };
 
     private String [] filepaths = new String[]{
-            "textures\\backButton.png",
+            "textures\\chooseButtons.png",
             "textures\\acceptMenuButton.png",
             "textures\\keySwitcher.png",
             "textures\\keySwitcher1.png"
@@ -57,7 +57,9 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
         this.width = width;
         this.heigth = heigth;
         for(int i = 0; i < buttons.length; i++){
-            createButton(buttons[i],80+520*i,500,filepaths[i],listeners[i]);
+            createButton(buttons[i],125+430*i,450,filepaths[0],listeners[i]);
+            if(i ==0) buttons[i].setText("Back");
+            else buttons[i].setText("Accept");
             this.add(buttons[i]);
         }
 
@@ -81,14 +83,16 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
         for(int i=0;i<4;i++){
             createButton(keySwitchers[i],135,200+50*i,filepaths[2], new MenuActionListener(this,i));
             createButton(keySwitchers[i+4],565,200+50*i,filepaths[2],new MenuActionListener(this,i+4));
-            setTextKeySwitcherForeground(keySwitchers[i]);
+            keySwitchers[i].setFont(new Font("Comic Sans", Font.BOLD, 24));
+            keySwitchers[i+4].setFont(new Font("Comic Sans", Font.BOLD, 24));
             setTextMovementKey(keySwitchers[i],keys[i]);
-            setTextKeySwitcherForeground(keySwitchers[i+4]);
             setTextMovementKey(keySwitchers[i+4],keys[i+4]);
             this.add(keySwitchers[i]);
             this.add(keySwitchers[i+4]);
         }
     }
+
+
 
     public boolean switcherClicked(int i){
         if(keySwitchers[i].getModel().isEnabled()) return true;
@@ -101,18 +105,11 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
 
     private void createPlayerLabel(JButton player, int x, String text){
         createButton(player,x,150,filepaths[3],null);
-        setTextKeySwitcherForeground(player);
-        player.setFont(new Font("Comic Sans", Font.BOLD, 24));
         player.setText(text);
         this.add(player);
     }
 
-    private void setTextKeySwitcherForeground(JButton button){
-       button.setFont(new Font("Comic Sans", Font.BOLD, 16));
-       button.setVerticalTextPosition(SwingConstants.CENTER);
-       button.setHorizontalTextPosition(SwingConstants.CENTER);
-       button.setForeground(Color.WHITE);
-    }
+
 
     private void setTextMovementKey(JButton button, int key){
         button.setText(String.valueOf(KeyEvent.getKeyText(key)));

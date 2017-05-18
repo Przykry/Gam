@@ -15,18 +15,14 @@ public interface WindowInt{
 
     default void createButton(JButton button, int x, int y, String filepath, ActionListener list) {
         ImageIcon icon = new ImageIcon(filepath);
-        //Image scaledImg = icon.getImage().getScaledInstance(246, 60,  Image.SCALE_SMOOTH);
-        //icon = new ImageIcon(scaledImg);
         button.setIcon(icon);
         button.setBounds(x,y,icon.getIconWidth(),icon.getIconHeight());
         button.addActionListener(list);
+        button.setFont(new Font("Comic Sans", Font.BOLD, 32));
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setForeground(Color.decode("#2A2C2E"));
         button.setFocusable(false);
-    }
-
-    default void createLabel(JLabel label, int x, int y, String filepath){
-        ImageIcon icon = new ImageIcon(filepath);
-        label.setIcon(icon);
-        label.setBounds(x,y,icon.getIconWidth(),icon.getIconHeight());
     }
 
     default Image getBackgroundImage(String nameBackground) throws IOException{
@@ -44,4 +40,5 @@ public interface WindowInt{
     default void drawBackground(Graphics g, Image backgroundImage, ImageObserver window){
         g.drawImage(backgroundImage,0,0, window);
     }
+
 }

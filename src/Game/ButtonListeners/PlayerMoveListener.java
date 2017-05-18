@@ -108,7 +108,7 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        torsoMove(player1);
-        torsoMove(player2);
+            torsoMove(player1);
+            torsoMove(player2);
     }
 }

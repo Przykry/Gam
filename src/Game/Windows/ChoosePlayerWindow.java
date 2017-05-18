@@ -5,6 +5,7 @@ import Game.ButtonListeners.BackButtonListener;
 import Game.ButtonListeners.LeftSwipeButtonListener;
 import Game.ButtonListeners.RightSwipeButtonListener;
 import Game.Entities.Player;
+import sun.plugin.dom.css.RGBColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +42,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
             new JButton()
     };
     private String [] filepaths = new String[]{
-            "textures\\backButton.png",
+            "textures\\chooseButtons.png",
             "textures\\acceptButton.png",
             "textures\\swipeLeftButton.png",
             "textures\\swipeRightButton.png"
@@ -125,7 +126,9 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         this.resizedHead[1] = resizePlayerHead(this.player2,0);
         this.resizedTorso[1] = resizePlayerTorso(this.player2,0);
         for(int i = 0; i < 2; i++){
-            createButton(buttons[i],80+520*i,500,filepaths[i],listeners[i]);
+            createButton(buttons[i],120+440*i,550,filepaths[0],listeners[i]);
+            if(i ==0) buttons[i].setText("Back");
+            else buttons[i].setText("Accept");
             this.add(buttons[i]);
         }
         createButton(buttons[2],50,260,filepaths[2],listeners[2]);
@@ -140,6 +143,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         this.setFocusable(true);
         this.setLayout(null);
     }
+
 
     public Image resizePlayerHead(Player play, int i){
         Image scaledImg = play.getHeadImage(i).getScaledInstance(play.getRadiusHead()*4, play.getRadiusHead()*4,  Image.SCALE_SMOOTH);
