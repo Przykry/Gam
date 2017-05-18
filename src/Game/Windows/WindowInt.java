@@ -23,6 +23,12 @@ public interface WindowInt{
         button.setFocusable(false);
     }
 
+    default void createLabel(JLabel label, int x, int y, String filepath){
+        ImageIcon icon = new ImageIcon(filepath);
+        label.setIcon(icon);
+        label.setBounds(x,y,icon.getIconWidth(),icon.getIconHeight());
+    }
+
     default Image getBackgroundImage(String nameBackground) throws IOException{
             return ImageIO.read(new File("textures\\" + nameBackground + ".png"));
     }

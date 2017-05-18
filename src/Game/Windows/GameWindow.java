@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,16 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     private static Player player1, player2;
     private static Timer timer;
     static Thread[] entities;
+    private Image gameBar;
+    private JLabel points[] = {
+            new JLabel(),
+            new JLabel()
+    };
+    private JLabel barText[] = {
+            new JLabel(),
+            new JLabel()
+    };
+
     public static Timer getTimer() {
         return timer;
     }
@@ -50,18 +61,18 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         //player2.setTurnedLeft(true);
         try {
             backgroundImage = getBackgroundImage("mainBackground");
+            gameBar = getBackgroundImage("gameBar");
         }
         catch(IOException e){
             e.printStackTrace();
         }
-        backButton = new JButton();
-        createButton(backButton,50,25,"textures\\backButton.png",new BackButtonListener());
-        this.add(backButton);
+        createBackButton();
         leftGoal = new Goal(1);
         rightGoal = new Goal(2);
         ball = new Ball(width/2, getGround()-600,0,0,this);
         setPlayerStanding();
         createPointsLabel();
+        createColonLabel();
         this.addKeyListener(new PlayerMoveListener(player1,player2));
         this.setFocusable(true);
         this.setLayout(null);
@@ -103,10 +114,20 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
-    private JLabel points[] = {
-            new JLabel(),
-            new JLabel()
-    };
+    private void createBackButton(){
+        backButton = new JButton();
+        createButton(backButton,15,15,"textures\\backGameButton.png",new BackButtonListener());
+        backButton.setFont(new Font("Comic Sans", Font.BOLD, 32));
+        backButton.setVerticalTextPosition(SwingConstants.CENTER);
+        backButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        backButton.setForeground(Color.WHITE);
+        backButton.setText("Back");
+        this.add(backButton);
+    }
+
+    private void drawWindowBar(Graphics g){
+       g.drawImage(gameBar,15,15,this);
+    }
 
     private void setBallStartPosition(Ball ball){
         ball.setX(width/2);
@@ -115,19 +136,26 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         ball.setSpeedY(0);
     }
 
-    private void showPoints(){
+    private void setColonPosition(JLabel label){
+        label.setBounds(width/2,20,32,32);
+    }
 
+    private void createColonLabel(){
+        setColonPosition(barText[0]);
+        setTextLabelForeground(barText[0]);
+        barText[0].setText(":");
+        this.add(barText[0]);
     }
 
     private void setTextLabelForeground(JLabel label){
-        label.setFont(new Font("Comic Sans", Font.BOLD, 16));
+        label.setFont(new Font("Comic Sans", Font.BOLD, 32));
         label.setVerticalTextPosition(SwingConstants.CENTER);
         label.setHorizontalTextPosition(SwingConstants.CENTER);
         label.setForeground(Color.WHITE);
     }
 
     private void setLabelPosition(JLabel label,int i){
-        label.setBounds(width/2 - 30 + i*10,20,10,16);
+        label.setBounds(width/2 - 20 + i*32,20,32,32);
     }
 
     private void setLabelPoints(JLabel label,Player player){
@@ -171,10 +199,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         graphics.drawImage(rightGoal.getGoalImage(),width-15- rightGoal.getWidth(), height -15- rightGoal.getHeigth(),this);
     }
 
-
-
-
-
     private void drawPlayers(Graphics graphics){
         graphics.drawImage(player1.getHeadImage(player1.getPlayerHeadImage()),player1.getX(),player1.getY(),this);
         graphics.drawImage(player1.getTorsoImage(player1.getPlayerTorsoImage()),player1.getX()+3,player1.getY()+2*player1.getRadiusHead(),this);
@@ -185,6 +209,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
 
     public void paintComponent(Graphics graphics){
         drawBackground(graphics,backgroundImage,this);
+        drawWindowBar(graphics);
         drawBorders(graphics,860,640);
         drawPlayers(graphics);
         drawGoalsAndBall(graphics);
