@@ -36,6 +36,23 @@ public class Goal {
         }
     }
 
+    public boolean isLeftScored(Ball ball){
+        if(ball.getCenterY() + ball.getRadius() >= 445){
+            if(ball.getCenterX() + ball.getRadius() < 75){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isRightScored(Ball ball){
+        if(ball.getCenterY() + ball.getRadius() >= 445){
+            if(ball.getCenterX() - ball.getRadius() > 785) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static void ballHittingGoal(Ball ball){
         if(ball.getCenterY() + ball.getRadius() <= 445 && ball.getCenterY() + ball.getRadius() > 415){

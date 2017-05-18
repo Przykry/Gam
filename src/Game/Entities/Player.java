@@ -45,6 +45,10 @@ public class Player implements Runnable {
     private volatile boolean threadSuspended;
     private int playerTorsoImage;
     private int playerHeadImage;
+    private int points;
+    public void setPoints(int points) {this.points = points;}
+
+    public int getPoints() { return points; }
 
     public int getPlayerTorsoImage() {
         return playerTorsoImage;

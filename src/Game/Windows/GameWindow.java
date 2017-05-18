@@ -103,6 +103,67 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    private JLabel points[] = {
+            new JLabel(),
+            new JLabel()
+    };
+
+    private void setBallStartPosition(Ball ball){
+        ball.setX(width/2);
+        ball.setY(getGround()-600);
+        ball.setSpeedX(0);
+        ball.setSpeedY(0);
+    }
+
+    private void showPoints(){
+
+    }
+
+    private void setTextLabelForeground(JLabel label){
+        label.setFont(new Font("Comic Sans", Font.BOLD, 16));
+        label.setVerticalTextPosition(SwingConstants.CENTER);
+        label.setHorizontalTextPosition(SwingConstants.CENTER);
+        label.setForeground(Color.WHITE);
+    }
+
+    private void setLabelPosition(JLabel label,int i){
+        label.setBounds(width/2 - 30 + i*10,20,10,16);
+    }
+
+    private void setLabelPoints(JLabel label,Player player){
+        label.setText(String.valueOf(player.getPoints()));
+    }
+
+    private void createPointsLabel(){
+        setLabelPoints(points[0],player1);
+        setLabelPoints(points[1],player2);
+        for(int i = 0; i< points.length; i++){
+            setTextLabelForeground(points[i]);
+            setLabelPosition(points[i],i);
+            this.add(points[i]);
+        }
+    }
+    private boolean isScored(){
+        if(leftGoal.isLeftScored(ball)) {
+            player1.setPoints(player1.getPoints() + 1);
+            setLabelPoints(points[0],player1);
+            System.out.println("jest brama");
+            return true;
+        }
+        else if(rightGoal.isRightScored(ball)) {
+            player2.setPoints(player2.getPoints() + 1);
+            setLabelPoints(points[1],player2);
+            return true;
+        }
+        return false;
+    }
+
+    private void startGameAgain(){
+        if(isScored()){
+            setPlayerStanding();
+            setBallStartPosition(ball);
+        }
+    }
 
     private void drawGoalsAndBall(Graphics graphics){
         ball.drawBall(graphics);
