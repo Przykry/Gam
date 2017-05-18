@@ -32,8 +32,8 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     }
 
     public static Player getPlayer(int player) {
-       if(player == 1) return player1;
-       else return player2;
+        if(player == 1) return player1;
+        else return player2;
     }
 
     public GameWindow(int width, int height, ChoosePlayerWindow window){
@@ -61,7 +61,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         rightGoal = new Goal(2);
         ball = new Ball(width/2, getGround()-600,0,0,this);
         setPlayerStanding();
-
+        createPointsLabel();
         this.addKeyListener(new PlayerMoveListener(player1,player2));
         this.setFocusable(true);
         this.setLayout(null);
@@ -291,6 +291,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         ball.checkIfBodyIntersects(player2);
         checkIfPlayersBlockedTheBall();
         checkIfPlayerHits();
+        startGameAgain();
         Goal.ballHittingGoal(ball);
         playerExitFrame(player1);
         playerExitFrame(player2);

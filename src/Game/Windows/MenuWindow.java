@@ -82,9 +82,9 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
             createButton(keySwitchers[i],135,200+50*i,filepaths[2], new MenuActionListener(this,i));
             createButton(keySwitchers[i+4],565,200+50*i,filepaths[2],new MenuActionListener(this,i+4));
             setTextKeySwitcherForeground(keySwitchers[i]);
-            setTextMovmentKey(keySwitchers[i],keys[i]);
+            setTextMovementKey(keySwitchers[i],keys[i]);
             setTextKeySwitcherForeground(keySwitchers[i+4]);
-            setTextMovmentKey(keySwitchers[i+4],keys[i+4]);
+            setTextMovementKey(keySwitchers[i+4],keys[i+4]);
             this.add(keySwitchers[i]);
             this.add(keySwitchers[i+4]);
         }
@@ -114,14 +114,13 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
        button.setForeground(Color.WHITE);
     }
 
-    private void setTextMovmentKey(JButton button, int key){
+    private void setTextMovementKey(JButton button, int key){
         button.setText(String.valueOf(KeyEvent.getKeyText(key)));
     }
 
     public void setKeys() throws FileNotFoundException {
         File file = new File("textures\\KeyBindings.txt");
         Scanner scr = new Scanner(file);
-
         for(int i=0;i<8;i++) {
             keys[i] = scr.nextInt();
         }

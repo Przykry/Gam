@@ -11,12 +11,10 @@ import java.io.IOException;
 public class Goal {
     private int width, heigth;
     private Image goalImage;
-    private boolean scored;
 
     public Goal(int leftOrRight){
         this.width = 60;
         this.heigth = 210;
-        this.scored = false;
         loadGoalImage(leftOrRight);
     }
 
@@ -34,24 +32,6 @@ public class Goal {
                 e.printStackTrace();
             }
         }
-    }
-
-    public boolean isLeftScored(Ball ball){
-        if(ball.getCenterY() + ball.getRadius() >= 445){
-            if(ball.getCenterX() + ball.getRadius() < 75){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isRightScored(Ball ball){
-        if(ball.getCenterY() + ball.getRadius() >= 445){
-            if(ball.getCenterX() - ball.getRadius() > 785) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static void ballHittingGoal(Ball ball){
@@ -80,6 +60,25 @@ public class Goal {
         }
     }
 
+    public boolean isLeftScored(Ball ball){
+        if(ball.getCenterY() + ball.getRadius() >= 445){
+            if(ball.getCenterX() + ball.getRadius() < 75){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isRightScored(Ball ball){
+        if(ball.getCenterY() + ball.getRadius() >= 445){
+            if(ball.getCenterX() - ball.getRadius() > 785) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public int getWidth() {
         return width;
     }
@@ -98,17 +97,5 @@ public class Goal {
 
     public Image getGoalImage() {
         return goalImage;
-    }
-
-    public void setGoalImage(Image goalImage) {
-        this.goalImage = goalImage;
-    }
-
-    public boolean isScored() {
-        return scored;
-    }
-
-    public void setScored(boolean scored) {
-        this.scored = scored;
     }
 }

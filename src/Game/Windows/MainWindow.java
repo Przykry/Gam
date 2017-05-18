@@ -76,7 +76,6 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
                         this)
                         );
         }
-
         List<Runnable> bouncingBall = new ArrayList<>();
         for(int i=0;i<numberOfBalls;i++) {
             bouncingBall.add(new BouncingBall(ballList,i));
@@ -90,7 +89,6 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
             t.suspend();
         }
     }
-
     public static void startBouncingBalls(){
         for(Thread t : thread){
             t.resume();
