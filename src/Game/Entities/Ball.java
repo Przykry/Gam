@@ -304,13 +304,13 @@ public class Ball implements Runnable {
     }
 
     public void speedLimitY(){
-        if(speedY > 300) speedY = 300;
-        else if(speedY < -300) speedY = -300;
+        if(speedY > 250) speedY = 250;
+        else if(speedY < -250) speedY = -250;
     }
 
     public void speedLimitX(){
-        if(speedX > 300) speedX = 300;
-        else if(speedX < -300) speedX = -300;
+        if(speedX > 250) speedX = 250;
+        else if(speedX < -250) speedX = -250;
     }
 
     public void gravity(){
