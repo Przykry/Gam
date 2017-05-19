@@ -46,6 +46,16 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         else return player2;
     }
 
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getTime(){
+        return this.time;
+    }
+
+    private int time;
+
     public GameWindow(int width, int height, ChoosePlayerWindow window){
         this.width = width;
         this.height = height;
@@ -77,6 +87,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         this.setLayout(null);
         Main.setGameWindow(this);
         timer = new Timer(5,this);
+        time = 60;
     }
 
     public static void setPlayerKeys(){
