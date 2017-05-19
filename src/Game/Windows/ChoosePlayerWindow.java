@@ -5,7 +5,6 @@ import Game.ButtonListeners.BackButtonListener;
 import Game.ButtonListeners.LeftSwipeButtonListener;
 import Game.ButtonListeners.RightSwipeButtonListener;
 import Game.Entities.Player;
-import sun.plugin.dom.css.RGBColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,12 +21,12 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
 
     public Player[] player1Models = new Player[]{
             new Player(50,50,"Messi",10,7,55),
-            new Player(50,50,"Kuchy",7,5,85)
+            new Player(50,50,"Kuchy",8,5,85)
     };
 
     public Player[] player2Models = new Player[]{
             new Player(50,50,"Messi",10,7,55),
-            new Player(50,50,"Kuchy",7,5,85),
+            new Player(50,50,"Kuchy",8,5,85),
     };
 
     private static Player player1;

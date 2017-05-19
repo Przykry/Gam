@@ -275,11 +275,11 @@ public class Ball implements Runnable {
             if (new Rectangle(x, y, 60, 60).intersects(new Rectangle(player.getX() + 15, player.getY() + 80, player.getWidthTorso() - 10, player.getHeightTorso())) && centerX > player.getCenterHeadX()) {
                 setX(player.getCenterHeadX()+player.getRadiusHead()-15);
                 speedY -= player.getShotStrength() * 20;
-                speedX += player.getShotStrength() * 15;
+                speedX += player.getShotStrength() * 20;
             } else if (new Rectangle(x, y, 60, 60).intersects(new Rectangle(player.getX() + 15, player.getY() + 80, player.getWidthTorso() - 10, player.getHeightTorso())) && centerX < player.getCenterHeadX()) {
                 setX(player.getCenterHeadX()-player.getRadiusHead()-2*radius+15);
                 speedY -= player.getShotStrength() * 20;
-                speedX -= player.getShotStrength() * 15;
+                speedX -= player.getShotStrength() * 20;
             }
         }
     }

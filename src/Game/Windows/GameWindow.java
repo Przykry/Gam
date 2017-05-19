@@ -215,9 +215,9 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         graphics.setColor(Color.red);
         graphics.setFont(new Font("Comic Sans", Font.BOLD, 32));
         if(player1.getPoints() > player2.getPoints()){
-            graphics.drawString("Player 1 won the game!",250,300);
+            graphics.drawString(player1.getName() + " won the game!",250,300);
         }else if(player1.getPoints() < player2.getPoints()){
-            graphics.drawString("Player 2 won the game!",250,300);
+            graphics.drawString(player2.getName() + " won the game!",250,300);
         }else graphics.drawString("It's a draw!",350,300);
         graphics.drawString("Press ENTER to return to main menu.",150,350);
     }
@@ -382,6 +382,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
             Tclock.suspend();
             stopEntities();
             gameEnd = true;
+            timer.stop();
         }
         try {
             Thread.sleep(10);
