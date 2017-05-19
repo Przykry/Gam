@@ -149,7 +149,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     }
 
     private void setLabelPosition(JLabel label,int i){
-        label.setBounds(width/2 - 20 + i*32,20,32,32);
+        label.setBounds(width/2 - 20 + i*32,20,64,32);
     }
 
     private void setLabelPoints(JLabel label,Player player){
@@ -189,11 +189,14 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         if(isScored()){
             setPlayerStanding();
             setBallStartPosition(ball);
+            player1.setBlockedLeft(false);
+            player1.setBlockedRight(false);
+            player2.setBlockedLeft(false);
+            player2.setBlockedRight(false);
         }
     }
 
-    private void drawGoalsAndBall(Graphics graphics){
-        ball.drawBall(graphics);
+    private void drawGoals(Graphics graphics){
         graphics.drawImage(leftGoal.getGoalImage(),16, height -15-leftGoal.getHeigth(),this);
         graphics.drawImage(rightGoal.getGoalImage(),width-15- rightGoal.getWidth(), height -15- rightGoal.getHeigth(),this);
     }
@@ -210,8 +213,9 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         drawBackground(graphics,backgroundImage,this);
         drawWindowBar(graphics);
         drawBorders(graphics,860,640);
+        ball.drawBall(graphics);
         drawPlayers(graphics);
-        drawGoalsAndBall(graphics);
+        drawGoals(graphics);
     }
 
     private boolean checkIfPlayerHits(){
@@ -306,8 +310,8 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         ball.checkIfIntersects(player2);
         ball.checkIfBodyIntersects(player1);
         ball.checkIfBodyIntersects(player2);
-        ball.playerShot(player1);
-        ball.playerShot(player2);
+        //ball.playerShot(player1);
+        //ball.playerShot(player2);
         checkIfPlayersBlockedTheBall();
         checkIfPlayerHits();
         startGameAgain();

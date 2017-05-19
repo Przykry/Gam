@@ -271,12 +271,37 @@ public class Ball implements Runnable {
     }
 
     public void checkIfBodyIntersects(Player player) {
-        if (new Rectangle(x, y, 60, 60).intersects(new Rectangle(player.getX() + 15, player.getY() + 80, player.getWidthTorso()-10, player.getHeightTorso())) && centerX > player.getCenterHeadX()) {
-            System.out.println("xD Left");
-        } else if (new Rectangle(x, y, 60, 60).intersects(new Rectangle(player.getX() + 15, player.getY() + 80, player.getWidthTorso()-10, player.getHeightTorso())) && centerX < player.getCenterHeadX()) {
-            System.out.println("xD Right");
+        if(player.isShooting()) {
+            if (new Rectangle(x, y, 60, 60).intersects(new Rectangle(player.getX() + 15, player.getY() + 80, player.getWidthTorso() - 10, player.getHeightTorso())) && centerX > player.getCenterHeadX()) {
+                System.out.println("xD Left");
+                setX(player.getCenterHeadX()+player.getRadiusHead()-15);
+                speedY -= player.getShotStrength() * 20;
+                speedX += player.getShotStrength() * 15;
+            } else if (new Rectangle(x, y, 60, 60).intersects(new Rectangle(player.getX() + 15, player.getY() + 80, player.getWidthTorso() - 10, player.getHeightTorso())) && centerX < player.getCenterHeadX()) {
+                System.out.println("xD Right");
+                setX(player.getCenterHeadX()-player.getRadiusHead()-2*radius+15);
+                speedY -= player.getShotStrength() * 20;
+                speedX -= player.getShotStrength() * 15;
+            }
         }
     }
+
+    /*public void playerShot(Player player){
+        if(player.isShooting()){
+            if(this.getCenterY() + this.getRadius() >= player.getCenterHeadY() + player.getRadiusHead()){
+                if(this.getCenterX() >= player.getCenterHeadX()){
+                    if(this.getCenterX() - 3 * this.getRadius()  <= player.getCenterHeadX()){
+
+                    }
+                }
+                else if(this.getCenterX() <= player.getCenterHeadX()){
+                    if(this.getCenterX()  + 3 * this.getRadius() >= player.getCenterHeadX()) {
+                    }
+                }
+            }
+        }
+    }*/
+
     public boolean checkIfIntersectsBoth(Player player1, Player player2){
         if (player1.getCenterHeadX() > centerX && player2.getCenterHeadX() < centerX || player1.getCenterHeadX() < centerX && player2.getCenterHeadX() > centerX){
             if(centerY > player1.getY() && centerY > player2.getY() && centerY < player1.getY()+2*player1.getRadiusHead() && centerY < player2.getY()+2*player2.getRadiusHead()){
@@ -294,25 +319,6 @@ public class Ball implements Runnable {
             else return false;
         }
         else return false;
-    }
-
-    public void playerShot(Player player){
-        if(player.isShooting()){
-            if(this.getCenterY() + this.getRadius() >= player.getCenterHeadY() - player.getRadiusHead()){
-                if(this.getCenterX() >= player.getCenterHeadX()){
-                    if(this.getCenterX() - 3 * this.getRadius()  <= player.getCenterHeadX()){
-                        speedY -= player.getShotStrength() * 20;
-                        speedX -= player.getShotStrength();
-                    }
-                }
-                else if(this.getCenterX() <= player.getCenterHeadX()){
-                    if(this.getCenterX()  + 3 * this.getRadius() >= player.getCenterHeadX()) {
-                        speedY -= player.getShotStrength() * 20;
-                        speedX += player.getShotStrength();
-                    }
-                }
-            }
-        }
     }
 
     public void speedLimitY(){
