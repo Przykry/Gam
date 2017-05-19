@@ -29,6 +29,8 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     private static Timer timer;
     static Thread[] entities;
     private Image gameBar;
+    private boolean gameEnd;
+    private static Thread Tclock;
     private JLabel points[] = {
             new JLabel(),
             new JLabel()
@@ -68,8 +70,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         player2.setPlayerTorsoImage(0);
         player2.setPlayerHeadImage(0);
         setPlayerKeys();
-        //player1.setTurnedLeft(false);
-        //player2.setTurnedLeft(true);
         try {
             backgroundImage = getBackgroundImage("mainBackground");
             gameBar = getBackgroundImage("gameBar");
@@ -84,11 +84,12 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         createPointsLabel();
         createColonLabel();
         createClockLabel();
-        Thread Tclock = new Thread(new Clock(this));
+        Tclock = new Thread(new Clock(this));
         addBackButton();
         this.addKeyListener(new PlayerMoveListener(player1,player2));
         this.setFocusable(true);
         this.setLayout(null);
+        this.gameEnd = false;
         Main.setGameWindow(this);
         timer = new Timer(5,this);
         Tclock.start();
@@ -104,12 +105,12 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         clock = new JLabel();
         setTextLabelForeground(clock);
         setClockLabelPosition();
-        clock.setText("0 : " + time);
+        clock.setText(Integer.toString(time));
         this.add(clock);
     }
 
     public void tickClock(){
-        clock.setText("0 : " + time);
+        clock.setText(Integer.toString(time));
     }
 
     private void setClockLabelPosition(){
@@ -198,6 +199,16 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    private void endOfGame(Graphics graphics){
+        graphics.setColor(Color.red);
+        graphics.setFont(new Font("Comic Sans", Font.BOLD, 32));
+        if(player1.getPoints() > player2.getPoints()){
+            graphics.drawString("Player 1 won the game!",250,300);
+        }else if(player1.getPoints() < player2.getPoints()){
+            graphics.drawString("Player 2 won the game!",250,300);
+        }else graphics.drawString("It's a draw!",350,300);
+    }
+
     public static void resetPoints(){
         player1.setPoints(0);
         player2.setPoints(0);
@@ -250,6 +261,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         ball.drawBall(graphics);
         drawPlayers(graphics);
         drawGoals(graphics);
+        if(gameEnd) endOfGame(graphics);
     }
 
     private boolean checkIfPlayerHits(){
@@ -353,6 +365,11 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         playerExitFrame(player1);
         playerExitFrame(player2);
         unblockPlayers();
+        if(time == 0){
+            Tclock.suspend();
+            stopEntities();
+            gameEnd = true;
+        }
         try {
             Thread.sleep(10);
         } catch (InterruptedException e1) {
