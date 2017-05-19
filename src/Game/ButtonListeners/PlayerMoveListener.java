@@ -1,6 +1,7 @@
 package Game.ButtonListeners;
 
 import Game.Entities.Player;
+import Game.Windows.GameWindow;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -11,13 +12,15 @@ import static Game.Windows.GameWindow.getGround;
  * Created by Daniel on 02.05.2017.
  */
 public class PlayerMoveListener implements KeyListener,ActionListener{
+    GameWindow gameWindow;
     private Player player1, player2;
     private boolean check = true;
     private static Timer moveTimer;
 
 
 
-    public PlayerMoveListener(Player player1, Player player2){
+    public PlayerMoveListener(Player player1, Player player2, GameWindow gameWindow){
+        this.gameWindow = gameWindow;
         this.player1 = player1;
         this.player2 = player2;
         moveTimer = new Timer(130,this);
@@ -35,6 +38,11 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if(gameWindow.isGameEnd()){
+            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                gameWindow.getBackButton().doClick();
+            }
+        }
         playerMove(e,player2);
         playerMove(e,player1);
         setPlayerImage(e,player1);

@@ -33,7 +33,7 @@ public class Main {
         contentPane.removeAll();
         contentPane.setFocusable(false);
         contentPane.add(windows.get(n));
-        if(n == 4)  frame.addKeyListener(new PlayerMoveListener(gameWindow.getPlayer(1), gameWindow.getPlayer(2)));
+        if(n == 4)  frame.addKeyListener(new PlayerMoveListener(gameWindow.getPlayer(1), gameWindow.getPlayer(2),gameWindow));
         else if(n == 2) frame.addKeyListener( new MenuKeyListener(windows.get(2)));
         frame.validate();
         frame.repaint();

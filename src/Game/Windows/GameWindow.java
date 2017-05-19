@@ -57,6 +57,18 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         return this.time;
     }
 
+    public boolean isGameEnd() {
+        return gameEnd;
+    }
+
+    public void setGameEnd(boolean gameEnd) {
+        this.gameEnd = gameEnd;
+    }
+
+    public JButton getBackButton() {
+        return backButton;
+    }
+
     private int time = 60;
     private JLabel clock;
 
@@ -86,7 +98,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         createClockLabel();
         Tclock = new Thread(new Clock(this));
         addBackButton();
-        this.addKeyListener(new PlayerMoveListener(player1,player2));
+        this.addKeyListener(new PlayerMoveListener(player1,player2,this));
         this.setFocusable(true);
         this.setLayout(null);
         this.gameEnd = false;
@@ -105,16 +117,16 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         clock = new JLabel();
         setTextLabelForeground(clock);
         setClockLabelPosition();
-        clock.setText(Integer.toString(time));
+        clock.setText("Time: " + Integer.toString(time) + " sec");
         this.add(clock);
     }
 
     public void tickClock(){
-        clock.setText(Integer.toString(time));
+        clock.setText("Time: " + Integer.toString(time) + " sec");
     }
 
     private void setClockLabelPosition(){
-        clock.setBounds(710,15,128,32);
+        clock.setBounds(640,15,32*12,32);
     }
 
     private void addBackButton(){
@@ -207,6 +219,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }else if(player1.getPoints() < player2.getPoints()){
             graphics.drawString("Player 2 won the game!",250,300);
         }else graphics.drawString("It's a draw!",350,300);
+        graphics.drawString("Press ENTER to return to main menu.",150,350);
     }
 
     public static void resetPoints(){
