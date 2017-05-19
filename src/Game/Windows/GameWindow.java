@@ -3,6 +3,7 @@ package Game.Windows;
 import Game.ButtonListeners.BackButtonListener;
 import Game.ButtonListeners.PlayerMoveListener;
 import Game.Entities.Ball;
+import Game.Entities.Clock;
 import Game.Entities.Goal;
 import Game.Entities.Player;
 import Game.Main;
@@ -54,7 +55,8 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         return this.time;
     }
 
-    private int time;
+    private int time = 60;
+    private JLabel clock;
 
     public GameWindow(int width, int height, ChoosePlayerWindow window){
         this.width = width;
@@ -81,18 +83,37 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         setPlayerStanding();
         createPointsLabel();
         createColonLabel();
+        createClockLabel();
+        Thread Tclock = new Thread(new Clock(this));
         addBackButton();
         this.addKeyListener(new PlayerMoveListener(player1,player2));
         this.setFocusable(true);
         this.setLayout(null);
         Main.setGameWindow(this);
         timer = new Timer(5,this);
-        time = 60;
+        Tclock.start();
     }
 
     public static void setPlayerKeys(){
         player1.setKeys(1);
         player2.setKeys(2);
+    }
+
+
+    private void createClockLabel(){
+        clock = new JLabel();
+        setTextLabelForeground(clock);
+        setClockLabelPosition();
+        clock.setText("0 : " + time);
+        this.add(clock);
+    }
+
+    public void tickClock(){
+        clock.setText("0 : " + time);
+    }
+
+    private void setClockLabelPosition(){
+        clock.setBounds(710,15,128,32);
     }
 
     private void addBackButton(){
@@ -159,8 +180,8 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         label.setForeground(Color.WHITE);
     }
 
-    private void setLabelPosition(JLabel label,int i){
-        label.setBounds(width/2 - 20 + i*32,20,64,32);
+    private void setLabelPointsPosition(JLabel label, int i){
+        label.setBounds(width/2 - 20 + i,20,64,32);
     }
 
     private void setLabelPoints(JLabel label,Player player){
@@ -172,7 +193,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         setLabelPoints(points[1],player2);
         for(int i = 0; i< points.length; i++){
             setTextLabelForeground(points[i]);
-            setLabelPosition(points[i],i);
+            setLabelPointsPosition(points[i],32 * i);
             this.add(points[i]);
         }
     }
@@ -191,6 +212,8 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         else if(rightGoal.isRightScored(ball)) {
             player1.setPoints(player1.getPoints() + 1);
             setLabelPoints(points[0],player1);
+            if(Integer.parseInt(points[0].getText()) == 10) setLabelPointsPosition(points[0],-20);
+            else if(Integer.parseInt(points[0].getText()) == 100) setLabelPointsPosition(points[0],-40);
             return true;
         }
         return false;
