@@ -212,8 +212,8 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     }
 
     private void endOfGame(Graphics graphics){
-        graphics.setColor(Color.red);
-        graphics.setFont(new Font("Comic Sans", Font.BOLD, 32));
+        graphics.setColor(Color.decode("#2A2C2E"));
+        graphics.setFont(new Font("Hobo Std", Font.BOLD, 32));
         if(player1.getPoints() > player2.getPoints()){
             graphics.drawString(player1.getName() + " won the game!",250,300);
         }else if(player1.getPoints() < player2.getPoints()){
