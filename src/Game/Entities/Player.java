@@ -287,7 +287,7 @@ public class Player implements Runnable {
 
     private void setHeadImage(int i) {
         try {
-            headImage[i] = ImageIO.read(new File("textures\\" + name + "Head" + i + ".png"));
+            headImage[i] = ImageIO.read(new File("textures\\" + name + "\\"+ name + "Head" + i + ".png"));
         } catch (IOException e) {
             System.out.println("Could not read the picture");
         }
@@ -295,7 +295,7 @@ public class Player implements Runnable {
 
     private void setTorsoImage(int i) {
         try {
-            torsoImage[i] = ImageIO.read(new File("textures\\" + name + "Torso" + i + ".png"));
+            torsoImage[i] = ImageIO.read(new File("textures\\" + name + "\\" + name + "Torso" + i + ".png"));
         } catch (IOException e) {
             System.out.println("Could not read the picture");
         }
@@ -304,7 +304,7 @@ public class Player implements Runnable {
     private void setWidthHeightTorso() {
         final BufferedImage bi;
         try {
-            bi = ImageIO.read(new File("textures\\" + name + "Torso" + 0 + ".png"));
+            bi = ImageIO.read(new File("textures\\" + name + "\\" + name + "Torso" + 0 + ".png"));
             this.widthTorso = bi.getWidth();
             this.heightTorso = bi.getHeight();
         } catch (IOException e) {
@@ -315,7 +315,7 @@ public class Player implements Runnable {
 
     private void setWidthHeightHead() {
         try {
-            final BufferedImage bi = ImageIO.read(new File("textures\\" + name + "Head" + 0 + ".png"));
+            final BufferedImage bi = ImageIO.read(new File("textures\\" + name + "\\" + name + "Head" + 0 + ".png"));
             this.radiusHead = bi.getWidth() / 2;
         } catch (IOException e) {
             e.printStackTrace();

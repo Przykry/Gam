@@ -22,7 +22,7 @@ public class AcceptButtonListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         Main.addWindow(new GameWindow(860,640,window));
-        changeWindow(4);
+        changeWindow(3);
         GameWindow.getTimer().start();
         GameWindow.runEntities();
     }

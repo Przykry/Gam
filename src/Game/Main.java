@@ -33,8 +33,8 @@ public class Main {
         contentPane.removeAll();
         contentPane.setFocusable(false);
         contentPane.add(windows.get(n));
-        if(n == 4)  frame.addKeyListener(new PlayerMoveListener(gameWindow.getPlayer(1), gameWindow.getPlayer(2),gameWindow));
-        else if(n == 2) frame.addKeyListener( new MenuKeyListener(windows.get(2)));
+        if(n == 3)  frame.addKeyListener(new PlayerMoveListener(gameWindow.getPlayer(1), gameWindow.getPlayer(2),gameWindow));
+        else if(n == 1) frame.addKeyListener( new MenuKeyListener(windows.get(1)));
         frame.validate();
         frame.repaint();
         //frame.setFocusable(true);
@@ -46,7 +46,7 @@ public class Main {
     }
 
     public static void removeWindow(){
-        windows.remove(4);
+        windows.remove(3);
     }
 
     public static void main(String [] args){
@@ -55,7 +55,6 @@ public class Main {
         double height = screenSize.getHeight();
         windows = new ArrayList();
         windows.add(new MainWindow(860,640));
-        windows.add(new HallOfFameWindow(860,640));
         windows.add(new MenuWindow(860,640));
         windows.add(new ChoosePlayerWindow(860,640));
         frame.setBounds((int)width/5,(int)(height/11),860,640);

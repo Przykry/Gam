@@ -18,6 +18,6 @@ public class StartGameButtonListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         MainWindow.stopBouncingBalls();
-        changeWindow(3);
+        changeWindow(2);
     }
 }

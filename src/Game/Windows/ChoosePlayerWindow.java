@@ -45,10 +45,10 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
             new JButton()
     };
     private String [] filepaths = new String[]{
-            "textures\\chooseButtons.png",
-            "textures\\acceptButton.png",
-            "textures\\swipeLeftButton.png",
-            "textures\\swipeRightButton.png"
+            "textures\\Buttons\\chooseButtons.png",
+            "textures\\Buttons\\acceptButton.png",
+            "textures\\Buttons\\swipeLeftButton.png",
+            "textures\\Buttons\\swipeRightButton.png"
     };
     private ActionListener [] listeners = new ActionListener[]{
             new BackButtonListener(),

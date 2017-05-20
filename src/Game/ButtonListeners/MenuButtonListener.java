@@ -17,7 +17,7 @@ public class MenuButtonListener implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e){
-        changeWindow(2);
+        changeWindow(1);
         MainWindow.stopBouncingBalls();
 
     }

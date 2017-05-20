@@ -130,7 +130,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     }
 
     private void addBackButton(){
-        createButton(backButton,15,15,"textures\\backGameButton.png",new BackButtonListener());
+        createButton(backButton,15,15,"textures\\Buttons\\backGameButton.png",new BackButtonListener());
         backButton.setText("Back");
         this.add(backButton);
     }

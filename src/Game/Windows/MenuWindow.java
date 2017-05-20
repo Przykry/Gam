@@ -41,10 +41,9 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
     };
 
     private String [] filepaths = new String[]{
-            "textures\\chooseButtons.png",
-            "textures\\acceptMenuButton.png",
-            "textures\\keySwitcher.png",
-            "textures\\keySwitcher1.png"
+            "textures\\Buttons\\chooseButtons.png",
+            "textures\\Buttons\\keySwitcher.png",
+            "textures\\Buttons\\keySwitcher1.png"
     };
 
     private ActionListener[] listeners = new ActionListener[]{
@@ -81,8 +80,8 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
 
     private void keySwitchers(){
         for(int i=0;i<4;i++){
-            createButton(keySwitchers[i],135,200+50*i,filepaths[2], new MenuActionListener(this,i));
-            createButton(keySwitchers[i+4],565,200+50*i,filepaths[2],new MenuActionListener(this,i+4));
+            createButton(keySwitchers[i],135,200+50*i,filepaths[1], new MenuActionListener(this,i));
+            createButton(keySwitchers[i+4],565,200+50*i,filepaths[1],new MenuActionListener(this,i+4));
             keySwitchers[i].setFont(new Font("Hobo Std",Font.ITALIC,24));
             keySwitchers[i+4].setFont(new Font("Hobo Std",Font.ITALIC,24));
             setTextMovementKey(keySwitchers[i],keys[i]);
@@ -104,7 +103,7 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
     }
 
     private void createPlayerLabel(JButton player, int x, String text){
-        createButton(player,x,150,filepaths[3],null);
+        createButton(player,x,150,filepaths[2],null);
         player.setText(text);
         this.add(player);
     }

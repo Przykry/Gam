@@ -21,13 +21,13 @@ public class Goal {
     private void loadGoalImage(int leftOrRight){
         if(leftOrRight == 1) {
             try {
-                this.goalImage = ImageIO.read(new File("textures\\leftGoal.png"));
+                this.goalImage = ImageIO.read(new File("textures\\Goal\\leftGoal.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }else{
             try {
-                this.goalImage = ImageIO.read(new File("textures\\rightGoal.png"));
+                this.goalImage = ImageIO.read(new File("textures\\Goal\\rightGoal.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }

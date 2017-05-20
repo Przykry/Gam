@@ -26,17 +26,14 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
             new JButton(),
             new JButton(),
             new JButton(),
-            new JButton()
     };
     String[] filePaths = new String[]{
-            "textures\\startGameButton.png",
-            "textures\\hallOfFameButton.png",
-            "textures\\menuButton.png",
-            "textures\\exitGameButton.png"
+            "textures\\Buttons\\startGameButton.png",
+            "textures\\Buttons\\menuButton.png",
+            "textures\\Buttons\\exitGameButton.png"
     };
     ActionListener[] listeners = new ActionListener[]{
             new StartGameButtonListener(),
-            new HallOfFameButtonListener(),
             new MenuButtonListener(),
             new ExitGameButtonListener()
     };
@@ -44,6 +41,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
     static Thread thread[];
     List<Ball> ballList = new ArrayList<>();
     Timer timer;
+
     public MainWindow(int width, int height){
         this.width = width;
         this.heigth = height;
