@@ -18,7 +18,7 @@ public interface WindowInt{
         button.setIcon(icon);
         button.setBounds(x,y,icon.getIconWidth(),icon.getIconHeight());
         button.addActionListener(list);
-        button.setFont(new Font("Comic Sans", Font.BOLD, 32));
+        button.setFont(new Font("Hobo Std", Font.PLAIN, 32));
         button.setVerticalTextPosition(SwingConstants.CENTER);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setForeground(Color.decode("#2A2C2E"));

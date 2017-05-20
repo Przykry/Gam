@@ -83,8 +83,8 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
         for(int i=0;i<4;i++){
             createButton(keySwitchers[i],135,200+50*i,filepaths[2], new MenuActionListener(this,i));
             createButton(keySwitchers[i+4],565,200+50*i,filepaths[2],new MenuActionListener(this,i+4));
-            keySwitchers[i].setFont(new Font("Comic Sans", Font.BOLD, 24));
-            keySwitchers[i+4].setFont(new Font("Comic Sans", Font.BOLD, 24));
+            keySwitchers[i].setFont(new Font("Hobo Std",Font.ITALIC,24));
+            keySwitchers[i+4].setFont(new Font("Hobo Std",Font.ITALIC,24));
             setTextMovementKey(keySwitchers[i],keys[i]);
             setTextMovementKey(keySwitchers[i+4],keys[i+4]);
             this.add(keySwitchers[i]);
