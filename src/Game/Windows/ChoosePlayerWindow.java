@@ -15,8 +15,8 @@ import java.io.IOException;
  * Created by Daniel on 26.04.2017.
  */
 public class ChoosePlayerWindow extends JPanel implements WindowInt {
-    int width;
-    int heigth;
+    private int width;
+    private int heigth;
     private static int firstPlayerChoose, secondPlayerChoose;
 
     public Player[] player1Models = new Player[]{

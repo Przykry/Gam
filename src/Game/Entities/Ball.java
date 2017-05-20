@@ -23,10 +23,6 @@ public class Ball implements Runnable {
     private volatile boolean threadSuspended;
     private boolean blocked;
 
-    public boolean isBlocked(){
-        return blocked;
-    }
-
     public void setBlocked(boolean blocked){
         this.blocked = blocked;
     }
