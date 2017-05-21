@@ -44,7 +44,7 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
             new JButton(),
             new JButton()
     };
-    private String [] filepaths = new String[]{
+    private String []  filepaths = new String[]{
             "textures\\Buttons\\chooseButtons.png",
             "textures\\Buttons\\acceptButton.png",
             "textures\\Buttons\\swipeLeftButton.png",
@@ -186,4 +186,6 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         drawPlayers(graphics);
         drawAttributes(graphics);
     }
+
+
 }
