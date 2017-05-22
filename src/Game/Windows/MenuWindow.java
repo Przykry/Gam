@@ -109,6 +109,16 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
     }
 
 
+    private void menuDescription(Graphics graphics){
+        graphics.setColor(Color.decode("#2A2C2E"));
+        graphics.setFont(new Font("Hobo Std", Font.PLAIN , 32));
+        graphics.drawString(" <Jump>",375,235);
+        graphics.drawString(" <Left>",375,235 + 50);
+        graphics.drawString("<Right>",375,235 + 2 * 50);
+        graphics.drawString(" <Shot>",375,235 + 3 * 50);
+
+    }
+
 
     private void setTextMovementKey(JButton button, int key){
         button.setText(String.valueOf(KeyEvent.getKeyText(key)));
@@ -133,6 +143,7 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
     public void paintComponent(Graphics g){
      drawBackground(g,backgroundImage,this);
      drawBorders(g,width,heigth);
+     menuDescription(g);
     }
 
     @Override
