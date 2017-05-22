@@ -62,7 +62,6 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
     private Image resizedHead[] = new Image[2];
     private Image resizedTorso[] = new Image[2];
     private Image backgroundImage;
-    private Image chooseWindowBar;
 
     public int getFirstPlayerChoose() {
         return firstPlayerChoose;
@@ -111,14 +110,12 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         this.heigth = heigth;
         try {
             this.backgroundImage = getBackgroundImage("mainBackground");
-            this.chooseWindowBar = getBackgroundImage("gameBar");
         }
         catch(IOException e){
             e.printStackTrace();
         }
         this.firstPlayerChoose = 0;
         this.secondPlayerChoose = 0;
-
 
         this.player1 = player1Models[firstPlayerChoose];
         this.player2 = player2Models[secondPlayerChoose];
@@ -148,14 +145,12 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
     }
 
 
-    public Image resizePlayerHead(Player play, int i){
-        Image scaledImg = play.getHeadImage(i).getScaledInstance(play.getRadiusHead()*4, play.getRadiusHead()*4,  Image.SCALE_SMOOTH);
-        return scaledImg;
+    private Image resizePlayerHead(Player play, int i){
+        return play.getHeadImage(i).getScaledInstance(play.getRadiusHead()*4, play.getRadiusHead()*4,  Image.SCALE_SMOOTH);
     }
 
-    public Image resizePlayerTorso(Player play, int i){
-        Image scaledImg = play.getTorsoImage(i).getScaledInstance(play.getWidthTorso()*2, play.getHeightTorso()*2,  Image.SCALE_SMOOTH);
-        return scaledImg;
+    private Image resizePlayerTorso(Player play, int i){
+        return play.getTorsoImage(i).getScaledInstance(play.getWidthTorso()*2, play.getHeightTorso()*2,  Image.SCALE_SMOOTH);
     }
 
     private void drawPlayers(Graphics graphics){

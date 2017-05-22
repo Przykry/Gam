@@ -17,9 +17,7 @@ public class AcceptMenuButtonListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (int k : keys) {
-            savedKeys += (k + "\n");
-        }
+        for (int k : keys) savedKeys += (k + "\n");
         try {
             PrintWriter writer = new PrintWriter("textures\\KeyBindings.txt", "UTF-8");
             writer.println(savedKeys);

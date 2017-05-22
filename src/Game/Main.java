@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 public class Main {
     private static JFrame frame = new JFrame();
-    private static Container contentPane;
     private static ArrayList<JPanel> windows;
     private static GameWindow gameWindow = null;
     static int n = 0;
@@ -22,14 +21,22 @@ public class Main {
     public static void setGameWindow(GameWindow gameWindow) {
         Main.gameWindow = gameWindow;
     }
+
     public static GameWindow getGameWindow() {
         return gameWindow;
     }
+
     public static int getWindow(){return n;}
+
+    public static void addWindow(WindowInt window){ windows.add((JPanel)window); }
+
+    public static void removeWindow(){ windows.remove(3); }
+
+
     public static void changeWindow(int n){
         Main.n = n;
         for(KeyListener kL : frame.getKeyListeners()) frame.removeKeyListener(kL);
-        contentPane = frame.getContentPane();
+        Container contentPane = frame.getContentPane();
         contentPane.removeAll();
         contentPane.setFocusable(false);
         contentPane.add(windows.get(n));
@@ -41,13 +48,7 @@ public class Main {
         frame.setVisible(true);
     }
 
-    public static void addWindow(WindowInt window){
-        windows.add((JPanel)window);
-    }
 
-    public static void removeWindow(){
-        windows.remove(3);
-    }
 
     public static void main(String [] args){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -60,9 +61,8 @@ public class Main {
         frame.setBounds((int)width/5,(int)(height/11),860,640);
         frame.setTitle("Game");
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.setFocusable(true);
-        //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setUndecorated(true);
         frame.add(windows.get(0));
         frame.setVisible(true);

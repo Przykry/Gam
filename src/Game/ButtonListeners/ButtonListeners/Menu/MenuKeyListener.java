@@ -11,10 +11,10 @@ import java.awt.event.KeyListener;
  */
 public class MenuKeyListener implements KeyListener {
     private static int keys[] = MenuWindow.getKeys();
-    MenuWindow window;
-    static boolean canChange[] = new boolean[10];
+    private MenuWindow window;
+    private static boolean canChange[] = new boolean[10];
 
-    public static void setCanChange(int i) {
+    static void setCanChange(int i) {
         MenuKeyListener.canChange[i] = true;
     }
 

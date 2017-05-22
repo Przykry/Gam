@@ -15,7 +15,7 @@ import static Game.Main.changeWindow;
  * Created by Daniel on 26.04.2017.
  */
 public class AcceptButtonListener implements ActionListener{
-    ChoosePlayerWindow window;
+    private ChoosePlayerWindow window;
     public  AcceptButtonListener(ChoosePlayerWindow window){
         this.window = window;
     }

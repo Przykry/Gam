@@ -18,9 +18,9 @@ import java.util.Scanner;
  * Created by Przykry on 29.04.2017.
  */
 public class MenuWindow extends JPanel implements WindowInt, ActionListener {
-    int width,heigth;
-    Image backgroundImage;
-    static int[] keys = new int[8];
+    private int width,heigth;
+    private Image backgroundImage;
+    private static int[] keys = new int[8];
 
     private JButton [] buttons = new JButton[]{
             new JButton(),
@@ -94,8 +94,7 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
 
 
     public boolean switcherClicked(int i){
-        if(keySwitchers[i].getModel().isEnabled()) return true;
-        else return false;
+        return keySwitchers[i].getModel().isEnabled();
     }
 
     public JButton getKeySwitcher(int i){
@@ -124,7 +123,7 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
         button.setText(String.valueOf(KeyEvent.getKeyText(key)));
     }
 
-    public void setKeys() throws FileNotFoundException {
+    private void setKeys() throws FileNotFoundException {
         File file = new File("textures\\KeyBindings.txt");
         Scanner scr = new Scanner(file);
         for(int i=0;i<8;i++) {
@@ -134,10 +133,6 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
 
     public static int[] getKeys(){
         return keys;
-    }
-
-    public static void setKeys(int keys[]){
-        MenuWindow.keys = keys;
     }
 
     public void paintComponent(Graphics g){

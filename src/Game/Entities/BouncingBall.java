@@ -7,8 +7,8 @@ import java.util.List;
  * Created by Przykry on 02.05.2017.
  */
 public class BouncingBall implements Runnable {
-    Ball ball;
-    List<Ball> ballsList;
+    private Ball ball;
+    private List<Ball> ballsList;
     private volatile boolean threadSuspended = false;
 
     public BouncingBall(List<Ball> ballsList, int iterator){

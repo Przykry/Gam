@@ -15,7 +15,7 @@ public class MenuSwingWorker extends SwingWorker<Void,Void> {
     private int i;
     private int keys[] = MenuWindow.getKeys();
 
-    public MenuSwingWorker(MenuWindow window, int i){
+    MenuSwingWorker(MenuWindow window, int i){
         this.window = window;
         this.i = i;
     }

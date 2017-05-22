@@ -27,7 +27,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     private JButton backButton = new JButton();
     private static Player player1, player2;
     private static Timer timer;
-    static Thread[] entities;
+    private static Thread[] entities;
     private Image gameBar;
     private boolean gameEnd;
     private static Thread Tclock;
@@ -107,7 +107,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         Tclock.start();
     }
 
-    public static void setPlayerKeys(){
+    private static void setPlayerKeys(){
         player1.setKeys(1);
         player2.setKeys(2);
     }
@@ -288,16 +288,14 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
-    private boolean checkIfPlayersBlockedTheBall(){
+    private void checkIfPlayersBlockedTheBall(){
         if(ball.checkIfIntersectsBoth(player1,player2)){
             blockPlayers(true);
             player1.setPlayerBallBlocked(true);
             player2.setPlayerBallBlocked(true);
-            return true;
         }
         else{
             ball.setBlocked(false);
-            return false;
         }
     }
 
@@ -313,17 +311,15 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
-    private boolean playerExitFrame(Player player){
+    private void playerExitFrame(Player player){
         if(player.getCenterHeadX()+player.getRadiusHead() >= 860-15){
             player.setX(860-15-2*player.getRadiusHead());
             player.setBlockedRight(true);
             player.setExitBlocked(true);
-            return true;
         }else if(player.getCenterHeadX()-player.getRadiusHead() <= 15){
             player.setX(15);
             player.setBlockedLeft(true);
             player.setExitBlocked(true);
-            return true;
         }else{
             if(player.isBlockedRight() && player.isExitBlocked()){
                 player.setBlockedRight(false);
@@ -333,7 +329,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
                 player.setBlockedLeft(false);
                 player.setExitBlocked(false);
             }
-            return false;
         }
     }
 

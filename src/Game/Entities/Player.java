@@ -15,7 +15,7 @@ import static java.lang.Thread.sleep;
  * Created by Przykry on 26.04.2017.
  */
 public class Player implements Runnable {
-    String name;
+    private String name;
     private int x;
     private int y;
     private int centerHeadX;
@@ -26,19 +26,9 @@ public class Player implements Runnable {
     private int maxJump;
     private int shotStrength;
     private Image headImage[] = new Image[2];
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
     private Image torsoImage[] = new Image[4];
     private int jumpKey;
     private int leftKey;
-
-    public static int getTerminalVelocity() {
-        return TERMINAL_VELOCITY;
-    }
-
     private final static int TERMINAL_VELOCITY = 20;
     private final static int GRAVITY = 15;
     private int fallingVelocity = GRAVITY;
@@ -46,7 +36,17 @@ public class Player implements Runnable {
     private int playerTorsoImage;
     private int playerHeadImage;
     private int points;
+    private int rightKey;
+    private int shotKey;
+    private boolean movingLeft, movingRight, jumping, shooting;
+    private boolean blockedLeft, blockedRight;
+    private boolean exitBlocked;
+    private boolean playerBlocked;
+    private boolean playerBallBlocked;
+
     public void setPoints(int points) {this.points = points;}
+
+    static int getTerminalVelocity() { return TERMINAL_VELOCITY;}
 
     public int getPoints() { return points; }
 
@@ -58,15 +58,13 @@ public class Player implements Runnable {
         return playerHeadImage;
     }
 
-
-
     public void setPlayerTorsoImage(int p1) {
         this.playerTorsoImage = p1;
     }
+
     public void setPlayerHeadImage(int p2) {
         this.playerHeadImage = p2;
     }
-
 
     public int getJumpKey() {
         return jumpKey;
@@ -84,16 +82,11 @@ public class Player implements Runnable {
         return shotKey;
     }
 
-    private int rightKey;
-    private int shotKey;
-    private boolean movingLeft, movingRight, jumping, shooting;
-    private boolean blockedLeft, blockedRight;
-
     public boolean isExitBlocked() {
         return exitBlocked;
     }
 
-    public boolean isShooting(){ return shooting; }
+    boolean isShooting(){ return shooting; }
 
     public void setShooting(boolean shooting){ this.shooting = shooting; }
 
@@ -101,27 +94,13 @@ public class Player implements Runnable {
         this.exitBlocked = exitBlocked;
     }
 
-    private boolean exitBlocked;
-    private boolean playerBlocked;
-
-    public boolean isPlayerBlocked() {
-        return playerBlocked;
-    }
-
     public void setPlayerBlocked(boolean playerBlocked) {
         this.playerBlocked = playerBlocked;
-    }
-
-    public boolean isPlayerBallBlocked() {
-        return playerBallBlocked;
     }
 
     public void setPlayerBallBlocked(boolean playerBallBlocked) {
         this.playerBallBlocked = playerBallBlocked;
     }
-
-    private boolean playerBallBlocked;
-
 
     public boolean isBlockedRight() {
         return blockedRight;
@@ -139,7 +118,6 @@ public class Player implements Runnable {
         this.blockedLeft = blockedLeft;
     }
 
-
     public boolean isMovingLeft() {
         return movingLeft;
     }
@@ -156,33 +134,12 @@ public class Player implements Runnable {
         this.movingRight = movingRight;
     }
 
-    public boolean isJumping() {
+    boolean isJumping() {
         return jumping;
     }
 
     public void setJumping(boolean jumping) {
         this.jumping = jumping;
-    }
-
-    public Player(int x, int y, String name, int shotStrength, int speed, int maxJump) {
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        for (int i = 0; i < 4; i++) {
-            if(i<2) setHeadImage(i);
-            setTorsoImage(i);
-        }
-        abilities(shotStrength, speed, maxJump);
-        setPlayerWidthHeight();
-        this.movingLeft = false;
-        this.movingRight = false;
-        this.jumping = false;
-        this.exitBlocked = false;
-        this.blockedRight = false;
-        this.blockedLeft = false;
-        this.playerBlocked = false;
-        this.playerBallBlocked = false;
-        this.shooting = false;
     }
 
     public void setCenterHeadX(int centerHeadX) {
@@ -197,7 +154,7 @@ public class Player implements Runnable {
         return centerHeadX;
     }
 
-    public int getCenterHeadY() {
+    int getCenterHeadY() {
         return centerHeadY;
     }
 
@@ -252,6 +209,27 @@ public class Player implements Runnable {
         setCenterHeadX(x+radiusHead);
     }
 
+    public Player(int x, int y, String name, int shotStrength, int speed, int maxJump) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        for (int i = 0; i < 4; i++) {
+            if(i<2) setHeadImage(i);
+            setTorsoImage(i);
+        }
+        abilities(shotStrength, speed, maxJump);
+        setPlayerWidthHeight();
+        this.movingLeft = false;
+        this.movingRight = false;
+        this.jumping = false;
+        this.exitBlocked = false;
+        this.blockedRight = false;
+        this.blockedLeft = false;
+        this.playerBlocked = false;
+        this.playerBallBlocked = false;
+        this.shooting = false;
+    }
+
     public void setY(int y) {
         this.y = y;
         setCenterHeadY(y+radiusHead);
@@ -271,14 +249,14 @@ public class Player implements Runnable {
         this.shotKey = shotKey;
     }
 
-    public void movePlayerLeft() {
+    private void movePlayerLeft() {
         if(!isBlockedLeft()) {
             this.x -= speed;
             this.centerHeadX -= speed;
         }
     }
 
-    public void movePlayerRight() {
+    private void movePlayerRight() {
         if(!isBlockedRight()) {
             this.x += speed;
             this.centerHeadX += speed;
@@ -335,7 +313,7 @@ public class Player implements Runnable {
     }
 
 
-    public void jumping() {
+    private void jumping() {
         if(jumping) {
             if (getGround() - 2*radiusHead - heightTorso - maxJump < y){
                 y-=TERMINAL_VELOCITY;
@@ -345,7 +323,7 @@ public class Player implements Runnable {
         }
     }
 
-    public void falling() {
+    private void falling() {
         if (isNoGround()) {
             fallingVelocity = fallingVelocity + GRAVITY;
             if (fallingVelocity > TERMINAL_VELOCITY) {

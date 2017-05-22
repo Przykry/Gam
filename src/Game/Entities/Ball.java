@@ -19,7 +19,7 @@ public class Ball implements Runnable {
     private int centerX, centerY;
     private int radius;
     private Image ballImage;
-    JPanel observer;
+    private JPanel observer;
     private volatile boolean threadSuspended;
     private boolean blocked;
 
@@ -40,7 +40,7 @@ public class Ball implements Runnable {
         this.centerY = this.y + this.radius;
     }
 
-    public void setBallImage() {
+    private void setBallImage() {
         try {
             ballImage = ImageIO.read(new File("textures\\ball.png"));
         } catch (IOException e) {
@@ -48,15 +48,15 @@ public class Ball implements Runnable {
         }
     }
 
-    public void setRadius(Image img, JPanel observer){
+    private void setRadius(Image img, JPanel observer){
         this.radius = img.getHeight(observer)/2;
     }
 
-    public int getRadius() {
+    int getRadius() {
         return radius;
     }
 
-    public int getCenterX() {
+    int getCenterX() {
         return centerX;
     }
 
@@ -64,7 +64,7 @@ public class Ball implements Runnable {
         this.centerX = centerX;
     }
 
-    public int getCenterY() {
+    int getCenterY() {
         return centerY;
     }
 
@@ -72,15 +72,15 @@ public class Ball implements Runnable {
         this.centerY = centerY;
     }
 
-    public int getWidth() {
+    private int getWidth() {
         return width;
     }
 
-    public int getHeigth() {
+    private int getHeigth() {
         return heigth;
     }
 
-    public int getX() {
+    private int getX() {
         return x;
     }
 
@@ -89,7 +89,7 @@ public class Ball implements Runnable {
         this.centerX = x + this.radius;
     }
 
-    public int getY() {
+    int getY() {
         return y;
     }
 
@@ -98,7 +98,7 @@ public class Ball implements Runnable {
         this.centerY = y + this.radius;
     }
 
-    public int getSpeedX() {
+    int getSpeedX() {
         return speedX;
     }
 
@@ -110,7 +110,7 @@ public class Ball implements Runnable {
         this.speedY = speedY;
     }
 
-    public Image getBallImage() {
+    private Image getBallImage() {
         return ballImage;
     }
 
@@ -126,15 +126,15 @@ public class Ball implements Runnable {
         }
     }
 
-    public void reverseSpeedX(){
+    private void reverseSpeedX(){
         this.speedX = -this.speedX;
     }
 
-    public void reverseSpeedY(){
+    void reverseSpeedY(){
         this.speedY = -this.speedY;
     }
 
-    public void directoryOfBall() {
+    void directoryOfBall() {
         ballHittingBorder(observer.getHeight(),observer.getWidth());
         move();
     }
@@ -283,33 +283,27 @@ public class Ball implements Runnable {
     public boolean checkIfIntersectsBoth(Player player1, Player player2){
         if (player1.getCenterHeadX() > centerX && player2.getCenterHeadX() < centerX || player1.getCenterHeadX() < centerX && player2.getCenterHeadX() > centerX){
             if(centerY > player1.getY() && centerY > player2.getY() && centerY < player1.getY()+2*player1.getRadiusHead() && centerY < player2.getY()+2*player2.getRadiusHead()){
-                if(Math.abs(player1.getCenterHeadX()-centerX)<=player1.getRadiusHead() + radius && Math.abs(player2.getCenterHeadX()-centerX)<=player2.getRadiusHead() + radius){
-                    return true;
-                }
-                else return false;
+                return Math.abs(player1.getCenterHeadX() - centerX) <= player1.getRadiusHead() + radius && Math.abs(player2.getCenterHeadX() - centerX) <= player2.getRadiusHead() + radius;
             }
             else if(centerY > player1.getCenterHeadY()+player1.getRadiusHead() && centerY > player2.getCenterHeadY() + player2.getRadiusHead()) {
-                if (Math.abs(player1.getCenterHeadX() - 20 - centerX) <= player1.getRadiusHead() + radius && Math.abs(player2.getCenterHeadX() + 25 - centerX) <= player2.getRadiusHead() + radius) {
-                    return true;
-                }
-                else return false;
+                return Math.abs(player1.getCenterHeadX() - 20 - centerX) <= player1.getRadiusHead() + radius && Math.abs(player2.getCenterHeadX() + 25 - centerX) <= player2.getRadiusHead() + radius;
             }
             else return false;
         }
         else return false;
     }
 
-    public void speedLimitY(){
+    private void speedLimitY(){
         if(speedY > 250) speedY = 250;
         else if(speedY < -250) speedY = -250;
     }
 
-    public void speedLimitX(){
+    private void speedLimitX(){
         if(speedX > 250) speedX = 250;
         else if(speedX < -250) speedX = -250;
     }
 
-    public void gravity(){
+    private void gravity(){
         if(y + 2*radius < getGround() && speedY < 300) speedY += 10;
         else if(y+2*radius >= getGround()) {
             y = getGround() - 2*radius;

@@ -8,7 +8,7 @@ import static java.lang.Thread.sleep;
  * Created by Daniel on 19.05.2017.
  */
 public class Clock implements Runnable{
-    GameWindow gameWindow;
+    private GameWindow gameWindow;
     public Clock(GameWindow gameWindow){
         this.gameWindow = gameWindow;
     }

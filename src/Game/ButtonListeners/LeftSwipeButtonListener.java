@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
  * Created by Daniel on 26.04.2017.
  */
 public class LeftSwipeButtonListener implements ActionListener{
-    ChoosePlayerWindow panel;
-    int player;
+    private ChoosePlayerWindow panel;
+    private int player;
     public LeftSwipeButtonListener(ChoosePlayerWindow panel, int player){
         this.panel = panel;
         this.player = player;
