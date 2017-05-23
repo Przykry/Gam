@@ -41,8 +41,6 @@ public class Player implements Runnable {
     private boolean movingLeft, movingRight, jumping, shooting;
     private boolean blockedLeft, blockedRight;
     private boolean exitBlocked;
-    private boolean playerBlocked;
-    private boolean playerBallBlocked;
 
     public void setPoints(int points) {this.points = points;}
 
@@ -92,14 +90,6 @@ public class Player implements Runnable {
 
     public void setExitBlocked(boolean exitBlocked) {
         this.exitBlocked = exitBlocked;
-    }
-
-    public void setPlayerBlocked(boolean playerBlocked) {
-        this.playerBlocked = playerBlocked;
-    }
-
-    public void setPlayerBallBlocked(boolean playerBallBlocked) {
-        this.playerBallBlocked = playerBallBlocked;
     }
 
     public boolean isBlockedRight() {
@@ -225,8 +215,6 @@ public class Player implements Runnable {
         this.exitBlocked = false;
         this.blockedRight = false;
         this.blockedLeft = false;
-        this.playerBlocked = false;
-        this.playerBallBlocked = false;
         this.shooting = false;
     }
 
