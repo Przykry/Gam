@@ -25,13 +25,6 @@ public class BouncingBall implements Runnable {
             }
             try {
                 Thread.sleep(15);
-                if(threadSuspended){
-                    synchronized(this){
-                        while (threadSuspended){
-                            wait();
-                        }
-                    }
-                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

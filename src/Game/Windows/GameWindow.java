@@ -280,8 +280,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     private boolean checkIfPlayerHits(){
         if(Math.abs(player1.getX() - player2.getX()) < player1.getRadiusHead() + player2.getRadiusHead()){
             blockPlayers(false);
-            player1.setPlayerBlocked(true);
-            player2.setPlayerBlocked(true);
             return true;
         }else{
             return false;
@@ -291,8 +289,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
     private void checkIfPlayersBlockedTheBall(){
         if(ball.checkIfIntersectsBoth(player1,player2)){
             blockPlayers(true);
-            player1.setPlayerBallBlocked(true);
-            player2.setPlayerBallBlocked(true);
         }
         else{
             ball.setBlocked(false);
