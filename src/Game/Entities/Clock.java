@@ -6,6 +6,7 @@ import static java.lang.Thread.sleep;
 
 /**
  * Created by Daniel on 19.05.2017.
+ * Zegar w oddzielnym wątku liczy czas, który jest wykorzystywany przy odmierzaniu czasu gry.
  */
 public class Clock implements Runnable{
     private GameWindow gameWindow;

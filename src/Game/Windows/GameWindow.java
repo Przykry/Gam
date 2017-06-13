@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Created by Daniel on 29.04.2017.
+ * Klasa wyświetla okno z grą.
  */
 public class GameWindow extends JPanel implements WindowInt, ActionListener{
     private int width, height;
@@ -59,10 +60,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
 
     public boolean isGameEnd() {
         return gameEnd;
-    }
-
-    public void setGameEnd(boolean gameEnd) {
-        this.gameEnd = gameEnd;
     }
 
     public JButton getBackButton() {
@@ -112,7 +109,9 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         player2.setKeys(2);
     }
 
-
+    /**
+     * Tworzy miejsce dla wyświetlania pozostałego czasu gry.
+     */
     private void createClockLabel(){
         clock = new JLabel();
         setTextLabelForeground(clock);
@@ -121,20 +120,32 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         this.add(clock);
     }
 
+    /**
+     * Aktualizuje wyświetlany czas.
+     */
     public void tickClock(){
         clock.setText("Time: " + Integer.toString(time) + " sec");
     }
 
+    /**
+     * Umiejscawia zegar na oknie.
+     */
     private void setClockLabelPosition(){
-        clock.setBounds(640,15,32*12,32);
+        clock.setBounds(600,15,32*12,32);
     }
 
+    /**
+     * Dodaje przycisk cofnięcia
+     */
     private void addBackButton(){
-        createButton(backButton,15,15,"textures\\Buttons\\backGameButton.png",new BackButtonListener());
+        createButton(backButton,15,15,"textures/Buttons/backGameButton.png",new BackButtonListener());
         backButton.setText("Back");
         this.add(backButton);
     }
 
+    /**
+     * Ustawia graczy w pozycjach początkowych
+     */
     private void setPlayerStanding(){
         player1.setX(leftGoal.getWidth()+20+15);
         player1.setY(height -15-player1.getHeightTorso()-2*player1.getRadiusHead());
@@ -146,6 +157,9 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         player2.setCenterHeadY(player2.getY() + player2.getRadiusHead());
     }
 
+    /**
+     * Uruchamia wątki piłki i graczy
+     */
     public static void runEntities(){
         List<Runnable> entity = new ArrayList<>();
         entity.add(player1);
@@ -158,16 +172,27 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    /**
+     * Wstrzymuje wątki piłki i graczy
+     */
     public static void stopEntities(){
         for(Thread t : entities){
             t.suspend();
         }
     }
 
+    /**
+     * Rysuje czarny pasek z zegarem i wynikiem u góry ekranu
+     * @param g
+     */
     private void drawWindowBar(Graphics g){
        g.drawImage(gameBar,15,15,this);
     }
 
+    /**
+     * Ustawia piłkę w pozycji początkowej
+     * @param ball
+     */
     private void setBallStartPosition(Ball ball){
         ball.setX(width/2);
         ball.setY(getGround()-600);
@@ -175,10 +200,17 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         ball.setSpeedY(0);
     }
 
+    /**
+     * Ustawia dwukropek w górnej części ekranu na środku
+     * @param label
+     */
     private void setColonPosition(JLabel label){
         label.setBounds(width/2,20,32,32);
     }
 
+    /**
+     * Tworzy miejsce do wyświetlania dwukropka.
+     */
     private void createColonLabel(){
         setColonPosition(barText[0]);
         setTextLabelForeground(barText[0]);
@@ -186,6 +218,10 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         this.add(barText[0]);
     }
 
+    /**
+     * Ustawia szczegóły tekstu do wyświetlania wyniku
+     * @param label
+     */
     private void setTextLabelForeground(JLabel label){
         label.setFont(new Font("Comic Sans", Font.BOLD, 32));
         label.setVerticalTextPosition(SwingConstants.CENTER);
@@ -193,14 +229,27 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         label.setForeground(Color.WHITE);
     }
 
+    /**
+     * Ustawia pozycję wyświetlania wyniku
+     * @param label
+     * @param i
+     */
     private void setLabelPointsPosition(JLabel label, int i){
         label.setBounds(width/2 - 20 + i,20,64,32);
     }
 
+    /**
+     * Ustawia wartość zdobytych bramek które mają być wyświetlone
+     * @param label
+     * @param player
+     */
     private void setLabelPoints(JLabel label,Player player){
         label.setText(String.valueOf(player.getPoints()));
     }
 
+    /**
+     * Tworzy miejsca do wyświetlania punktów
+     */
     private void createPointsLabel(){
         setLabelPoints(points[0],player1);
         setLabelPoints(points[1],player2);
@@ -211,6 +260,10 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    /**
+     * Wyświetla informację o zwycięscy bądź remisie na koniec gry
+     * @param graphics
+     */
     private void endOfGame(Graphics graphics){
         graphics.setColor(Color.decode("#2A2C2E"));
         graphics.setFont(new Font("Hobo Std", Font.BOLD, 32));
@@ -222,11 +275,18 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         graphics.drawString("Press ENTER to return to main menu.",150,350);
     }
 
+    /**
+     * Resetuje zdobyte punkty
+     */
     public static void resetPoints(){
         player1.setPoints(0);
         player2.setPoints(0);
     }
 
+    /**
+     * Sprawdza czy została strzelona bramka
+     * @return
+     */
     private boolean isScored(){
         if(leftGoal.isLeftScored(ball)) {
             player2.setPoints(player2.getPoints() + 1);
@@ -243,6 +303,9 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         return false;
     }
 
+    /**
+     * Ustawia wszystko na pierwotne pozycje po strzeleniu bramki
+     */
     private void startGameAgain(){
         if(isScored()){
             setPlayerStanding();
@@ -254,11 +317,19 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    /**
+     * Rysuje bramki
+     * @param graphics
+     */
     private void drawGoals(Graphics graphics){
         graphics.drawImage(leftGoal.getGoalImage(),16, height -15-leftGoal.getHeigth(),this);
         graphics.drawImage(rightGoal.getGoalImage(),width-15- rightGoal.getWidth(), height -15- rightGoal.getHeigth(),this);
     }
 
+    /**
+     * Rysuje zawodników
+     * @param graphics
+     */
     private void drawPlayers(Graphics graphics){
         graphics.drawImage(player1.getHeadImage(player1.getPlayerHeadImage()),player1.getX(),player1.getY(),this);
         graphics.drawImage(player1.getTorsoImage(player1.getPlayerTorsoImage()),player1.getX()+3,player1.getY()+2*player1.getRadiusHead(),this);
@@ -267,6 +338,10 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         graphics.drawImage(player2.getTorsoImage(player2.getPlayerTorsoImage()),player2.getX()+3,player2.getY()+2*player2.getRadiusHead(),this);
     }
 
+    /**
+     * Rysuje cały obraz gry
+     * @param graphics
+     */
     public void paintComponent(Graphics graphics){
         drawBackground(graphics,backgroundImage,this);
         drawWindowBar(graphics);
@@ -277,6 +352,10 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         if(gameEnd) endOfGame(graphics);
     }
 
+    /**
+     * Sprawdza czy gracze się ze sobą zderzyli
+     * @return
+     */
     private boolean checkIfPlayerHits(){
         if(Math.abs(player1.getX() - player2.getX()) < player1.getRadiusHead() + player2.getRadiusHead()){
             blockPlayers(false);
@@ -286,6 +365,9 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    /**
+     * Sprawdza czy gracze zablokowali piłkę między sobą
+     */
     private void checkIfPlayersBlockedTheBall(){
         if(ball.checkIfIntersectsBoth(player1,player2)){
             blockPlayers(true);
@@ -295,6 +377,10 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    /**
+     * Uniemożliwia graczom poruszanie się (opcjonalnie wyłącza ruch piłki jeśli jest zablokowana)
+     * @param ifBall
+     */
     private void blockPlayers(boolean ifBall){
         if(player1.getCenterHeadX() < player2.getCenterHeadX() ){
             player1.setBlockedRight(true);
@@ -307,6 +393,10 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    /**
+     * Nie pozwala graczom wyjść poza ekran
+     * @param player
+     */
     private void playerExitFrame(Player player){
         if(player.getCenterHeadX()+player.getRadiusHead() >= 860-15){
             player.setX(860-15-2*player.getRadiusHead());
@@ -328,6 +418,9 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
+    /**
+     * Odblokowuje graczy jeśli są zablokowani
+     */
     private void unblockPlayers(){
         if(player1.isMovingRight() && !checkIfPlayerHits()){
             player1.setBlockedLeft(false);
@@ -347,10 +440,10 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         }
     }
 
-
-
-
-
+    /**
+     * Zwraca poziom ziemi
+     * @return
+     */
     public static int getGround(){
         return 625;
     }
@@ -360,8 +453,6 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
         ball.checkIfIntersects(player2);
         ball.checkIfBodyIntersects(player1);
         ball.checkIfBodyIntersects(player2);
-        //ball.playerShot(player1);
-        //ball.playerShot(player2);
         checkIfPlayersBlockedTheBall();
         checkIfPlayerHits();
         startGameAgain();
@@ -376,7 +467,7 @@ public class GameWindow extends JPanel implements WindowInt, ActionListener{
             timer.stop();
         }
         try {
-            Thread.sleep(10);
+            Thread.sleep(1);
         } catch (InterruptedException e1) {
             e1.printStackTrace();
         }

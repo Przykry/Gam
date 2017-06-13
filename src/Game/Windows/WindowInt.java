@@ -26,7 +26,7 @@ public interface WindowInt{
     }
 
     default Image getBackgroundImage(String nameBackground) throws IOException{
-            return ImageIO.read(new File("textures\\" + nameBackground + ".png"));
+            return ImageIO.read(new File("textures/" + nameBackground + ".png"));
     }
 
     default void drawBorders(Graphics graphics, int width, int heigth){

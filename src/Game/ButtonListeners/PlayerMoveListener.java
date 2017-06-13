@@ -10,6 +10,7 @@ import static Game.Windows.GameWindow.getGround;
 
 /**
  * Created by Daniel on 02.05.2017.
+ * Klasa implementuje ActionListenera i KeyListenera, które powodują ruch piłkarza
  */
 public class PlayerMoveListener implements KeyListener,ActionListener{
     GameWindow gameWindow;
@@ -27,15 +28,15 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
         moveTimer.start();
     }
 
-    static void stopTimer(){
-        moveTimer.stop();
-    }
-
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
 
+    /**
+     * Metoda powoduje ruch piłkarza w odpowiednią stronę (zależną od wciśniętego klawisza)
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if(gameWindow.isGameEnd()){
@@ -49,13 +50,21 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
         setPlayerImage(e,player2);
     }
 
+    /**
+     * Metoda stopuje ruch piłkarza po puszczeniu przycisku.
+     * @param e
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         playerStop(e,player1);
         playerStop(e,player2);
     }
 
-
+    /**
+     * Metoda ustawia jeden z dwóch obrazów piłkarza biegnącego w daną stronę (ładowanie tych obrazów na przemian symuluje animację biegu)
+     * @param e
+     * @param player
+     */
     private void setPlayerImage(KeyEvent e, Player player){
         if(e.getKeyCode() == player.getLeftKey()){
             player.setPlayerHeadImage(0);
@@ -65,6 +74,11 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
         }
     }
 
+    /**
+     * Metoda ustawia flagi odpowiedzialne za poruszanie się piłkarza i kopanie piłki na true.
+     * @param e
+     * @param player
+     */
     private void playerMove(KeyEvent e,Player player){
         if(e.getKeyCode() == player.getLeftKey()){
             player.setMovingLeft(true);
@@ -76,11 +90,15 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
             if(player.getY()+player.getHeightTorso()+2*player.getRadiusHead() == getGround()) player.setJumping(true);
         }
         else if(e.getKeyCode() == player.getShotKey()){
-            //System.out.println("shooting");
             player.setShooting(true);
         }
     }
 
+    /**
+     * Metoda ustawia flagi odpowiedzialne za poruszanie się piłkarza i kopanie piłki na false
+     * @param e
+     * @param player
+     */
     private void playerStop(KeyEvent e,Player player){
         if(e.getKeyCode() == player.getLeftKey()){
             player.setMovingLeft(false);
@@ -93,6 +111,10 @@ public class PlayerMoveListener implements KeyListener,ActionListener{
         }
     }
 
+    /**
+     * Jeśli piłkarz porusza się w którąś stronę to ustawia naprzemiennie odpowiedni obraz tułowia.
+     * @param player
+     */
     private void torsoMove(Player player) {
         if(player.getMovingLeft()){
             if (check) {

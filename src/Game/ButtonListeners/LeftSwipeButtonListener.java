@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Created by Daniel on 26.04.2017.
+ * Klasa implementuje Action Listenera który jest przypisany do przycisku przesunięcia w lewo podczas wybory zawodnika.
  */
 public class LeftSwipeButtonListener implements ActionListener{
     private ChoosePlayerWindow panel;
@@ -16,6 +17,10 @@ public class LeftSwipeButtonListener implements ActionListener{
         this.player = player;
     }
 
+    /**
+     * Metoda działa w zależności od parametru player - przesuwa w lewo wybór gracza nr 1 bądź nr 2
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(player == 1) {

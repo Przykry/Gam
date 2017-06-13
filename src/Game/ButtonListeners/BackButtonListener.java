@@ -12,6 +12,7 @@ import static Game.Main.getWindow;
 
 /**
  * Created by Daniel on 26.04.2017.
+ * Klasa implementuje Action Listenera który jest przypisany do przycisku wstecz w menu wyboru bohatera oraz w ekranie gry.
  */
 public class BackButtonListener implements ActionListener{
     @Override

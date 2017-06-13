@@ -13,6 +13,7 @@ import static Game.Main.changeWindow;
 
 /**
  * Created by Daniel on 26.04.2017.
+ * Klasa implementuje Action Listenera który jest dodawany do przycisku zatwierdzenia wyboru graczy.
  */
 public class AcceptButtonListener implements ActionListener{
     private ChoosePlayerWindow window;

@@ -13,6 +13,7 @@ import java.io.IOException;
 
 /**
  * Created by Daniel on 26.04.2017.
+ * Klasa rozszerza klasę JPanel i implenetuje interfejs WindowInt, na tym oknie wyświetlane jest wybieranie zawodników do meczu
  */
 public class ChoosePlayerWindow extends JPanel implements WindowInt {
     private int width;
@@ -45,10 +46,10 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
             new JButton()
     };
     private String []  filepaths = new String[]{
-            "textures\\Buttons\\chooseButtons.png",
-            "textures\\Buttons\\acceptButton.png",
-            "textures\\Buttons\\swipeLeftButton.png",
-            "textures\\Buttons\\swipeRightButton.png"
+            "textures/Buttons/chooseButtons.png",
+            "textures/Buttons/acceptButton.png",
+            "textures/Buttons/swipeLeftButton.png",
+            "textures/Buttons/swipeRightButton.png"
     };
     private ActionListener [] listeners = new ActionListener[]{
             new BackButtonListener(),
@@ -144,15 +145,30 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         this.setLayout(null);
     }
 
-
+    /**
+     * Powiększa głowę piłkarza w celu wyświetlenia jej podczas wyboru (w grze jest nieco mniejsza)
+     * @param play
+     * @param i
+     * @return
+     */
     private Image resizePlayerHead(Player play, int i){
         return play.getHeadImage(i).getScaledInstance(play.getRadiusHead()*4, play.getRadiusHead()*4,  Image.SCALE_SMOOTH);
     }
 
+    /**
+     * Powiększa tułów piłkarza w celu wyświetlenia podczas wyboru (w grze jest nieco mniejszy)
+     * @param play
+     * @param i
+     * @return
+     */
     private Image resizePlayerTorso(Player play, int i){
         return play.getTorsoImage(i).getScaledInstance(play.getWidthTorso()*2, play.getHeightTorso()*2,  Image.SCALE_SMOOTH);
     }
 
+    /**
+     * Metoda rysuje zawodników na ekranie
+     * @param graphics
+     */
     private void drawPlayers(Graphics graphics){
         graphics.drawImage(resizedHead[0],120,200 ,this);
         graphics.drawImage(resizedTorso[0],127, 200+player1.getRadiusHead()*4,this  );
@@ -160,7 +176,10 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         graphics.drawImage(resizedTorso[1],607, 200+player2.getRadiusHead()*4,this  );
     }
 
-
+    /**
+     * Metoda wyświetla atrybuty aktualnie zaznaczonych piłkarzy
+     * @param graphics
+     */
     private void drawAttributes(Graphics graphics){
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("MyFont",Font.BOLD,25));
@@ -168,13 +187,16 @@ public class ChoosePlayerWindow extends JPanel implements WindowInt {
         graphics.drawString("Max Jump: "+player1.getMaxJump(),120,105);
         graphics.drawString("Speed: "+ player1.getSpeed(),120,130);
         graphics.drawString("Shot Strength: "+player1.getShotStrength(),120,155);
-        graphics.drawString("Name: "+player2.getName(),600,80);
-        graphics.drawString("Max Jump: "+player2.getMaxJump(),600,105);
-        graphics.drawString("Speed: "+ player2.getSpeed(),600,130);
-        graphics.drawString("Shot Strength: "+player2.getShotStrength(),600,155);
+        graphics.drawString("Name: "+player2.getName(),580,80);
+        graphics.drawString("Max Jump: "+player2.getMaxJump(),580,105);
+        graphics.drawString("Speed: "+ player2.getSpeed(),580,130);
+        graphics.drawString("Shot Strength: "+player2.getShotStrength(),580,155);
     }
 
-
+    /**
+     * Metoda rysuje wszystkie elementy na oknie
+     * @param graphics
+     */
     public void paintComponent(Graphics graphics){
         graphics.drawImage(backgroundImage,0,0,this);
         drawBorders(graphics,width,heigth);

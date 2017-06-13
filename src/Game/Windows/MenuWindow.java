@@ -41,9 +41,9 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
     };
 
     private String [] filepaths = new String[]{
-            "textures\\Buttons\\chooseButtons.png",
-            "textures\\Buttons\\keySwitcher.png",
-            "textures\\Buttons\\keySwitcher1.png"
+            "textures/Buttons/chooseButtons.png",
+            "textures/Buttons/keySwitcher.png",
+            "textures/Buttons/keySwitcher1.png"
     };
 
     private ActionListener[] listeners = new ActionListener[]{
@@ -124,7 +124,7 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
     }
 
     private void setKeys() throws FileNotFoundException {
-        File file = new File("textures\\KeyBindings.txt");
+        File file = new File("textures/KeyBindings.txt");
         Scanner scr = new Scanner(file);
         for(int i=0;i<8;i++) {
             keys[i] = scr.nextInt();

@@ -11,6 +11,7 @@ import static java.lang.Thread.sleep;
 
 /**
  * Created by Daniel on 28.04.2017.
+ * Klasa przechowuje informacje i metody dotyczące piłki oraz implementuje wątek który porusza piłką.
  */
 public class Ball implements Runnable {
     private int x, y;
@@ -42,7 +43,7 @@ public class Ball implements Runnable {
 
     private void setBallImage() {
         try {
-            ballImage = ImageIO.read(new File("textures\\ball.png"));
+            ballImage = ImageIO.read(new File("textures/ball.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,16 +61,8 @@ public class Ball implements Runnable {
         return centerX;
     }
 
-    public void setCenterX(int centerX) {
-        this.centerX = centerX;
-    }
-
     int getCenterY() {
         return centerY;
-    }
-
-    public void setCenterY(int centerY) {
-        this.centerY = centerY;
     }
 
     private int getWidth() {
@@ -114,6 +107,9 @@ public class Ball implements Runnable {
         return ballImage;
     }
 
+    /**
+     * Metoda rusza piłką jeśli ta nie jest zablokowana
+     */
     private void move(){
         if(!blocked) {
             this.x += speedX / 10;
@@ -126,14 +122,23 @@ public class Ball implements Runnable {
         }
     }
 
+    /**
+     * Odwraca zwrot prędkości piłki w poziomie
+     */
     private void reverseSpeedX(){
         this.speedX = -this.speedX;
     }
 
+    /**
+     * Odwraca zwrot prędkości piłki w pionie
+     */
     void reverseSpeedY(){
         this.speedY = -this.speedY;
     }
 
+    /**
+     * Metoda sprawdza czy piłka nie uderzyła w ramkę okna i wywołuje jej ruch.
+     */
     void directoryOfBall() {
         ballHittingBorder(observer.getHeight(),observer.getWidth());
         move();
@@ -143,6 +148,11 @@ public class Ball implements Runnable {
         g.drawImage(getBallImage(), getX(), getY(), observer);
     }
 
+    /**
+     * Sprawdzenie czy piłka nie uderzyła w ramkę.
+     * @param heigth
+     * @param width
+     */
     private void ballHittingBorder(int heigth, int width) {
         if (new Rectangle(0, 0, 15, heigth).intersects(new Rectangle(this.getX(), this.getY(), this.getRadius() * 2, this.getRadius() * 2))) {
             this.reverseSpeedX();
@@ -175,16 +185,31 @@ public class Ball implements Runnable {
         }
     }
 
+    /**
+     * Oblicza pitagorasa w celu sprawdzenia czy piłka nie zderzyła się z inną piłką (menu główne)
+     * @param ball1
+     * @return
+     */
     private double calculatePythagoras(Ball ball1) {
         double aplusb = Math.pow(ball1.getCenterX() - this.getCenterX(), 2) + Math.pow(this.getCenterY() - ball1.getCenterY(), 2);
         return Math.sqrt(aplusb);
     }
+
+    /**
+     * Oblicza pitagorasa w celu sprawdzenia czy piłka nie zderzyła się z głową piłkarza (gra)
+     * @param ball
+     * @param player
+     * @return
+     */
     private double calculatePythagoras(Ball ball, Player player) {
         double aplusb = Math.pow(ball.getCenterX() - player.getCenterHeadX(), 2) + Math.pow(player.getCenterHeadY() - ball.getCenterY(), 2);
         return Math.sqrt(aplusb);
     }
 
-
+    /**
+     * Metoda na podstawie funkcji trygonometrycznych oblicza kierunek lotu piłki/piłek po zderzeniu.
+     * @param obj
+     */
     private void calculateDirection(Object obj) {
        if(obj instanceof Ball) {
            Ball ball = (Ball)obj;
@@ -251,6 +276,10 @@ public class Ball implements Runnable {
        }
     }
 
+    /**
+     * Wywołuje sprawdzenie czy piłka zderzyła się z inną piłką bądź głową piłkarza i jeśli tak to oblicza nowy kierunek lotu.
+     * @param obj
+     */
     public void checkIfIntersects(Object obj) {
         if(obj instanceof Ball) {
             Ball ball1 = (Ball)obj;
@@ -266,6 +295,10 @@ public class Ball implements Runnable {
         }
     }
 
+    /**
+     * Sprawdza czy piłka dotyka tułowia piłkarza (działa tylko wtedy jeśli wciśnięty jest przycisk strzału, inaczej można przebiec obok piłki)
+     * @param player
+     */
     public void checkIfBodyIntersects(Player player) {
         if(player.isShooting()) {
             if (new Rectangle(x, y, 60, 60).intersects(new Rectangle(player.getX() + 15, player.getY() + 80, player.getWidthTorso() - 10, player.getHeightTorso())) && centerX > player.getCenterHeadX()) {
@@ -280,6 +313,12 @@ public class Ball implements Runnable {
         }
     }
 
+    /**
+     * Metoda sprawdza czy piłka nie zostalą zablokowana między dwoma graczami
+     * @param player1
+     * @param player2
+     * @return
+     */
     public boolean checkIfIntersectsBoth(Player player1, Player player2){
         if (player1.getCenterHeadX() > centerX && player2.getCenterHeadX() < centerX || player1.getCenterHeadX() < centerX && player2.getCenterHeadX() > centerX){
             if(centerY > player1.getY() && centerY > player2.getY() && centerY < player1.getY()+2*player1.getRadiusHead() && centerY < player2.getY()+2*player2.getRadiusHead()){
@@ -293,16 +332,25 @@ public class Ball implements Runnable {
         else return false;
     }
 
+    /**
+     * Ustala limit prędkości pionowej dla piłki
+     */
     private void speedLimitY(){
         if(speedY > 250) speedY = 250;
         else if(speedY < -250) speedY = -250;
     }
 
+    /**
+     * Ustala limit prędkości poziomek dla piłki
+     */
     private void speedLimitX(){
         if(speedX > 250) speedX = 250;
         else if(speedX < -250) speedX = -250;
     }
 
+    /**
+     * Imituje grawitacje piłki
+     */
     private void gravity(){
         if(y + 2*radius < getGround() && speedY < 300) speedY += 10;
         else if(y+2*radius >= getGround()) {

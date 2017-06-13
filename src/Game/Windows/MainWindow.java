@@ -3,7 +3,6 @@ package Game.Windows;
 import Game.Entities.BouncingBall;
 import Game.Entities.Ball;
 import Game.ButtonListeners.ExitGameButtonListener;
-import Game.ButtonListeners.HallOfFameButtonListener;
 import Game.ButtonListeners.MenuButtonListener;
 import Game.ButtonListeners.StartGameButtonListener;
 
@@ -28,9 +27,9 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
             new JButton(),
     };
     String[] filePaths = new String[]{
-            "textures\\Buttons\\startGameButton.png",
-            "textures\\Buttons\\menuButton.png",
-            "textures\\Buttons\\exitGameButton.png"
+            "textures/Buttons/startGameButton.png",
+            "textures/Buttons/menuButton.png",
+            "textures/Buttons/exitGameButton.png"
     };
     ActionListener[] listeners = new ActionListener[]{
             new StartGameButtonListener(),
@@ -102,6 +101,7 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Toolkit.getDefaultToolkit().sync();
         repaint();
     }
 }

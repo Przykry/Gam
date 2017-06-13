@@ -9,6 +9,7 @@ import static Game.Main.changeWindow;
 
 /**
  * Created by Daniel on 25.04.2017.
+ * Klasa implementuje Action Listenera który przypisany jest do przycisku rozpoczęcia gry i przejścia do wyboru zawodników.
  */
 public class StartGameButtonListener implements ActionListener{
     public StartGameButtonListener(){
