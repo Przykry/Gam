@@ -11,6 +11,10 @@ import static java.lang.Thread.sleep;
 
 /**
  * Created by Daniel on 28.04.2017.
+ */
+
+/**
+ *
  * Klasa przechowuje informacje i metody dotyczące piłki oraz implementuje wątek który porusza piłką.
  */
 public class Ball implements Runnable {

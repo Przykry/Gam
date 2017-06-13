@@ -10,6 +10,10 @@ import static Game.Windows.GameWindow.getGround;
 
 /**
  * Created by Daniel on 02.05.2017.
+ */
+
+/**
+ *
  * Klasa implementuje ActionListenera i KeyListenera, które powodują ruch piłkarza
  */
 public class PlayerMoveListener implements KeyListener,ActionListener{

@@ -7,6 +7,11 @@ import java.awt.event.ActionListener;
 
 /**
  * Created by Daniel on 26.04.2017.
+ *
+ */
+
+/**
+ *
  * Klasa implementuje Action Listenera który jest przypisany do przycisku przesunięcia w prawo podczas wyboru zawodnika.
  */
 public class RightSwipeButtonListener implements ActionListener{

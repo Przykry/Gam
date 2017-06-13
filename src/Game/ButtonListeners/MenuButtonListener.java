@@ -9,6 +9,10 @@ import static Game.Main.changeWindow;
 
 /**
  * Created by Daniel on 25.04.2017.
+ */
+
+/**
+ *
  * Klasa implementuje ActionListenera który jest dodany do przycisku w menu głównym który przechodzi do ekranu ustawień sterowania.
  */
 public class MenuButtonListener implements ActionListener {

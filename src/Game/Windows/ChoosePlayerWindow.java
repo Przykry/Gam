@@ -13,6 +13,10 @@ import java.io.IOException;
 
 /**
  * Created by Daniel on 26.04.2017.
+ */
+
+/**
+ *
  * Klasa rozszerza klasę JPanel i implenetuje interfejs WindowInt, na tym oknie wyświetlane jest wybieranie zawodników do meczu
  */
 public class ChoosePlayerWindow extends JPanel implements WindowInt {

@@ -7,6 +7,10 @@ import java.io.IOException;
 
 /**
  * Created by Daniel on 29.04.2017.
+ */
+
+/**
+ *
  * Klasa przechowuje informacje o bramce
  */
 public class Goal {

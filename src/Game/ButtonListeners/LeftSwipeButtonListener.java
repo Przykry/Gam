@@ -4,9 +4,12 @@ import Game.Windows.ChoosePlayerWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 /**
  * Created by Daniel on 26.04.2017.
+ */
+
+/**
+ *
  * Klasa implementuje Action Listenera który jest przypisany do przycisku przesunięcia w lewo podczas wybory zawodnika.
  */
 public class LeftSwipeButtonListener implements ActionListener{

@@ -12,6 +12,10 @@ import java.util.ArrayList;
 /**
  * Created by Daniel on 24.04.2017.
  */
+
+/**
+ * Glowna klasa rozpoczynajaca glowy watek aplikacji, nastepuje w niej zmienianie okienek wystepujacych w aplikacji
+ */
 public class Main {
     private static JFrame frame = new JFrame();
     private static ArrayList<JPanel> windows;
@@ -28,11 +32,21 @@ public class Main {
 
     public static int getWindow(){return n;}
 
+    /**
+     * dodanie okienka do listy
+     * @param window
+     */
     public static void addWindow(WindowInt window){ windows.add((JPanel)window); }
 
+    /**
+     * usuniecie okienka gry
+     */
     public static void removeWindow(){ windows.remove(3); }
 
-
+    /**
+     * zmiana okienek aplikacji
+     * @param n
+     */
     public static void changeWindow(int n){
         Main.n = n;
         for(KeyListener kL : frame.getKeyListeners()) frame.removeKeyListener(kL);

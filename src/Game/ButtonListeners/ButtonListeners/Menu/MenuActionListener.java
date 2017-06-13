@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
  * Created by Przykry on 09.05.2017.
  */
 
+/**
+ * klasa implementuajca ActionListenera sluzy do chwytania akcji przyciskow
+ */
 
 public class MenuActionListener implements ActionListener {
 

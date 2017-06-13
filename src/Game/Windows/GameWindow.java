@@ -18,6 +18,10 @@ import java.util.List;
 
 /**
  * Created by Daniel on 29.04.2017.
+ */
+
+/**
+ *
  * Klasa wyświetla okno z grą.
  */
 public class GameWindow extends JPanel implements WindowInt, ActionListener{

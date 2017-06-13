@@ -8,11 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static Game.Main.changeWindow;
-
+/**
+ * Created by Daniel on 26.04.2017.
+ */
 
 
 /**
- * Created by Daniel on 26.04.2017.
+ *
  * Klasa implementuje Action Listenera który jest dodawany do przycisku zatwierdzenia wyboru graczy.
  */
 public class AcceptButtonListener implements ActionListener{
