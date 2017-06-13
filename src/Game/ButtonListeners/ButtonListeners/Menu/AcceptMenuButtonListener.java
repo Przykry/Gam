@@ -10,11 +10,19 @@ import java.io.PrintWriter;
 /**
  * Created by Przykry on 29.04.2017.
  */
+
+/**
+ * Klasa implementujaca listener dla przycisku accept zapisujaca przyciski do pliku
+ */
 public class AcceptMenuButtonListener implements ActionListener {
     private int keys[] = MenuWindow.getKeys();
     private String savedKeys = "";
 
 
+    /**
+     * zapisuje przyciski do pliku
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         for (int k : keys) savedKeys += (k + "\n");

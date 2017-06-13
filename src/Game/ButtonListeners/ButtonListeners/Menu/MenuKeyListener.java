@@ -9,6 +9,11 @@ import java.awt.event.KeyListener;
 /**
  * Created by Przykry on 09.05.2017.
  */
+
+/**
+ * klasa sluzy do zczytywania wartosci klawiatury
+ */
+
 public class MenuKeyListener implements KeyListener {
     private static int keys[] = MenuWindow.getKeys();
     private MenuWindow window;
@@ -24,6 +29,10 @@ public class MenuKeyListener implements KeyListener {
     }
 
 
+    /**
+     * pobiera wcisniety klawisz i ustawia jego wartosc oraz odswieza ekran
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         for(int i = 0; i<8 ;i++) {

@@ -11,8 +11,19 @@ import java.io.IOException;
 /**
  * Created by Przykry on 29.04.2017.
  */
-public interface WindowInt{
 
+/**
+ * Interfejs implementujacy okna aplikacji
+ */
+public interface WindowInt{
+    /**
+     * metoda domyślna tworzy przycisk z standardowymi parametrami
+     * @param button
+     * @param x
+     * @param y
+     * @param filepath
+     * @param list
+     */
     default void createButton(JButton button, int x, int y, String filepath, ActionListener list) {
         ImageIcon icon = new ImageIcon(filepath);
         button.setIcon(icon);
@@ -25,10 +36,22 @@ public interface WindowInt{
         button.setFocusable(false);
     }
 
+    /**
+     * pobieranie obrazka tla gry
+     * @param nameBackground
+     * @return
+     * @throws IOException
+     */
     default Image getBackgroundImage(String nameBackground) throws IOException{
             return ImageIO.read(new File("textures/" + nameBackground + ".png"));
     }
 
+    /**
+     * rysowanie obramowan na ekranie
+     * @param graphics
+     * @param width
+     * @param heigth
+     */
     default void drawBorders(Graphics graphics, int width, int heigth){
         graphics.setColor(Color.black);
         graphics.fillRect(0,0,15,heigth);

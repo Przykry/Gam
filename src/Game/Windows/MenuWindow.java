@@ -17,6 +17,10 @@ import java.util.Scanner;
 /**
  * Created by Przykry on 29.04.2017.
  */
+
+/**
+ * Klasa implementujaca okno menu aplikacji
+ */
 public class MenuWindow extends JPanel implements WindowInt, ActionListener {
     private int width,heigth;
     private Image backgroundImage;
@@ -78,6 +82,9 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
         this.setLayout(null);
     }
 
+    /**
+     * utworzenie przyciskow do zmiany klawiszy sterowania
+     */
     private void keySwitchers(){
         for(int i=0;i<4;i++){
             createButton(keySwitchers[i],135,200+50*i,filepaths[1], new MenuActionListener(this,i));
@@ -92,7 +99,11 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
     }
 
 
-
+    /**
+     * sprawdzenei czy przycisk jest wcisniety
+     * @param i
+     * @return
+     */
     public boolean switcherClicked(int i){
         return keySwitchers[i].getModel().isEnabled();
     }
@@ -101,13 +112,23 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
         return keySwitchers[i];
     }
 
+
+    /**
+     * tworzenie labela dla danego pilkarza
+     * @param player
+     * @param x
+     * @param text
+     */
     private void createPlayerLabel(JButton player, int x, String text){
         createButton(player,x,150,filepaths[2],null);
         player.setText(text);
         this.add(player);
     }
 
-
+    /**
+     * wyswietlanie opisu menu
+     * @param graphics
+     */
     private void menuDescription(Graphics graphics){
         graphics.setColor(Color.decode("#2A2C2E"));
         graphics.setFont(new Font("Hobo Std", Font.PLAIN , 32));
@@ -118,11 +139,19 @@ public class MenuWindow extends JPanel implements WindowInt, ActionListener {
 
     }
 
-
+    /**
+     * ustawianie klawisza dla danego przycisku
+     * @param button
+     * @param key
+     */
     private void setTextMovementKey(JButton button, int key){
         button.setText(String.valueOf(KeyEvent.getKeyText(key)));
     }
 
+    /**
+     * ustawianie przyciskow zapisanych w pliku
+     * @throws FileNotFoundException
+     */
     private void setKeys() throws FileNotFoundException {
         File file = new File("textures/KeyBindings.txt");
         Scanner scr = new Scanner(file);

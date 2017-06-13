@@ -6,6 +6,10 @@ import java.util.List;
 /**
  * Created by Przykry on 02.05.2017.
  */
+
+/**
+ * Klasa implementujaca watki poruszajacych sie pilek
+ */
 public class BouncingBall implements Runnable {
     private Ball ball;
     private List<Ball> ballsList;

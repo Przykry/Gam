@@ -14,6 +14,11 @@ import static java.lang.Thread.sleep;
 /**
  * Created by Przykry on 26.04.2017.
  */
+
+/**
+ * Klasa zawodnika zawarta w niej jest cala logika poruszania sie zawodnikiem oraz jego wyglada i atrybuty
+ */
+
 public class Player implements Runnable {
     private String name;
     private int x;
@@ -223,13 +228,23 @@ public class Player implements Runnable {
         setCenterHeadY(y+radiusHead);
     }
 
+    /**
+     * ustawia przyciski poruszania pobrane z menu
+     * @param playerNumber
+     */
     public void setKeys(int playerNumber) {
         int keys[] = MenuWindow.getKeys();
         if(playerNumber == 1) setKeys(keys[0],keys[1],keys[2],keys[3]);
         else if(playerNumber == 2) setKeys(keys[4],keys[5],keys[6],keys[7]);
     }
 
-
+    /**
+     * przypisuje wartosci klawiszy
+     * @param jumpKey
+     * @param leftKey
+     * @param rightKey
+     * @param shotKey
+     */
     private void setKeys(int jumpKey, int leftKey, int rightKey, int shotKey) {
         this.jumpKey = jumpKey;
         this.leftKey = leftKey;
@@ -237,6 +252,9 @@ public class Player implements Runnable {
         this.shotKey = shotKey;
     }
 
+    /**
+     * porusza zwodnika w lewo jesli ten nie jest zablokowany
+     */
     private void movePlayerLeft() {
         if(!isBlockedLeft()) {
             this.x -= speed;
@@ -244,12 +262,18 @@ public class Player implements Runnable {
         }
     }
 
+    /**
+     * porusza zawodnika w prawo jesli ten nie jest zablokowany
+     */
     private void movePlayerRight() {
         if(!isBlockedRight()) {
             this.x += speed;
             this.centerHeadX += speed;
         }
     }
+    /**
+     * wpisuje wartosc i-tego obrazka do tablicy z obrazkami glow
+     */
 
     private void setHeadImage(int i) {
         try {
@@ -259,6 +283,10 @@ public class Player implements Runnable {
         }
     }
 
+    /**
+     * wpisuje wartosc i-tego obrazka do tablicy z obrazkami tulowiow
+     * @param i
+     */
     private void setTorsoImage(int i) {
         try {
             torsoImage[i] = ImageIO.read(new File("textures/" + name + "/" + name + "Torso" + i + ".png"));
@@ -267,6 +295,9 @@ public class Player implements Runnable {
         }
     }
 
+    /**
+     * pobiera z obrazka szerokosc i wysokosc tulowia
+     */
     private void setWidthHeightTorso() {
         final BufferedImage bi;
         try {
@@ -278,7 +309,9 @@ public class Player implements Runnable {
         }
     }
 
-
+    /**
+     *  pobiera z obrazka promien glowy
+     */
     private void setWidthHeightHead() {
         try {
             final BufferedImage bi = ImageIO.read(new File("textures/" + name + "/" + name + "Head" + 0 + ".png"));
@@ -288,18 +321,29 @@ public class Player implements Runnable {
         }
     }
 
+    /**
+     * ustawia wysokosc i szerokosc glowy i tulowia zawodnika
+     */
     private void setPlayerWidthHeight() {
         setWidthHeightHead();
         setWidthHeightTorso();
     }
 
-
+    /**
+     * ustawianie wartosci atrybutow pilkarza
+     * @param shotStrength
+     * @param speed
+     * @param maxJump
+     */
     private void abilities(int shotStrength, int speed, int maxJump) {
         this.speed = speed;
         this.maxJump = maxJump;
         this.shotStrength = shotStrength;
     }
 
+    /**
+     * skakanie piłkarza
+     */
 
     private void jumping() {
         if(jumping) {
@@ -311,6 +355,9 @@ public class Player implements Runnable {
         }
     }
 
+    /**
+     * Grawitacja dla piłkarzy
+     */
     private void falling() {
         if (isNoGround()) {
             fallingVelocity = fallingVelocity + GRAVITY;

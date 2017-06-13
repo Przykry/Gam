@@ -10,6 +10,10 @@ import java.awt.event.KeyEvent;
 /**
  * Created by Przykry on 09.05.2017.
  */
+
+/**
+ * Klasa jest rozszerzeniem SwingWorker, dzieki ktoremu mozna zmieniac tekst ustawiony na przycisku
+ */
 public class MenuSwingWorker extends SwingWorker<Void,Void> {
     private MenuWindow window;
     private int i;

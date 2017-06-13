@@ -18,6 +18,11 @@ import java.util.List;
 /**
  * Created by Daniel on 24.04.2017.
  */
+
+/**
+ * glowne okno, otwiera sie jako pierwsze w aplikacji z niego mamy dostep do innych miejsc w aplikacji
+ *
+ */
 public class MainWindow extends JPanel implements ActionListener, WindowInt {
     int width;
     int heigth;
@@ -61,7 +66,10 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
         timer.start();
     }
 
-
+    /**
+     * dodawanie pilek latajacych w okienku
+     * @param numberOfBalls
+     */
     private void addBouncingBalls(int numberOfBalls){
         thread = new Thread[numberOfBalls];
         for(int i=0;i<numberOfBalls;i++){
@@ -81,17 +89,28 @@ public class MainWindow extends JPanel implements ActionListener, WindowInt {
         }
     }
 
+    /**
+     * zatrzymanie watku pilek
+     */
     public static void stopBouncingBalls(){
         for(Thread t : thread){
             t.suspend();
         }
     }
+
+    /**
+     * wznowienie watku pilek
+     */
     public static void startBouncingBalls(){
         for(Thread t : thread){
             t.resume();
         }
     }
 
+    /**
+     * Metoda rysuje wszystkie elementy na oknie
+     * @param graphics
+     */
     public void paintComponent(Graphics graphics) {
         drawBackground(graphics, mainBackground, this);
         drawBorders(graphics,width,heigth);
